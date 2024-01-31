@@ -1,0 +1,50 @@
+.firstDiv {
+  width: 100%;
+  height: 900px;
+  background-color: rosybrown;
+}
+
+.secondDiv {
+  width: 100%;
+  height: 900px;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: #e3e1d9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .imgComponentWrapper {
+    display: flex;
+    gap: 7rem;
+  }
+
+  .stepperContainer {
+    width: max-content;
+    display: flex;
+    margin-top: 70px;
+    margin-bottom: 30px;
+  }
+
+  .cardContainer {
+    display: flex;
+    gap: 4rem;
+    max-width: 100%;
+  }
+}
+
+.blur {
+  opacity: 0.2;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.animationImgWrapper {
+  display: flex;
+  align-items: center;
+  gap: 90px;
+  transition: opacity 1s;
+}
