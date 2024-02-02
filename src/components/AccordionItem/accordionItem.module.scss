@@ -1,0 +1,19 @@
+.faqAccordionItem {
+  border-bottom: 2px solid rgba(22, 91, 137, 0.1);
+
+  .faqAccordionItemTrigger {
+    border: none;
+    background: rgba(255, 255, 255, 0) !important;
+  }
+
+  .faqAccordionItemContent {
+    background: #fff;
+    color: #3b475e;
+    font-family: Lexend;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 128%;
+    letter-spacing: -0.32px;
+  }
+}
