@@ -13,7 +13,7 @@ import {
 } from '@frontbase/components-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import pageStyle from '@/app/page.module.scss';
@@ -28,6 +28,7 @@ import locationIcon from '@/public/assets/icons/landingPageLocation.svg';
 
 import arrowIcon from '../../public/assets/icons/whiteArrow.svg';
 import brandLogo from '../../public/assets/images/brandLogo.svg';
+import hosiptalImg1 from '../../public/assets/images/hospitalImg1.png';
 import landingPageBannerImg from '../../public/assets/images/landingPageBannerImg.png';
 
 const landingCardsInfo = [
@@ -50,6 +51,8 @@ const landingCardsInfo = [
 ];
 
 const menuItems = ['How it works', 'Our Hospitals', 'FAQs'];
+
+const images = [hosiptalImg1, landingPageBannerImg, hosiptalImg1];
 
 const faqData = [
   {
@@ -75,8 +78,21 @@ const landingPageIconList = [
 
 function LandingPage() {
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const { ref, inView } = useInView({
+    threshold: 0,
+  });
+
+  const { ref: section3Ref, inView: section3InView } = useInView({
     threshold: 0,
   });
 
@@ -221,6 +237,42 @@ function LandingPage() {
           <p className={pageStyle.secondSecCtaBtnText}>Get me started</p>
           <Image src={arrowIcon} alt="arrow icon cta button" />
         </FbtButton>
+      </div>
+
+      <div className={pageStyle.thirdSectionContainer}>
+        <div className={pageStyle.hospitalInfoContainer}>
+          <div
+            ref={section3Ref}
+            className={`${pageStyle.hospitalInfoInnerContainer} ${section3InView ? pageStyle.visible : pageStyle.blur}`}
+          >
+            <h1
+              className={`${pageStyle.hospitalInfoTitle} ${section3InView && pageStyle.titleAnimate}`}
+            >
+              Hospitals <br /> vetted for you
+            </h1>
+
+            <div className={pageStyle.hospitalInfoDescContainer}>
+              <p className={pageStyle.hospitalInfoDesc}>
+                With low MRSA-risk, extensive experience all our partner <br />
+                hospitals offer the highest quality health care
+              </p>
+
+              <p className={pageStyle.hospitalInfoDesc}>
+                The average waiting time for a treatment at one of out partner
+                <br /> hospitals is 1- 6 weeks
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className={pageStyle.hospitalImgCarouselContainer}>
+          <Image
+            width={535}
+            height={768}
+            src={images[currentIndex] || hosiptalImg1}
+            alt="carousel img"
+          />
+        </div>
       </div>
 
       <div className={pageStyle.faqSectionContainer}>
