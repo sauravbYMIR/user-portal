@@ -1,0 +1,56 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  background: var(--Colour-Primary-5, #e1f7fe) !important;
+  padding: 0px 80px !important;
+  gap: 149px;
+  border: none !important;
+
+  .headerLinkContainer {
+    margin-left: auto;
+    margin-right: 3rem;
+
+    .headerLink {
+      color: var(--Nabo-Neutral-Ten, #120f1c);
+      font-family: Poppins;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.2px;
+    }
+  }
+
+  .headerLoginBtn {
+    border-radius: 6.4px;
+    border: 2px solid var(--Colour-Primary-2, #096f90);
+    height: 64px;
+    padding: 12px 24px;
+    color: var(--Colour-Primary-2, #096f90);
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    background: #e1f7fe;
+  }
+
+  .menuItem {
+    color: var(--Colour-Neutral-3, #757f95);
+    font-family: Poppins;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 36px;
+    letter-spacing: 0.2px;
+    border-bottom: 1px solid #096f90;
+    padding-bottom: 2rem;
+    width: 100%;
+    display: flex;
+  }
+
+  .liWrapper {
+    padding: 24px 12px 24px;
+    width: 100%;
+  }
+}

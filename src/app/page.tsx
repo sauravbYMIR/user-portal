@@ -1,23 +1,14 @@
 'use client';
 
-import {
-  FbtAccordion,
-  FbtButton,
-  FbtHeader,
-  FbtHeaderBrand,
-  FbtHeaderContent,
-  FbtHeaderItem,
-  FbtHeaderMenu,
-  FbtHeaderMenuItem,
-  FbtHeaderMenuToggle,
-} from '@frontbase/components-react';
+import { FbtAccordion, FbtButton } from '@frontbase/components-react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import pageStyle from '@/app/page.module.scss';
 import AccordionItem from '@/components/AccordionItem/AccordionItem';
+import Footer from '@/components/Footer/Footer';
+import Header from '@/components/Header/Header';
 import LandingPageContentCard from '@/components/LandingPageContentCard/LandingPageContentCard';
 import LandingPageImage from '@/components/LandingPageImage/LandingPageImage';
 import LandingPageStepper from '@/components/LandingPageStepper/LandingPageStepper';
@@ -27,7 +18,6 @@ import hospitalIcon from '@/public/assets/icons/landingPageHospital.svg';
 import locationIcon from '@/public/assets/icons/landingPageLocation.svg';
 
 import arrowIcon from '../../public/assets/icons/whiteArrow.svg';
-import brandLogo from '../../public/assets/images/brandLogo.svg';
 import hosiptalImg1 from '../../public/assets/images/hospitalImg1.png';
 import landingPageBannerImg from '../../public/assets/images/landingPageBannerImg.png';
 
@@ -49,8 +39,6 @@ const landingCardsInfo = [
     desc: 'Once your enquiry has been sent the hospital will be in touch with you within 48hrs to confirm and complete the booking process',
   },
 ];
-
-const menuItems = ['How it works', 'Our Hospitals', 'FAQs'];
 
 const images = [hosiptalImg1, landingPageBannerImg, hosiptalImg1];
 
@@ -77,7 +65,6 @@ const landingPageIconList = [
 ];
 
 function LandingPage() {
-  const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -100,68 +87,7 @@ function LandingPage() {
 
   return (
     <div>
-      <FbtHeader className={pageStyle.headerContainer}>
-        <FbtHeaderBrand>
-          <Image alt="branch icon" src={brandLogo} />
-        </FbtHeaderBrand>
-
-        <FbtHeaderContent className={pageStyle.headerLinkContainer}>
-          <FbtHeaderItem>
-            <Link className={pageStyle.headerLink} href="./">
-              How it works
-            </Link>
-          </FbtHeaderItem>
-
-          <FbtHeaderItem>
-            <Link className={pageStyle.headerLink} href="./">
-              Our Hospitals
-            </Link>
-          </FbtHeaderItem>
-
-          <FbtHeaderItem>
-            <Link className={pageStyle.headerLink} href="./">
-              FAQS
-            </Link>
-          </FbtHeaderItem>
-        </FbtHeaderContent>
-
-        <FbtHeaderContent>
-          <FbtHeaderItem>
-            <FbtButton
-              className={pageStyle.headerLoginBtn}
-              size="lg"
-              variant="outline"
-            >
-              Log in
-            </FbtButton>
-          </FbtHeaderItem>
-        </FbtHeaderContent>
-
-        <FbtHeaderMenuToggle
-          clickHandler={() => setIsHeaderMenuOpen(!isHeaderMenuOpen)}
-          isMenuOpen={isHeaderMenuOpen}
-        />
-
-        {isHeaderMenuOpen && (
-          <FbtHeaderMenu>
-            {menuItems.map((menu) => {
-              return (
-                <FbtHeaderMenuItem className={pageStyle.liWrapper} key={menu}>
-                  <Link className={pageStyle.menuItem} href="./">
-                    {menu}
-                  </Link>
-                </FbtHeaderMenuItem>
-              );
-            })}
-
-            <FbtHeaderMenuItem className={pageStyle.liWrapper}>
-              <Link className={pageStyle.menuItem} href="./">
-                Log in
-              </Link>
-            </FbtHeaderMenuItem>
-          </FbtHeaderMenu>
-        )}
-      </FbtHeader>
+      <Header />
 
       <div className={pageStyle.firstSectionContainer}>
         <div className={pageStyle.firstSecLeftContainer}>
@@ -301,6 +227,8 @@ function LandingPage() {
           </FbtAccordion>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
