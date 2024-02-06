@@ -1,3 +1,5 @@
+'use client';
+
 import {
   FbtButton,
   FbtHeader,
@@ -12,6 +14,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
+import { useScreenWidth } from '@/hooks/useWindowWidth';
+
 import brandLogo from '../../../public/assets/images/brandLogo.svg';
 import headerStyle from './header.module.scss';
 
@@ -19,11 +23,17 @@ const menuItems = ['How it works', 'Our Hospitals', 'FAQs'];
 
 function Header() {
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
+  const { matches } = useScreenWidth(500);
 
   return (
     <FbtHeader className={headerStyle.headerContainer}>
       <FbtHeaderBrand>
-        <Image src={brandLogo} alt="branch icon" />
+        <Image
+          src={brandLogo}
+          alt="branch icon"
+          width={!matches ? 160 : 80}
+          height={!matches ? 64 : 32}
+        />
       </FbtHeaderBrand>
 
       <FbtHeaderContent className={headerStyle.headerLinkContainer}>
@@ -64,7 +74,18 @@ function Header() {
       />
 
       {isHeaderMenuOpen && (
-        <FbtHeaderMenu>
+        <FbtHeaderMenu className={headerStyle.headerMobileMenuContainer}>
+          <FbtHeaderMenuItem className={headerStyle.headerMobile}>
+            <FbtHeaderBrand>
+              <Image src={brandLogo} alt="branch icon" width={80} height={32} />
+            </FbtHeaderBrand>
+
+            <FbtHeaderMenuToggle
+              clickHandler={() => setIsHeaderMenuOpen(!isHeaderMenuOpen)}
+              isMenuOpen={isHeaderMenuOpen}
+            />
+          </FbtHeaderMenuItem>
+
           {menuItems.map((menu) => {
             return (
               <FbtHeaderMenuItem className={headerStyle.liWrapper} key={menu}>
@@ -76,7 +97,7 @@ function Header() {
           })}
 
           <FbtHeaderMenuItem className={headerStyle.liWrapper}>
-            <Link className={headerStyle.menuItem} href="./">
+            <Link className={headerStyle.menuItemBtn} href="./">
               Log in
             </Link>
           </FbtHeaderMenuItem>

@@ -59,6 +59,10 @@
     display: flex;
     justify-content: flex-end;
     padding-top: 50px;
+
+    .landingPageBannerImg {
+      object-fit: cover;
+    }
   }
 }
 
@@ -250,4 +254,164 @@
   align-items: center;
   gap: 90px;
   transition: opacity 1s;
+}
+
+@media only screen and (max-width: 500px) {
+  .firstSectionContainer {
+    height: auto;
+    flex-direction: column-reverse;
+
+    .firstSecLeftContainer {
+      width: 100%;
+
+      .firstSecLeftWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 30px 24px 50px;
+
+        .firstSecTitle {
+          color: var(--Colour-Primary-1, #0c4e64);
+          text-align: center;
+          font-size: 36px;
+          line-height: 120%;
+        }
+
+        .firstSecDesc {
+          color: var(--Colour-Primary-1, #0c4e64);
+          text-align: center;
+          font-family: Lexend;
+          font-size: 16px;
+          font-weight: 300;
+          line-height: 120%;
+          margin-bottom: 40px;
+        }
+      }
+    }
+
+    .firstSecRightContainer {
+      width: 100%;
+      padding-top: 0;
+      justify-content: unset;
+
+      .landingPageBannerImg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .secondSectionMainContainer {
+    height: auto;
+    padding: 68px 1rem;
+
+    .secondSecTitle {
+      color: var(--Colour-Primary-1, #0c4e64);
+      font-size: 36px;
+      line-height: 120%;
+      margin-bottom: 48px;
+    }
+
+    .secondSectionContainer {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 20px;
+
+      .imgComponentWrapper {
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+
+      .stepperContainer {
+        display: none;
+      }
+
+      .cardContainer {
+        flex-direction: column;
+        gap: 36px;
+      }
+    }
+  }
+
+  .animationImgWrapper {
+    gap: 2.5rem;
+    flex-direction: column;
+
+    .stepperCardIcon {
+      width: 48px;
+      height: 48px;
+    }
+
+    .arrowForwardIcon {
+      transform: rotate(90deg);
+    }
+  }
+
+  .thirdSectionContainer {
+    height: auto;
+    flex-direction: column;
+
+    .hospitalInfoContainer {
+      .hospitalInfoInnerContainer {
+        padding: 64px 20px;
+
+        .hospitalInfoTitle {
+          color: var(--Colour-Primary-1, #0c4e64);
+          text-align: center;
+          font-family: Poppins;
+          font-size: 36px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 120%;
+          margin-bottom: 24px;
+        }
+
+        .hospitalInfoDescContainer {
+          gap: 24px;
+
+          .hospitalInfoDesc {
+            color: var(--Colour-Primary-1, #0c4e64);
+            text-align: center;
+            font-family: Lexend;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: 120%;
+          }
+        }
+      }
+    }
+
+    .hospitalImgCarouselContainer {
+      width: 100%;
+      height: 386px;
+
+      .carouselImg {
+        width: 100%;
+      }
+    }
+  }
+
+  .faqSectionContainer {
+    height: auto;
+    padding: 90px 20px;
+
+    .faqSectionTitle {
+      color: var(--Colour-Primary-1, #0c4e64);
+      font-size: 36px;
+      line-height: 120%;
+      margin-bottom: 24px;
+    }
+
+    .faqSectionDesc {
+      color: var(--Colour-Primary-1, #0c4e64);
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 120%;
+    }
+
+    .faqContainer {
+      padding: 0;
+    }
+  }
 }

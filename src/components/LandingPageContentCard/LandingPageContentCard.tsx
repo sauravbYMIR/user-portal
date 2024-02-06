@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import landingPageCardStyle from '@/components/LandingPageContentCard/landingPageCard.module.scss';
+import { useScreenWidth } from '@/hooks/useWindowWidth';
 
 interface LandingPageCardProp {
   index: number;
@@ -16,6 +17,7 @@ const LandingPageContentCard = ({
   desc,
 }: LandingPageCardProp) => {
   const [isVisible, setIsVisible] = useState(false);
+  const { matches } = useScreenWidth(500);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -36,7 +38,9 @@ const LandingPageContentCard = ({
       className={`${landingPageCardStyle.card} ${isVisible ? landingPageCardStyle.visible : landingPageCardStyle.blur}`}
     >
       <h1
-        style={index === 0 || index === 3 ? { padding: '0 2rem' } : {}}
+        style={
+          (index === 0 || index === 3) && !matches ? { padding: '0 2rem' } : {}
+        }
         className={landingPageCardStyle.title}
       >
         {title}

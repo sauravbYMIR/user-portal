@@ -5,6 +5,8 @@ import {
 } from '@frontbase/components-react';
 import { useEffect, useRef } from 'react';
 
+import { useScreenWidth } from '@/hooks/useWindowWidth';
+
 import accordionItemStyle from './accordionItem.module.scss';
 
 interface AccordionItemType {
@@ -15,12 +17,19 @@ interface AccordionItemType {
 
 function AccordionItem({ value, question, ans }: AccordionItemType) {
   const accordionContentRef = useRef<HTMLDivElement | null>(null);
+  const { matches } = useScreenWidth(500);
 
   useEffect(() => {
     if (accordionContentRef.current) {
       accordionContentRef.current.style.background = 'white';
+
+      if (matches) {
+        accordionContentRef.current.style.padding = '4px 8px';
+      } else {
+        accordionContentRef.current.style.padding = '20px 28px';
+      }
     }
-  }, []);
+  }, [matches]);
 
   return (
     <FbtAccordionItem

@@ -17,3 +17,14 @@
     letter-spacing: -0.32px;
   }
 }
+
+@media only screen and (max-width: 500px) {
+  .faqAccordionItemTrigger {
+    color: #222835;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 125%;
+    padding: 10px 8px;
+  }
+}

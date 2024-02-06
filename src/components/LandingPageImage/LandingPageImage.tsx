@@ -32,10 +32,18 @@ function LandingPageImage({ src, alt, index, inView }: LandingPageImageProp) {
     <div
       className={`${pageStyle.animationImgWrapper} ${isVisible ? pageStyle.visible : pageStyle.blur}`}
     >
-      <Image key={alt} src={src} alt={alt} width={85} height={85} />
+      <Image
+        className={pageStyle.stepperCardIcon}
+        key={alt}
+        src={src}
+        alt={alt}
+        width={85}
+        height={85}
+      />
 
       {index !== 3 && (
         <Image
+          className={pageStyle.arrowForwardIcon}
           src={arrowIcon}
           alt="arrow forward icon"
           width={20}

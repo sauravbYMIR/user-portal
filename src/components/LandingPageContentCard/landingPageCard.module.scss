@@ -38,3 +38,22 @@
 .visible {
   opacity: 1;
 }
+
+@media only screen and (max-width: 500px) {
+  .card {
+    align-items: flex-start;
+    gap: 8px;
+    
+    .title {
+      color: var(--Colour-Primary-2, #096f90);
+      text-align: unset;
+    }
+
+    .desc {
+      letter-spacing: -0.32px;
+      font-size: 14px;
+      font-weight: 300;
+      text-align: unset;
+    }
+  }
+}
