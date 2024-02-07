@@ -9,6 +9,12 @@ import {
   FbtHeaderMenu,
   FbtHeaderMenuItem,
   FbtHeaderMenuToggle,
+  FbtSelect,
+  FbtSelectContent,
+  FbtSelectGroup,
+  FbtSelectItem,
+  FbtSelectTrigger,
+  FbtSelectValue,
 } from '@frontbase/components-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,9 +27,24 @@ import headerStyle from './header.module.scss';
 
 const menuItems = ['How it works', 'Our Hospitals', 'FAQs'];
 
-function Header() {
+interface HeaderPropType {
+  howItWorksRef: any;
+  ourHospitalRef: any;
+  faqsRef: any;
+}
+
+function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState('home');
   const { matches } = useScreenWidth(500);
+
+  const scrollToSection = (ref: any) => {
+    ref.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleLinkClick = (link: string) => {
+    setActiveLink(link);
+  };
 
   return (
     <FbtHeader className={headerStyle.headerContainer}>
@@ -38,22 +59,82 @@ function Header() {
 
       <FbtHeaderContent className={headerStyle.headerLinkContainer}>
         <FbtHeaderItem>
-          <Link className={headerStyle.headerLink} href="./">
+          <Link
+            onClick={() => {
+              handleLinkClick('How it works');
+              scrollToSection(howItWorksRef);
+            }}
+            className={`${headerStyle.headerLink} ${activeLink === 'How it works' && headerStyle.headerActiveLink}`}
+            href="./"
+          >
             How it works
           </Link>
         </FbtHeaderItem>
 
         <FbtHeaderItem>
-          <Link className={headerStyle.headerLink} href="./">
+          <Link
+            onClick={() => {
+              handleLinkClick('Our Hospitals');
+              scrollToSection(ourHospitalRef);
+            }}
+            className={`${headerStyle.headerLink} ${activeLink === 'Our Hospitals' && headerStyle.headerActiveLink}`}
+            href="./"
+          >
             Our Hospitals
           </Link>
         </FbtHeaderItem>
 
         <FbtHeaderItem>
-          <Link className={headerStyle.headerLink} href="./">
+          <Link
+            onClick={() => {
+              handleLinkClick('FAQS');
+              scrollToSection(faqsRef);
+            }}
+            className={`${headerStyle.headerLink} ${activeLink === 'FAQS' && headerStyle.headerActiveLink}`}
+            href="./"
+          >
             FAQS
           </Link>
         </FbtHeaderItem>
+      </FbtHeaderContent>
+
+      <FbtHeaderContent>
+        <FbtSelect defaultValue="NOR">
+          <FbtSelectTrigger
+            selectIconClassName={headerStyle.headerSelectTriggerIcon}
+            className={headerStyle.headerSelectTrigger}
+          >
+            <FbtSelectValue placeholder="Select" />
+          </FbtSelectTrigger>
+
+          <FbtSelectContent className={headerStyle.headerSelectContent}>
+            <FbtSelectGroup>
+              <FbtSelectItem
+                checkIconClassName={headerStyle.headerSelectTickIcon}
+                className={headerStyle.headerSelectItem}
+                value="NOR"
+              >
+                NOR
+              </FbtSelectItem>
+
+              <FbtSelectItem
+                checkIconClassName={headerStyle.headerSelectTickIcon}
+                className={headerStyle.headerSelectItem}
+                value="EN"
+              >
+                EN
+              </FbtSelectItem>
+
+              <FbtSelectItem
+                checkIconClassName={headerStyle.headerSelectTickIcon}
+                className={headerStyle.headerSelectItem}
+                value="DN"
+              >
+                DN
+              </FbtSelectItem>
+            </FbtSelectGroup>
+          </FbtSelectContent>
+        </FbtSelect>
       </FbtHeaderContent>
 
       <FbtHeaderContent>
@@ -89,7 +170,20 @@ function Header() {
           {menuItems.map((menu) => {
             return (
               <FbtHeaderMenuItem className={headerStyle.liWrapper} key={menu}>
-                <Link className={headerStyle.menuItem} href="./">
+                <Link
+                  onClick={() => {
+                    setIsHeaderMenuOpen(false);
+                    if (menu === 'How it works') {
+                      scrollToSection(howItWorksRef);
+                    } else if (menu === 'Our Hospitals') {
+                      scrollToSection(ourHospitalRef);
+                    } else if (menu === 'FAQs') {
+                      scrollToSection(faqsRef);
+                    }
+                  }}
+                  className={headerStyle.menuItem}
+                  href="./"
+                >
                   {menu}
                 </Link>
               </FbtHeaderMenuItem>

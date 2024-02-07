@@ -2,7 +2,7 @@
 
 import { FbtAccordion, FbtButton } from '@frontbase/components-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import pageStyle from '@/app/page.module.scss';
@@ -22,10 +22,15 @@ import mobileBandageIcon from '@/public/assets/icons/mobileLandingBandage.svg';
 import mobileHospitalIcon from '@/public/assets/icons/mobileLandingHospital.svg';
 import mobileLocationIcon from '@/public/assets/icons/mobileLandingLocation.svg';
 
+import carouselActiveCircle from '../../public/assets/icons/carouselActiveCircle.svg';
+import carouselCircle from '../../public/assets/icons/carouselCircle.svg';
 import arrowIcon from '../../public/assets/icons/whiteArrow.svg';
 import hosiptalImg1 from '../../public/assets/images/hospitalImg1.png';
+import hosiptalImg1Tag from '../../public/assets/images/hospitalImg1Tag.svg';
 import hosiptalImg2 from '../../public/assets/images/hospitalImg2.png';
+import hosiptalImg2Tag from '../../public/assets/images/hospitalImg2Tag.svg';
 import hosiptalImg3 from '../../public/assets/images/hospitalImg3.png';
+import hosiptalImg3Tag from '../../public/assets/images/hospitalImg3Tag.svg';
 import landingPageBannerImg from '../../public/assets/images/landingPageBannerImg.png';
 
 const landingCardsInfo = [
@@ -48,6 +53,7 @@ const landingCardsInfo = [
 ];
 
 const images = [hosiptalImg1, hosiptalImg2, hosiptalImg3];
+const imagesTag = [hosiptalImg1Tag, hosiptalImg2Tag, hosiptalImg3Tag];
 
 const faqData = [
   {
@@ -82,6 +88,10 @@ function LandingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { matches } = useScreenWidth(500);
 
+  const howItWorksRef = useRef(null);
+  const ourHospitalRef = useRef(null);
+  const faqsRef = useRef(null);
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -102,7 +112,11 @@ function LandingPage() {
 
   return (
     <div>
-      <Header />
+      <Header
+        howItWorksRef={howItWorksRef}
+        ourHospitalRef={ourHospitalRef}
+        faqsRef={faqsRef}
+      />
 
       <div className={pageStyle.firstSectionContainer}>
         <div className={pageStyle.firstSecLeftContainer}>
@@ -137,7 +151,7 @@ function LandingPage() {
         </div>
       </div>
 
-      <div className={pageStyle.secondSectionMainContainer}>
+      <div ref={howItWorksRef} className={pageStyle.secondSectionMainContainer}>
         <h1 className={pageStyle.secondSecTitle}>Getting started is easy</h1>
 
         <div ref={ref} className={pageStyle.secondSectionContainer}>
@@ -200,14 +214,14 @@ function LandingPage() {
         )}
       </div>
 
-      <div className={pageStyle.thirdSectionContainer}>
+      <div ref={ourHospitalRef} className={pageStyle.thirdSectionContainer}>
         <div className={pageStyle.hospitalInfoContainer}>
           <div
             ref={section3Ref}
             className={`${pageStyle.hospitalInfoInnerContainer} ${section3InView ? pageStyle.visible : pageStyle.blur}`}
           >
             <h1
-              className={`${pageStyle.hospitalInfoTitle} ${section3InView && pageStyle.titleAnimate}`}
+              className={`${pageStyle.hospitalInfoTitle} ${section3InView && matches && pageStyle.titleAnimateMobile} ${section3InView && !matches && pageStyle.titleAnimate}`}
             >
               Hospitals <br /> vetted for you
             </h1>
@@ -238,10 +252,39 @@ function LandingPage() {
             src={images[currentIndex] || hosiptalImg1}
             alt="carousel img"
           />
+
+          <Image
+            className={pageStyle.carouselImgTag}
+            src={imagesTag[currentIndex] || ''}
+            alt="carousel image tag"
+          />
+
+          <div className={pageStyle.carouselImgCircleContainer}>
+            <Image
+              src={currentIndex === 0 ? carouselActiveCircle : carouselCircle}
+              alt="carousel image cicle"
+              width={matches ? 12 : 16}
+              height={matches ? 12 : 16}
+            />
+
+            <Image
+              src={currentIndex === 1 ? carouselActiveCircle : carouselCircle}
+              alt="carousel image cicle"
+              width={matches ? 12 : 16}
+              height={matches ? 12 : 16}
+            />
+
+            <Image
+              src={currentIndex === 2 ? carouselActiveCircle : carouselCircle}
+              alt="carousel image cicle"
+              width={matches ? 12 : 16}
+              height={matches ? 12 : 16}
+            />
+          </div>
         </div>
       </div>
 
-      <div className={pageStyle.faqSectionContainer}>
+      <div ref={faqsRef} className={pageStyle.faqSectionContainer}>
         <h1 className={pageStyle.faqSectionTitle}>FAQs</h1>
 
         <p className={pageStyle.faqSectionDesc}>

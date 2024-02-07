@@ -2,7 +2,10 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import pageStyle from '@/app/page.module.scss';
+import { useScreenWidth } from '@/hooks/useWindowWidth';
 import arrowIcon from '@/public/assets/icons/arrowForward.svg';
+import mobLineIcon from '@/public/assets/icons/mobVectorLine.svg';
+import mobLineSmallIcon from '@/public/assets/icons/mobVectorSmallLine.svg';
 
 interface LandingPageImageProp {
   src: any;
@@ -13,6 +16,7 @@ interface LandingPageImageProp {
 
 function LandingPageImage({ src, alt, index, inView }: LandingPageImageProp) {
   const [isVisible, setIsVisible] = useState(false);
+  const { matches } = useScreenWidth(500);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -41,13 +45,20 @@ function LandingPageImage({ src, alt, index, inView }: LandingPageImageProp) {
         height={85}
       />
 
-      {index !== 3 && (
+      {index !== 3 && !matches && (
         <Image
-          className={pageStyle.arrowForwardIcon}
           src={arrowIcon}
           alt="arrow forward icon"
           width={20}
           height={20}
+        />
+      )}
+
+      {index !== 3 && matches && (
+        <Image
+          src={index === 0 ? mobLineSmallIcon : mobLineIcon}
+          alt="line icon"
+          height={index === 0 ? 84 : 112}
         />
       )}
     </div>
