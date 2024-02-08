@@ -5,6 +5,7 @@
   padding: 0px 80px;
   gap: 149px;
   border: none;
+  z-index: 9990;
 
   .headerLinkContainer {
     margin-left: auto;
@@ -25,6 +26,11 @@
       font-weight: 500;
       text-decoration: underline;
     }
+  }
+
+  .headerMobIconContainer {
+    display: flex;
+    gap: 20px;
   }
 
   .headerSelectTrigger {
@@ -97,11 +103,15 @@
         font-weight: 400;
         line-height: 36px;
         letter-spacing: 0.2px;
-        border-bottom: 1px solid #096f90;
+        border-bottom: 2px solid #096f90;
         padding-bottom: 2rem;
         width: 100%;
         display: flex;
         text-decoration: none;
+      }
+
+      .menuItemActive {
+        color: var(--Colour-Neutral-1, #181b20);
       }
 
       .menuItemBtn {
@@ -144,7 +154,7 @@
   letter-spacing: 0.4px !important;
 }
 
-.headerSelectTickIcon{
+.headerSelectTickIcon {
   width: 20px !important;
   height: 20px !important;
 }
@@ -158,5 +168,39 @@
 @media only screen and (max-width: 500px) {
   .headerContainer {
     padding: 0px 20px !important;
+    gap: 0;
+
+    .headerSelectTrigger {
+      width: 80px;
+      height: 40px;
+      background: transparent;
+      border: none;
+    }
+
+    .headerSelectTrigger > span {
+      width: 20px;
+    }
+
+    .headerSelectTrigger > span > span {
+      opacity: 0;
+    }
+
+    .headerSelectTriggerIcon {
+      width: 23px;
+      height: 23px;
+    }
+  }
+
+  .headerSelectItem {
+    padding: 12px 16px !important;
+
+    .dropdownOptionDesc {
+      margin-left: 8px;
+    }
+  }
+
+  .headerSelectItem span:nth-child(2) {
+    display: flex !important;
+    align-items: center !important;
   }
 }

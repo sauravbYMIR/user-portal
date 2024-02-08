@@ -18,9 +18,12 @@ import {
 } from '@frontbase/components-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useScreenWidth } from '@/hooks/useWindowWidth';
+import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
+import irelandFlag from '@/public/assets/icons/ireland.svg';
+import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
 
 import brandLogo from '../../../public/assets/images/brandLogo.svg';
 import headerStyle from './header.module.scss';
@@ -35,7 +38,7 @@ interface HeaderPropType {
 
 function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState('home');
+  const [activeLink, setActiveLink] = useState('');
   const { matches } = useScreenWidth(500);
 
   const scrollToSection = (ref: any) => {
@@ -46,8 +49,16 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
     setActiveLink(link);
   };
 
+  useEffect(() => {
+    document.body.style.overflow = isHeaderMenuOpen ? 'hidden' : 'auto';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isHeaderMenuOpen]);
+
   return (
-    <FbtHeader className={headerStyle.headerContainer}>
+    <FbtHeader isFixed className={headerStyle.headerContainer}>
       <FbtHeaderBrand>
         <Image
           src={brandLogo}
@@ -149,10 +160,58 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
         </FbtHeaderItem>
       </FbtHeaderContent>
 
-      <FbtHeaderMenuToggle
-        clickHandler={() => setIsHeaderMenuOpen(!isHeaderMenuOpen)}
-        isMenuOpen={isHeaderMenuOpen}
-      />
+      {matches && (
+        <div className={headerStyle.headerMobIconContainer}>
+          <FbtSelect defaultValue="NOR">
+            <FbtSelectTrigger
+              selectIconClassName={headerStyle.headerSelectTriggerIcon}
+              className={headerStyle.headerSelectTrigger}
+            >
+              <FbtSelectValue placeholder="Select" />
+            </FbtSelectTrigger>
+
+            <FbtSelectContent className={headerStyle.headerSelectContent}>
+              <FbtSelectGroup>
+                <FbtSelectItem
+                  checkIconClassName={headerStyle.headerSelectTickIcon}
+                  className={headerStyle.headerSelectItem}
+                  value="NOR"
+                >
+                  <Image src={norwayFlag} alt="norway flag" />
+                  <span className={headerStyle.dropdownOptionDesc}>Norway</span>
+                </FbtSelectItem>
+
+                <FbtSelectItem
+                  checkIconClassName={headerStyle.headerSelectTickIcon}
+                  className={headerStyle.headerSelectItem}
+                  value="DN"
+                >
+                  <Image src={denmarkFlag} alt="denmark flag" />
+                  <span className={headerStyle.dropdownOptionDesc}>
+                    Denmark
+                  </span>
+                </FbtSelectItem>
+
+                <FbtSelectItem
+                  checkIconClassName={headerStyle.headerSelectTickIcon}
+                  className={headerStyle.headerSelectItem}
+                  value="IR"
+                >
+                  <Image src={irelandFlag} alt="ireland flag" />
+                  <span className={headerStyle.dropdownOptionDesc}>
+                    Ireland
+                  </span>
+                </FbtSelectItem>
+              </FbtSelectGroup>
+            </FbtSelectContent>
+          </FbtSelect>
+
+          <FbtHeaderMenuToggle
+            clickHandler={() => setIsHeaderMenuOpen(!isHeaderMenuOpen)}
+            isMenuOpen={isHeaderMenuOpen}
+          />
+        </div>
+      )}
 
       {isHeaderMenuOpen && (
         <FbtHeaderMenu className={headerStyle.headerMobileMenuContainer}>
@@ -173,15 +232,24 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
                 <Link
                   onClick={() => {
                     setIsHeaderMenuOpen(false);
+
                     if (menu === 'How it works') {
-                      scrollToSection(howItWorksRef);
+                      setTimeout(() => {
+                        scrollToSection(howItWorksRef);
+                      }, 500);
                     } else if (menu === 'Our Hospitals') {
-                      scrollToSection(ourHospitalRef);
+                      setTimeout(() => {
+                        scrollToSection(ourHospitalRef);
+                      }, 500);
                     } else if (menu === 'FAQs') {
-                      scrollToSection(faqsRef);
+                      setTimeout(() => {
+                        scrollToSection(faqsRef);
+                      }, 500);
                     }
+
+                    handleLinkClick(menu);
                   }}
-                  className={headerStyle.menuItem}
+                  className={`${headerStyle.menuItem} ${activeLink === menu && headerStyle.menuItemActive}`}
                   href="./"
                 >
                   {menu}
