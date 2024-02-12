@@ -5,9 +5,8 @@ import {
 } from '@frontbase/components-react';
 import { useEffect, useRef } from 'react';
 
+import accordionItemStyle from '@/components/AccordionItem/accordionItem.module.scss';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
-
-import accordionItemStyle from './accordionItem.module.scss';
 
 interface AccordionItemType {
   value: string;

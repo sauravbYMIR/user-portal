@@ -20,13 +20,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
+import headerStyle from '@/components/Header/header.module.scss';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
 import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
 import irelandFlag from '@/public/assets/icons/ireland.svg';
 import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
-
-import brandLogo from '../../../public/assets/images/brandLogo.svg';
-import headerStyle from './header.module.scss';
+import brandLogo from '@/public/assets/images/brandLogo.svg';
 
 const menuItems = ['How it works', 'Our Hospitals', 'FAQs'];
 
@@ -49,6 +48,22 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
     setActiveLink(link);
   };
 
+  function handleScrollOnClick(menu: string) {
+    if (menu === 'How it works') {
+      setTimeout(() => {
+        scrollToSection(howItWorksRef);
+      }, 500);
+    } else if (menu === 'Our Hospitals') {
+      setTimeout(() => {
+        scrollToSection(ourHospitalRef);
+      }, 500);
+    } else if (menu === 'FAQs') {
+      setTimeout(() => {
+        scrollToSection(faqsRef);
+      }, 500);
+    }
+  }
+
   useEffect(() => {
     document.body.style.overflow = isHeaderMenuOpen ? 'hidden' : 'auto';
 
@@ -69,44 +84,22 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
       </FbtHeaderBrand>
 
       <FbtHeaderContent className={headerStyle.headerLinkContainer}>
-        <FbtHeaderItem>
-          <Link
-            onClick={() => {
-              handleLinkClick('How it works');
-              scrollToSection(howItWorksRef);
-            }}
-            className={`${headerStyle.headerLink} ${activeLink === 'How it works' && headerStyle.headerActiveLink}`}
-            href="./"
-          >
-            How it works
-          </Link>
-        </FbtHeaderItem>
-
-        <FbtHeaderItem>
-          <Link
-            onClick={() => {
-              handleLinkClick('Our Hospitals');
-              scrollToSection(ourHospitalRef);
-            }}
-            className={`${headerStyle.headerLink} ${activeLink === 'Our Hospitals' && headerStyle.headerActiveLink}`}
-            href="./"
-          >
-            Our Hospitals
-          </Link>
-        </FbtHeaderItem>
-
-        <FbtHeaderItem>
-          <Link
-            onClick={() => {
-              handleLinkClick('FAQS');
-              scrollToSection(faqsRef);
-            }}
-            className={`${headerStyle.headerLink} ${activeLink === 'FAQS' && headerStyle.headerActiveLink}`}
-            href="./"
-          >
-            FAQS
-          </Link>
-        </FbtHeaderItem>
+        {menuItems.map((menu) => {
+          return (
+            <FbtHeaderItem key={menu}>
+              <Link
+                onClick={() => {
+                  handleLinkClick(menu);
+                  handleScrollOnClick(menu);
+                }}
+                className={`${headerStyle.headerLink} ${activeLink === menu && headerStyle.headerActiveLink}`}
+                href="./"
+              >
+                {menu}
+              </Link>
+            </FbtHeaderItem>
+          );
+        })}
       </FbtHeaderContent>
 
       <FbtHeaderContent>
@@ -226,27 +219,14 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
             />
           </FbtHeaderMenuItem>
 
-          {menuItems.map((menu) => {
+          {menuItems.map((menu: string) => {
             return (
               <FbtHeaderMenuItem className={headerStyle.liWrapper} key={menu}>
                 <Link
                   onClick={() => {
                     setIsHeaderMenuOpen(false);
 
-                    if (menu === 'How it works') {
-                      setTimeout(() => {
-                        scrollToSection(howItWorksRef);
-                      }, 500);
-                    } else if (menu === 'Our Hospitals') {
-                      setTimeout(() => {
-                        scrollToSection(ourHospitalRef);
-                      }, 500);
-                    } else if (menu === 'FAQs') {
-                      setTimeout(() => {
-                        scrollToSection(faqsRef);
-                      }, 500);
-                    }
-
+                    handleScrollOnClick(menu);
                     handleLinkClick(menu);
                   }}
                   className={`${headerStyle.menuItem} ${activeLink === menu && headerStyle.menuItemActive}`}

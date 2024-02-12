@@ -13,6 +13,8 @@ import LandingPageContentCard from '@/components/LandingPageContentCard/LandingP
 import LandingPageImage from '@/components/LandingPageImage/LandingPageImage';
 import LandingPageStepper from '@/components/LandingPageStepper/LandingPageStepper';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
+import carouselActiveCircle from '@/public/assets/icons/carouselActiveCircle.svg';
+import carouselCircle from '@/public/assets/icons/carouselCircle.svg';
 import appointmentIcon from '@/public/assets/icons/landingPageAppointment.svg';
 import bandageIcon from '@/public/assets/icons/landingPageBandage.svg';
 import hospitalIcon from '@/public/assets/icons/landingPageHospital.svg';
@@ -21,17 +23,14 @@ import mobileAppointmentIcon from '@/public/assets/icons/mobileLandingAppoint.sv
 import mobileBandageIcon from '@/public/assets/icons/mobileLandingBandage.svg';
 import mobileHospitalIcon from '@/public/assets/icons/mobileLandingHospital.svg';
 import mobileLocationIcon from '@/public/assets/icons/mobileLandingLocation.svg';
-
-import carouselActiveCircle from '../../public/assets/icons/carouselActiveCircle.svg';
-import carouselCircle from '../../public/assets/icons/carouselCircle.svg';
-import arrowIcon from '../../public/assets/icons/whiteArrow.svg';
-import hosiptalImg1 from '../../public/assets/images/hospitalImg1.png';
-import hosiptalImg1Tag from '../../public/assets/images/hospitalImg1Tag.svg';
-import hosiptalImg2 from '../../public/assets/images/hospitalImg2.png';
-import hosiptalImg2Tag from '../../public/assets/images/hospitalImg2Tag.svg';
-import hosiptalImg3 from '../../public/assets/images/hospitalImg3.png';
-import hosiptalImg3Tag from '../../public/assets/images/hospitalImg3Tag.svg';
-import landingPageBannerImg from '../../public/assets/images/landingPageBannerImg.png';
+import arrowIcon from '@/public/assets/icons/whiteArrow.svg';
+import hosiptalImg1 from '@/public/assets/images/hospitalImg1.png';
+import hosiptalImg1Tag from '@/public/assets/images/hospitalImg1Tag.svg';
+import hosiptalImg2 from '@/public/assets/images/hospitalImg2.png';
+import hosiptalImg2Tag from '@/public/assets/images/hospitalImg2Tag.svg';
+import hosiptalImg3 from '@/public/assets/images/hospitalImg3.png';
+import hosiptalImg3Tag from '@/public/assets/images/hospitalImg3Tag.svg';
+import landingPageBannerImg from '@/public/assets/images/landingPageBannerImg.png';
 
 const landingCardsInfo = [
   {

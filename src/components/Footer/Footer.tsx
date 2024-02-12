@@ -2,13 +2,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import footerStyle from '@/components/Footer/footer.module.scss';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
-
-import facebookLogo from '../../../public/assets/icons/facebook.svg';
-import instagramLogo from '../../../public/assets/icons/instagram.svg';
-import twitterLogo from '../../../public/assets/icons/twitter.svg';
-import brandLogoWhite from '../../../public/assets/images/brandLogoWhite.svg';
-import footerStyle from './footer.module.scss';
+import facebookLogo from '@/public/assets/icons/facebook.svg';
+import instagramLogo from '@/public/assets/icons/instagram.svg';
+import twitterLogo from '@/public/assets/icons/twitter.svg';
+import brandLogoWhite from '@/public/assets/images/brandLogoWhite.svg';
 
 function Footer() {
   const { matches } = useScreenWidth(500);
