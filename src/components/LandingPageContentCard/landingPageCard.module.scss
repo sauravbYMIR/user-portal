@@ -1,0 +1,59 @@
+.card {
+  width: 250px;
+  box-sizing: border-box;
+  transition: opacity 1s;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  .title {
+    color: #014a7b;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 128%; /* 30.72px */
+    letter-spacing: -0.48px;
+    margin: 0;
+  }
+
+  .desc {
+    color: #3b475e;
+    text-align: center;
+    font-family: Lexend;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 128%; /* 20.48px */
+    letter-spacing: -0.32px;
+    margin: 0;
+  }
+}
+
+.blur {
+  opacity: 0.2;
+}
+
+.visible {
+  opacity: 1;
+}
+
+@media only screen and (max-width: 500px) {
+  .card {
+    align-items: flex-start;
+    gap: 8px;
+    
+    .title {
+      color: var(--Colour-Primary-2, #096f90);
+      text-align: unset;
+    }
+
+    .desc {
+      letter-spacing: -0.32px;
+      font-size: 14px;
+      font-weight: 300;
+      text-align: unset;
+    }
+  }
+}

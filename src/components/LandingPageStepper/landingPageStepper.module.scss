@@ -1,0 +1,13 @@
+.stepperWrapper {
+  display: flex;
+  align-items: center;
+  transition: opacity 1s;
+}
+
+.blur {
+  opacity: 0.2;
+}
+
+.visible {
+  opacity: 1;
+}
