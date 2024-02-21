@@ -1,0 +1,206 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  background: var(--Colour-Primary-5, #e1f7fe) !important;
+  padding: 0px 80px;
+  gap: 149px;
+  border: none;
+  z-index: 9990;
+
+  .headerLinkContainer {
+    margin-left: auto;
+    margin-right: 3rem;
+
+    .headerLink {
+      color: var(--Nabo-Neutral-Ten, #120f1c);
+      font-family: Poppins;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.2px;
+      text-decoration: none;
+    }
+
+    .headerActiveLink {
+      font-weight: 500;
+      text-decoration: underline;
+    }
+  }
+
+  .headerMobIconContainer {
+    display: flex;
+    gap: 20px;
+  }
+
+  .headerSelectTrigger {
+    border-radius: 10.667px;
+    border: 2px solid #d9dee7;
+    background: var(--colour-neutral-6, #f9f9f9);
+    width: 128px;
+    height: 64px;
+    box-sizing: border-box;
+    outline: none;
+    overflow: hidden;
+    color: #000;
+    text-overflow: ellipsis;
+    font-family: Inter;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+  }
+
+  .headerSelectTriggerIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .headerLoginBtn {
+    border-radius: 6.4px;
+    border: 2px solid var(--Colour-Primary-2, #096f90);
+    height: 64px;
+    padding: 12px 24px;
+    color: var(--Colour-Primary-2, #096f90);
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    background: transparent;
+  }
+
+  .headerLoginBtn:hover {
+    border: 2px solid var(--Colour-Primary-1, #0c4e64);
+    background: transparent;
+    color: var(--Colour-Primary-1, #0c4e64);
+  }
+
+  .headerMobileMenuContainer {
+    box-sizing: border-box;
+    margin: 0;
+    height: 100vh;
+    top: 0;
+
+    .headerMobile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 6px 4px 12px;
+    }
+
+    .liWrapper {
+      padding: 16px 12px 16px;
+      width: 100%;
+      box-sizing: border-box;
+
+      .menuItem {
+        color: var(--Colour-Neutral-3, #757f95);
+        font-family: Poppins;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 36px;
+        letter-spacing: 0.2px;
+        border-bottom: 2px solid #096f90;
+        padding-bottom: 2rem;
+        width: 100%;
+        display: flex;
+        text-decoration: none;
+      }
+
+      .menuItemActive {
+        color: var(--Colour-Neutral-1, #181b20);
+      }
+
+      .menuItemBtn {
+        font-family: Poppins;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 400;
+        padding-bottom: 2rem;
+        width: 100%;
+        display: flex;
+        text-decoration: none;
+        color: var(--Colour-Primary-2, #096f90);
+        line-height: 24px;
+        letter-spacing: 0.2px;
+      }
+    }
+  }
+}
+
+.headerSelectContent {
+  width: 233px;
+  border-radius: 8px;
+  border: 1px solid var(--colour-neutral-6, #f9f9f9);
+  background: #fff;
+  box-shadow:
+    0px 4px 6px -2px rgba(9, 111, 144, 0.03),
+    0px 12px 16px -1px rgba(9, 111, 144, 0.1);
+}
+
+.headerSelectItem {
+  padding: 16px !important;
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--Colour-Neutral-2, #434956) !important;
+  font-family: Lexend;
+  font-size: 20px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 20px !important;
+  letter-spacing: 0.4px !important;
+}
+
+.headerSelectTickIcon {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.headerSelectItem:focus {
+  background: var(--Colour-Neutral-6, #eceff3) !important;
+  color: var(--Colour-Neutral-1, #181b20);
+  font-weight: 500 !important;
+}
+
+@media only screen and (max-width: 500px) {
+  .headerContainer {
+    padding: 0px 20px !important;
+    gap: 0;
+
+    .headerSelectTrigger {
+      width: 80px;
+      height: 40px;
+      background: transparent;
+      border: none;
+    }
+
+    .headerSelectTrigger > span {
+      width: 20px;
+    }
+
+    .headerSelectTrigger > span > span {
+      opacity: 0;
+    }
+
+    .headerSelectTriggerIcon {
+      width: 23px;
+      height: 23px;
+    }
+  }
+
+  .headerSelectItem {
+    padding: 12px 16px !important;
+
+    .dropdownOptionDesc {
+      margin-left: 8px;
+    }
+  }
+
+  .headerSelectItem span:nth-child(2) {
+    display: flex !important;
+    align-items: center !important;
+  }
+}
