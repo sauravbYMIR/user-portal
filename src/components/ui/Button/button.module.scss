@@ -1,0 +1,146 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: var(--radius100, 6.5rem);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  background-position: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.button:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-color: hsl(var(--ring));
+}
+.button:disabled {
+  pointer-events: none;
+  background-color: hsl(var(--inactive, 240 5.9% 90%));
+  color: hsl(var(--inactive-foreground, 240 2.8% 72.2%));
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), 0 0 #0000;
+}
+.solid {
+  background-color: hsl(var(--primary, 245 76.8% 62.7%));
+  color: hsl(var(--primary-foreground, 0 0% 100%));
+  transition: all 0.3s ease-out;
+}
+.solid:hover {
+  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
+  background: hsl(var(--primary, 245 76.8% 62.7%) / 0.9)
+    radial-gradient(
+      circle,
+      transparent 1%,
+      hsl(var(--primary, 245 76.8% 62.7%) / 0.9) 1%
+    )
+    center/15000%;
+}
+.solid:active {
+  background-color: hsl(var(--primary-active, 245 45.8% 37.6%));
+  background-size: 100%;
+  transition: background 0s;
+  transform: scale(0.99);
+}
+.outline {
+  border: 1px solid hsl(var(--primary, 245 76.8% 62.7%));
+  color: hsl(var(--primary, 245 76.8% 62.7%));
+  background-color: hsl(var(--background, 0 0% 100%));
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  transition: all 0.3s ease-out;
+}
+.outline:hover {
+  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
+  color: hsl(var(--primary-foreground, 0 0% 100%));
+  background: hsl(var(--primary, 245 76.8% 62.7%) / 0.9)
+    radial-gradient(
+      circle,
+      transparent 1%,
+      hsl(var(--primary, 245 76.8% 62.7%) / 0.9) 1%
+    )
+    center/15000%;
+}
+.outline:active {
+  border-color: hsl(var(--primary-active, 245 45.8% 37.6%));
+  background-color: hsl(var(--primary-active, 245 45.8% 37.6%));
+  color: hsl(var(--primary-foreground, 0 0% 100%));
+  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
+  background-size: 100%;
+  transition: background 0s;
+  transform: scale(0.99);
+}
+.outline:disabled {
+  border-color: hsl(var(--inactive, 240 5.9% 90%));
+  background-color: transparent;
+}
+.ghost {
+  color: hsl(var(--primary, 245 76.8% 62.7%));
+  transition: all 0.3s ease-out;
+}
+.ghost:hover {
+  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
+  color: hsl(var(--primary-foreground, 0 0% 100%));
+  background: hsl(var(--primary, 245 76.8% 62.7%) / 0.9)
+    radial-gradient(
+      circle,
+      transparent 1%,
+      hsl(var(--primary, 245 76.8% 62.7%) / 0.9) 1%
+    )
+    center/15000%;
+}
+.ghost:active {
+  background-color: hsl(var(--primary-active, 245 45.8% 37.6%));
+  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
+  background-size: 100%;
+  transition: background 0s;
+  transform: scale(0.99);
+}
+.ghost:disabled {
+  background-color: hsl(var(--inactive, 240 5.9% 90%));
+  color: hsl(var(--inactive-foreground, 240 2.8% 72.2%));
+  background-color: transparent;
+}
+.link {
+  color: hsl(var(--primary, 245 76.8% 62.7%));
+  text-underline-offset: 4px;
+}
+.link:hover {
+  text-decoration-line: underline;
+}
+.defaultSize {
+  height: 3rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.sm {
+  height: 2.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.lg {
+  height: 4rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.icon {
+  height: 2.25rem;
+  width: 2.25rem;
+}

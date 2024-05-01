@@ -1,5 +1,16 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+
+import headerStyle from '@/components/Header/header.module.scss';
+import { useScreenWidth } from '@/hooks/useWindowWidth';
+import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
+import irelandFlag from '@/public/assets/icons/ireland.svg';
+import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
+import brandLogo from '@/public/assets/images/brandLogo.svg';
+
 import {
   FbtButton,
   FbtHeader,
@@ -15,17 +26,7 @@ import {
   FbtSelectItem,
   FbtSelectTrigger,
   FbtSelectValue,
-} from '@frontbase/components-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-
-import headerStyle from '@/components/Header/header.module.scss';
-import { useScreenWidth } from '@/hooks/useWindowWidth';
-import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
-import irelandFlag from '@/public/assets/icons/ireland.svg';
-import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
-import brandLogo from '@/public/assets/images/brandLogo.svg';
+} from '../ui';
 
 const menuItems = ['How it works', 'Our Hospitals', 'FAQs'];
 

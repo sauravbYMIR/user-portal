@@ -1,6 +1,5 @@
 'use client';
 
-import { FbtAccordion, FbtButton } from '@frontbase/components-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -12,6 +11,7 @@ import Header from '@/components/Header/Header';
 import LandingPageContentCard from '@/components/LandingPageContentCard/LandingPageContentCard';
 import LandingPageImage from '@/components/LandingPageImage/LandingPageImage';
 import LandingPageStepper from '@/components/LandingPageStepper/LandingPageStepper';
+import { FbtAccordion, FbtButton } from '@/components/ui';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
 import carouselActiveCircle from '@/public/assets/icons/carouselActiveCircle.svg';
 import carouselCircle from '@/public/assets/icons/carouselCircle.svg';
