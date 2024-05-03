@@ -49,6 +49,20 @@ const Profile = () => {
     <main className="flex w-screen flex-col">
       <ProfileHeader />
       {/* <CreateAccount /> */}
+      {/* <aside className="flex flex-col items-start">
+        <button
+          className="rounded-xl font-poppins text-xl font-medium text-primary-2"
+          type="button"
+        >
+          My procedures
+        </button>
+        <button
+          className="rounded-xl font-poppins text-xl font-medium text-primary-2"
+          type="button"
+        >
+          My profile
+        </button>
+      </aside> */}
       <div className="flex flex-col items-start px-20">
         <h2 className="mb-[73px] text-start font-poppins text-5xl font-normal text-neutral-1">
           My procedures

@@ -50,7 +50,6 @@ export const getHospitalProcedureById = async (
     success: boolean;
     data: HospitalProcedureByIdType;
   }>(`${process.env.BASE_URL}/hospital-procedure/procedure-details/${id}`);
-  console.log(process, process.env.BASE_URL);
   return {
     success: response.data.success,
     status: response.data.status,

@@ -1,3 +1,6 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const ProcedureCard = ({
@@ -17,12 +20,17 @@ const ProcedureCard = ({
   applicationStatus: string;
   waitTime: string;
 }) => {
+  const router = useRouter();
   return (
-    <div
-      className="flex w-full flex-col items-start rounded-xl border border-neutral-6 px-9 py-[33px] sm:w-[834px]"
+    <button
+      type="button"
+      className="flex w-full cursor-pointer flex-col items-start rounded-xl border border-neutral-6 px-9 py-[33px] sm:w-[834px]"
       style={{
         boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
       }}
+      onClick={() =>
+        router.push(`profile/${'58d2deca-3aec-4692-ac0d-a5943041a390'}`)
+      }
     >
       <div className="flex w-full flex-col items-start">
         <div className="flex w-full items-center justify-between">
@@ -74,7 +82,7 @@ const ProcedureCard = ({
           </span>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
