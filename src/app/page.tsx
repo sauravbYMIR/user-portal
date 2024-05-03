@@ -1,11 +1,12 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import pageStyle from '@/app/page.module.scss';
-import AccordionItem from '@/components/AccordionItem/AccordionItem';
+import { CustomAccordionItem } from '@/components/AccordionItem/AccordionItem';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import LandingPageContentCard from '@/components/LandingPageContentCard/LandingPageContentCard';
@@ -108,7 +109,7 @@ function LandingPage() {
   });
 
   const stepCount = 4;
-
+  const router = useRouter();
   return (
     <div>
       <Header
@@ -132,6 +133,7 @@ function LandingPage() {
               className={pageStyle.landingPageCtaBtn}
               size="sm"
               variant="solid"
+              onClick={() => router.push('/book-procedure')}
             >
               <p className={pageStyle.ctaBtnText}>Get me started</p>
               <Image src={arrowIcon} alt="arrow icon cta button" />
@@ -152,7 +154,6 @@ function LandingPage() {
 
       <div ref={howItWorksRef} className={pageStyle.secondSectionMainContainer}>
         <h1 className={pageStyle.secondSecTitle}>Getting started is easy</h1>
-
         <div ref={ref} className={pageStyle.secondSectionContainer}>
           <div className={pageStyle.imgComponentWrapper}>
             {matches
@@ -298,7 +299,7 @@ function LandingPage() {
           >
             {faqData.map(({ question, ans }, index) => {
               return (
-                <AccordionItem
+                <CustomAccordionItem
                   key={question}
                   value={`${index}`}
                   question={question}

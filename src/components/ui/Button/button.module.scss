@@ -19,97 +19,96 @@
 .button:focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  --tw-ring-color: hsl(var(--ring));
 }
 .button:disabled {
   pointer-events: none;
-  background-color: hsl(var(--inactive, 240 5.9% 90%));
-  color: hsl(var(--inactive-foreground, 240 2.8% 72.2%));
+  background-color: rgb(var(--inactive, 228 228 231));
+  color: rgb(var(--inactive-foreground, 182 182 186));
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), 0 0 #0000;
 }
 .solid {
-  background-color: hsl(var(--primary, 245 76.8% 62.7%));
-  color: hsl(var(--primary-foreground, 0 0% 100%));
+  background-color: rgb(var(--primary, 9, 111, 144));
+  color: rgb(var(--primary-foreground, 12, 78, 100));
   transition: all 0.3s ease-out;
 }
-.solid:hover {
-  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
-  background: hsl(var(--primary, 245 76.8% 62.7%) / 0.9)
-    radial-gradient(
-      circle,
-      transparent 1%,
-      hsl(var(--primary, 245 76.8% 62.7%) / 0.9) 1%
-    )
-    center/15000%;
-}
+// .solid:hover {
+//   background-color: rgba(var(--primary, 9, 111, 144) / 0.9);
+//   background: rgba(var(--primary, 9, 111, 144) / 0.9)
+//     radial-gradient(
+//       circle,
+//       transparent 1%,
+//       rgba(var(--primary, 9, 111, 144) / 0.9) 1%
+//     )
+//     center/15000%;
+// }
 .solid:active {
-  background-color: hsl(var(--primary-active, 245 45.8% 37.6%));
+  background-color: rgb(var(--primary-active, 9, 111, 144, 1));
   background-size: 100%;
   transition: background 0s;
   transform: scale(0.99);
 }
 .outline {
-  border: 1px solid hsl(var(--primary, 245 76.8% 62.7%));
-  color: hsl(var(--primary, 245 76.8% 62.7%));
-  background-color: hsl(var(--background, 0 0% 100%));
+  border: 1px solid rgb(var(--primary, 9, 111, 144));
+  color: rgb(var(--primary, 9, 111, 144));
+  background-color: rgb(var(--background, 0 0% 100%));
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), 0 1px 2px 0 rgb(0 0 0 / 0.05);
   transition: all 0.3s ease-out;
 }
 .outline:hover {
-  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
-  color: hsl(var(--primary-foreground, 0 0% 100%));
-  background: hsl(var(--primary, 245 76.8% 62.7%) / 0.9)
+  background-color: rgb(var(--primary, 9, 111, 144) / 0.9);
+  color: rgb(var(--primary-foreground, 0 0% 100%));
+  background: rgb(var(--primary, 9, 111, 144) / 0.9)
     radial-gradient(
       circle,
       transparent 1%,
-      hsl(var(--primary, 245 76.8% 62.7%) / 0.9) 1%
+      rgb(var(--primary, 9, 111, 144) / 0.9) 1%
     )
     center/15000%;
 }
 .outline:active {
-  border-color: hsl(var(--primary-active, 245 45.8% 37.6%));
-  background-color: hsl(var(--primary-active, 245 45.8% 37.6%));
-  color: hsl(var(--primary-foreground, 0 0% 100%));
-  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
+  border-color: rgb(var(--primary-active, 9, 111, 144, 1));
+  background-color: rgb(var(--primary-active, 9, 111, 144, 1));
+  color: rgb(var(--primary-foreground, 0 0% 100%));
+  background-color: rgb(var(--primary, 9, 111, 144) / 0.9);
   background-size: 100%;
   transition: background 0s;
   transform: scale(0.99);
 }
 .outline:disabled {
-  border-color: hsl(var(--inactive, 240 5.9% 90%));
+  border-color: rgb(var(--inactive, 240 5.9% 90%));
   background-color: transparent;
 }
 .ghost {
-  color: hsl(var(--primary, 245 76.8% 62.7%));
+  color: rgb(var(--primary, 9, 111, 144));
   transition: all 0.3s ease-out;
 }
 .ghost:hover {
-  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
-  color: hsl(var(--primary-foreground, 0 0% 100%));
-  background: hsl(var(--primary, 245 76.8% 62.7%) / 0.9)
+  background-color: rgb(var(--primary, 9, 111, 144) / 0.9);
+  color: rgb(var(--primary-foreground, 0 0% 100%));
+  background: rgb(var(--primary, 9, 111, 144) / 0.9)
     radial-gradient(
       circle,
       transparent 1%,
-      hsl(var(--primary, 245 76.8% 62.7%) / 0.9) 1%
+      rgb(var(--primary, 9, 111, 144) / 0.9) 1%
     )
     center/15000%;
 }
 .ghost:active {
-  background-color: hsl(var(--primary-active, 245 45.8% 37.6%));
-  background-color: hsl(var(--primary, 245 76.8% 62.7%) / 0.9);
+  background-color: rgb(var(--primary-active, 9, 111, 144, 1));
+  background-color: rgb(var(--primary, 9, 111, 144) / 0.9);
   background-size: 100%;
   transition: background 0s;
   transform: scale(0.99);
 }
 .ghost:disabled {
-  background-color: hsl(var(--inactive, 240 5.9% 90%));
-  color: hsl(var(--inactive-foreground, 240 2.8% 72.2%));
+  background-color: rgb(var(--inactive, 240 5.9% 90%));
+  color: rgb(var(--inactive-foreground, 240 2.8% 72.2%));
   background-color: transparent;
 }
 .link {
-  color: hsl(var(--primary, 245 76.8% 62.7%));
+  color: rgb(var(--primary, 9, 111, 144));
   text-underline-offset: 4px;
 }
 .link:hover {

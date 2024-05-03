@@ -15,7 +15,7 @@ interface AccordionItemType {
   ans: string;
 }
 
-function AccordionItem({ value, question, ans }: AccordionItemType) {
+function CustomAccordionItem({ value, question, ans }: AccordionItemType) {
   const accordionContentRef = useRef<HTMLDivElement | null>(null);
   const { matches } = useScreenWidth(500);
 
@@ -52,4 +52,4 @@ function AccordionItem({ value, question, ans }: AccordionItemType) {
   );
 }
 
-export default AccordionItem;
+export { CustomAccordionItem };

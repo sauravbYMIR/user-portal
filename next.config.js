@@ -16,7 +16,7 @@ module.exports = {
       },
     ],
   },
-  // env: {
-  //   BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
-  // },
+  env: {
+    BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+  },
 };
