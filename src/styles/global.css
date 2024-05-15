@@ -30,6 +30,17 @@ body{
 .PhoneInputInput {
   height: 40px;
 }
+/* React Select */
+.css-13cymwt-control {
+  border: 2px solid rgba(217, 222, 231, 1);
+  border-radius: 10.67px !important;
+  padding: 10px 8px;
+}
+.css-t3ipsp-control {
+  border: 2px solid #2684ff;
+  border-radius: 10.67px !important;
+  padding: 10px 8px;
+}
 @layer base {
   :root {
     --muted: 248 33.3% 30.6%;

@@ -48,7 +48,6 @@ const Profile = () => {
   return (
     <main className="flex w-screen flex-col">
       <ProfileHeader />
-      {/* <CreateAccount /> */}
       {/* <aside className="flex flex-col items-start">
         <button
           className="rounded-xl font-poppins text-xl font-medium text-primary-2"

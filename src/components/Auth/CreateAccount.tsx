@@ -5,16 +5,32 @@
 import 'react-phone-number-input/style.css';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
+import Select from 'react-select';
 import { ClipLoader } from 'react-spinners';
+import { toast } from 'sonner';
 import { z } from 'zod';
+
+import { createUser } from '@/hooks/useAuth';
+import { countryData, handleSetLocalStorage } from '@/utils/global';
 
 import { CloseIcon } from '../Icons/Icons';
 import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
 import { FbtButton } from '../ui';
+
+export const preferredLanguageTypeSchema = z.object({
+  label: z.string(),
+  value: z.string(),
+});
+
+export type PreferredLanguageType = {
+  value: string;
+  label: string;
+};
 
 const createUserAccountSchema = z.object({
   email: z.string().email(),
@@ -22,34 +38,74 @@ const createUserAccountSchema = z.object({
     .string()
     .min(10, { message: 'Must be a valid mobile number' })
     .max(14, { message: 'Must be a valid mobile number' }),
-  preferredLanguage: z
-    .string()
-    .min(1, { message: 'Please enter preferred language' }),
+  preferredLanguage: preferredLanguageTypeSchema,
 });
 export type CreateUserAccountFormFields = z.infer<
   typeof createUserAccountSchema
 >;
-const CreateAccount = () => {
+const CreateAccount = ({
+  setIsLoginModalActive,
+  setIsOtpVerifyModalActive,
+}: {
+  setIsLoginModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOtpVerifyModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const router = useRouter();
+  const languageList: Array<PreferredLanguageType> = countryData.map(
+    (data) => ({
+      label: data.language,
+      value: data.locale,
+    }),
+  );
+  const [selectedOption, setSelectedOption] = React.useState<{
+    label: string;
+    value: string;
+  } | null>(null);
   const {
     register,
     handleSubmit,
     control,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<CreateUserAccountFormFields>({
     resolver: zodResolver(createUserAccountSchema),
   });
-  const onFormSubmit: SubmitHandler<
-    CreateUserAccountFormFields
-  > = async () => {};
+  const onFormSubmit: SubmitHandler<CreateUserAccountFormFields> = async (
+    data: CreateUserAccountFormFields,
+  ) => {
+    try {
+      const response = await createUser({
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        preferedLanguage: data.preferredLanguage.value,
+      });
+      console.log(response);
+      if (response.success) {
+        handleSetLocalStorage({
+          tokenKey: 'otp_verify_token',
+          tokenValue: response.data.token,
+        });
+        setIsOtpVerifyModalActive(true);
+        setIsLoginModalActive(false);
+        router.replace(`/?phonenumber=${getValues('phoneNumber')}`);
+      }
+    } catch (error) {
+      toast.error(error as string);
+    }
+  };
   return (
     <ModalWrapper
       parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
-      childrenStyle="overflow-scroll relative z-[9999] flex flex-col items-center justify-center w-full sm:w-[547px] rounded-lg bg-white px-[24px] py-[32px] shadow-colorPickerShadow"
+      childrenStyle="overflow-scroll relative z-[9999] flex flex-col items-center justify-center w-full sm:w-[547px] h-[775px] rounded-lg bg-white px-[24px] py-[42px] shadow-colorPickerShadow"
     >
-      <FbtButton variant="link" className="!absolute !right-2 !top-2 !p-0">
-        <CloseIcon stroke="#333" />
+      <FbtButton
+        variant="link"
+        className="!absolute !right-4 !top-0 !p-0"
+        onClick={() => setIsLoginModalActive(false)}
+      >
+        <CloseIcon className="size-8" stroke="#333" />
       </FbtButton>
-      <div className="flex flex-col items-center">
+      <div className="mt-10 flex flex-col items-center">
         <h1 className="font-poppins text-5xl font-medium text-primary-1">
           Create an account
         </h1>
@@ -60,7 +116,7 @@ const CreateAccount = () => {
       </div>
       <form
         onSubmit={handleSubmit(onFormSubmit)}
-        className="my-12 flex w-full flex-col items-center px-12"
+        className="my-12 flex w-full flex-col items-center px-10"
       >
         <div className="mb-8 flex w-full flex-col items-start">
           <label
@@ -120,15 +176,27 @@ const CreateAccount = () => {
           >
             Preferred language of communication
           </label>
-          <input
-            placeholder="Enter your email"
-            className="mt-2 w-full rounded-[10.67px] border-2 border-lightsilver px-3 py-5"
-            id="preferredLanguage"
-            type="text"
-            {...register('preferredLanguage')}
+          <Controller
+            name="preferredLanguage"
+            control={control}
+            defaultValue={
+              selectedOption?.label ? selectedOption : { label: '', value: '' }
+            }
+            render={({ field }) => (
+              <Select
+                {...field}
+                placeholder={<div>Type to search</div>}
+                className="mt-2 w-full"
+                options={languageList}
+                onChange={(value) => {
+                  setSelectedOption(value);
+                  field.onChange(value);
+                }}
+              />
+            )}
           />
           {errors.preferredLanguage && (
-            <div className="mt-2 text-center font-lexend text-base font-normal text-error">
+            <div className="mt-1 text-start font-lexend text-base font-normal text-error">
               {errors.preferredLanguage.message}
             </div>
           )}
