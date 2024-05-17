@@ -88,9 +88,16 @@ const handleRemoveFromLocalStorage = ({ tokenKey }: { tokenKey: string }) => {
   }
 };
 
+const handleLogOut = () => {
+  handleRemoveFromLocalStorage({ tokenKey: 'access_token' });
+  handleRemoveFromLocalStorage({ tokenKey: 'refresh_token' });
+  handleRemoveFromLocalStorage({ tokenKey: 'user_id' });
+};
+
 export {
   countryData,
   handleGetLocalStorage,
+  handleLogOut,
   handleRemoveFromLocalStorage,
   handleSetLocalStorage,
   intialLanguagesData,

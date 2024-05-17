@@ -1,50 +1,54 @@
-'use clients';
+'use client';
 
 import React from 'react';
 
 import { ProfileHeader } from '@/components/Header/ProfileHeader';
 import { ProcedureCard } from '@/components/ProcedureCard/ProcedureCard';
+import { useGetBookingByUserId } from '@/hooks/useBooking';
+import { handleGetLocalStorage } from '@/utils/global';
 
-const proceduresDummyArr = [
-  {
-    procedureName: 'Breast removal and reconstruction',
-    hospitalName: 'PSH Hospital',
-    city: 'Oslo',
-    country: 'Norway',
-    hospitalStay: '12',
-    applicationStatus: 'Application sent',
-    waitTime: '3-4 weeks',
-  },
-  {
-    procedureName: 'Breast removal and reconstruction',
-    hospitalName: 'PSH Hospital',
-    city: 'Oslo',
-    country: 'Norway',
-    hospitalStay: '12',
-    applicationStatus: 'Request accepted',
-    waitTime: '3-4 weeks',
-  },
-  {
-    procedureName: 'Breast removal and reconstruction',
-    hospitalName: 'PSH Hospital',
-    city: 'Oslo',
-    country: 'Norway',
-    hospitalStay: '12',
-    applicationStatus: 'Request rejected',
-    waitTime: '3-4 weeks',
-  },
-  {
-    procedureName: 'Breast removal and reconstruction',
-    hospitalName: 'PSH Hospital',
-    city: 'Oslo',
-    country: 'Norway',
-    hospitalStay: '12',
-    applicationStatus: 'Request accepted',
-    waitTime: '3-4 weeks',
-  },
-];
+// const proceduresDummyArr = [
+//   {
+//     procedureName: 'Breast removal and reconstruction',
+//     hospitalName: 'PSH Hospital',
+//     city: 'Oslo',
+//     country: 'Norway',
+//     hospitalStay: '12',
+//     applicationStatus: 'Application sent',
+//     waitTime: '3-4 weeks',
+//   },
+//   {
+//     procedureName: 'Breast removal and reconstruction',
+//     hospitalName: 'PSH Hospital',
+//     city: 'Oslo',
+//     country: 'Norway',
+//     hospitalStay: '12',
+//     applicationStatus: 'Request accepted',
+//     waitTime: '3-4 weeks',
+//   },
+//   {
+//     procedureName: 'Breast removal and reconstruction',
+//     hospitalName: 'PSH Hospital',
+//     city: 'Oslo',
+//     country: 'Norway',
+//     hospitalStay: '12',
+//     applicationStatus: 'Request rejected',
+//     waitTime: '3-4 weeks',
+//   },
+//   {
+//     procedureName: 'Breast removal and reconstruction',
+//     hospitalName: 'PSH Hospital',
+//     city: 'Oslo',
+//     country: 'Norway',
+//     hospitalStay: '12',
+//     applicationStatus: 'Request accepted',
+//     waitTime: '3-4 weeks',
+//   },
+// ];
 
 const Profile = () => {
+  const userId = handleGetLocalStorage({ tokenKey: 'user_id' });
+  const bookingsByUserId = useGetBookingByUserId(userId ?? '');
   return (
     <main className="flex w-screen flex-col">
       <ProfileHeader />
@@ -67,20 +71,23 @@ const Profile = () => {
           My procedures
         </h2>
         <div className="flex flex-col gap-4">
-          {proceduresDummyArr.map((procedure) => {
-            return (
-              <ProcedureCard
-                key={procedure.procedureName}
-                procedureName={procedure.procedureName}
-                hospitalName={procedure.hospitalName}
-                city={procedure.city}
-                country={procedure.country}
-                hospitalStay={procedure.hospitalStay}
-                applicationStatus={procedure.applicationStatus}
-                waitTime={procedure.waitTime}
-              />
-            );
-          })}
+          {bookingsByUserId.data &&
+            Array.isArray(bookingsByUserId.data.data) &&
+            bookingsByUserId.data.data.length > 0 &&
+            bookingsByUserId.data.data.map((booking) => {
+              return (
+                <ProcedureCard
+                  key={booking.id}
+                  procedureName={booking.procedureName.en}
+                  hospitalName={booking.hospitalName}
+                  city={booking.city}
+                  country={booking.country}
+                  hospitalStay={booking.hospitalStay}
+                  applicationStatus={booking.applicationStatus}
+                  waitTime={booking.waitTime}
+                />
+              );
+            })}
         </div>
       </div>
     </main>

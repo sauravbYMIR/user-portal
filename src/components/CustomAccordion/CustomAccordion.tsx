@@ -4,27 +4,28 @@
 
 import { type ReactNode, useState } from 'react';
 
+import { useAppStore } from '@/libs/store';
+
 import accordionStyles from './customAccordion.module.scss';
 
 interface AccordionProps {
   children: ReactNode;
   title: string;
-  // editClickHandler?: () => void;
-  // type: 'DEPARTMENT' | 'PROCEDURE' | 'SUB-CATEGORY';
+  type: 'DEPARTMENT' | 'PROCEDURE' | 'SUB-CATEGORY';
+  procedureId?: string;
 }
 
 function CustomAccordion({
   children,
   title,
-  // editClickHandler,
-  // type,
+  procedureId,
+  type,
 }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { selectedProcedure, setSelectedProcedure } = useAppStore();
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
   };
-
   return (
     <div className={accordionStyles.accordionContainer}>
       <button
@@ -70,7 +71,25 @@ function CustomAccordion({
               </svg>
             )}
           </button> */}
-          <p className="font-poppins text-base text-black18">{title}</p>
+          <div className="flex w-full items-center justify-between">
+            {(type === 'SUB-CATEGORY' || type === 'PROCEDURE') && (
+              <input
+                type="radio"
+                id={procedureId}
+                value={procedureId}
+                checked={selectedProcedure === procedureId}
+                onChange={(e) =>
+                  setSelectedProcedure && setSelectedProcedure(e.target.value)
+                }
+              />
+            )}
+            <label
+              htmlFor={procedureId}
+              className="ml-4 cursor-pointer font-poppins text-base text-black18"
+            >
+              {title}
+            </label>
+          </div>
         </div>
         {/* <button
           type="button"

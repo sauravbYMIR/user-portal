@@ -15,6 +15,17 @@ export type HospitalMember = {
   deletedAt: string | null;
 };
 
+export type Hospital = {
+  id: string;
+  waitTime: string;
+  hospitalName: string;
+  city: string;
+  country: string;
+  hospitalDesc: NameJSONType;
+  costOfProcedure: ReimbursementJSONType;
+  reimBursementCost: ReimbursementJSONType;
+};
+
 export type HospitalProcedureByIdType = {
   createdAt: string | null;
   deletedAt: string | null;
@@ -63,5 +74,37 @@ export const useGetHospitalProcedureById = ({ id }: { id: string }) => {
     queryFn: () => getHospitalProcedureById(id),
     refetchOnWindowFocus: false,
     enabled: !!id,
+  });
+};
+
+export const getHospitalByProcedureId = async (
+  hospitalId: string,
+): Promise<{
+  status: number;
+  success: boolean;
+  data: Array<Hospital>;
+}> => {
+  const response = await axios.get<{
+    status: number;
+    success: boolean;
+    data: Array<Hospital>;
+  }>(`${process.env.BASE_URL}/hospital-procedure/hospitals/${hospitalId}`);
+  return {
+    success: response.data.success,
+    status: response.data.status,
+    data: response.data.data,
+  };
+};
+
+export const useGetHospitalByProcedureId = ({
+  hospitalId,
+}: {
+  hospitalId: string;
+}) => {
+  return useQuery({
+    queryKey: [`hospital-procedure`, hospitalId],
+    queryFn: () => getHospitalByProcedureId(hospitalId),
+    refetchOnWindowFocus: false,
+    enabled: !!hospitalId,
   });
 };

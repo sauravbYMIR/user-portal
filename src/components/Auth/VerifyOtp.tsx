@@ -4,6 +4,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
 import { resendOtp, verifyOtp } from '@/hooks/useAuth';
+import { useAppStore } from '@/libs/store';
 import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
 
 import { CloseIcon } from '../Icons/Icons';
@@ -11,11 +12,8 @@ import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
 import { FbtButton } from '../ui';
 import OTPInputWrapper from './OtpInputWrapper';
 
-const VerifyOtp = ({
-  setIsOtpVerifyModalActive,
-}: {
-  setIsOtpVerifyModalActive: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const VerifyOtp = () => {
+  const { setIsOtpVerifyModalActive } = useAppStore();
   const searchParams = useSearchParams();
   const phoneNumber = searchParams.get('phonenumber');
   const [otp, setOtp] = React.useState<string>('');
@@ -32,7 +30,6 @@ const VerifyOtp = ({
       }
     } catch (e) {
       setIsResendOtpLoader(false);
-      console.error(e);
     } finally {
       setIsResendOtpLoader(false);
     }
@@ -53,7 +50,6 @@ const VerifyOtp = ({
         otp,
         token,
       });
-      console.log(response);
       if (response.success) {
         setIsLoading(false);
         setIsOtpVerifyModalActive(false);
@@ -65,10 +61,13 @@ const VerifyOtp = ({
           tokenKey: 'refresh_token',
           tokenValue: response.data.refreshToken,
         });
+        handleSetLocalStorage({
+          tokenKey: 'user_id',
+          tokenValue: response.data.userId,
+        });
       }
     } catch (e) {
       setIsLoading(false);
-      console.error(e);
     } finally {
       setIsLoading(false);
     }

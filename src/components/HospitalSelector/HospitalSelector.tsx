@@ -2,44 +2,15 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
+import { useGetHospitalByProcedureId } from '@/hooks/useHospital';
+import { useAppStore } from '@/libs/store';
 import brandLogo from '@/public/assets/images/brandLogo.svg';
 
 import { FbtButton } from '../ui';
 
-const hospitalDummyArray = [
-  {
-    waitTime: '2-3 weeks wait',
-    hospitalName: 'PSH Avanti Hospital',
-    city: 'Oslo',
-    country: 'Norway',
-    hospitalDesc:
-      'The hospital offers specialized treatment to the population. In addition, the hospital has tasks in research, education of health personnel and training of patients and relatives.',
-    costOfProcedure: '€ 1,000,000',
-    reimBursementCost: '€ 1,000,000',
-  },
-  {
-    waitTime: '2-3 weeks wait',
-    hospitalName: 'Privathospitalet Kollund',
-    city: 'Oslo',
-    country: 'Norway',
-    hospitalDesc:
-      'The hospital offers specialized treatment to the population. In addition, the hospital has tasks in research, education of health personnel and training of patients and relatives.',
-    costOfProcedure: '€ 1,000,000',
-    reimBursementCost: '€ 1,000,000',
-  },
-  {
-    waitTime: '2-3 weeks wait',
-    hospitalName: 'CPH Privathospital',
-    city: 'Oslo',
-    country: 'Norway',
-    hospitalDesc:
-      'The hospital offers specialized treatment to the population. In addition, the hospital has tasks in research, education of health personnel and training of patients and relatives.',
-    costOfProcedure: '€ 1,000,000',
-    reimBursementCost: '€ 1,000,000',
-  },
-];
-
 const HospitalCard = ({
+  id,
+  selectedHospital,
   waitTime,
   hospitalName,
   city,
@@ -48,6 +19,8 @@ const HospitalCard = ({
   costOfProcedure,
   reimBursementCost,
 }: {
+  selectedHospital: string;
+  id: string;
   waitTime: string;
   hospitalName: string;
   city: string;
@@ -56,24 +29,25 @@ const HospitalCard = ({
   costOfProcedure: string;
   reimBursementCost: string;
 }) => {
+  const { setSelectedHospital, setSelectedHospitalName } = useAppStore();
   const router = useRouter();
   return (
     <div
-      className="flex w-[357px] flex-col items-start rounded-xl border border-neutral-5 px-6 py-4"
+      className={`${selectedHospital === id ? 'border-primary-2' : 'border-neutral-5'} flex w-[357px] flex-col items-start rounded-xl border  px-6 py-4`}
       style={{
         boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
       }}
     >
       <div className="flex items-center justify-center rounded-lg bg-info-2 px-3 py-2 font-lexend text-sm font-normal text-info-1">
-        {waitTime}
+        {waitTime} days
       </div>
       <div className="mt-[21px] flex items-center justify-between">
         <Image
           src={brandLogo}
-          className="size-12 rounded-full"
+          className="size-12 rounded-full border-2 border-neutral-5"
           alt="hospital-logo"
         />
-        <div className="flex flex-col items-start">
+        <div className="ml-3 flex flex-col items-start">
           <h3 className="font-poppins text-xl font-medium text-neutral-1">
             {hospitalName}
           </h3>
@@ -106,9 +80,11 @@ const HospitalCard = ({
       <FbtButton
         variant="outline"
         className="!h-[64px] !w-full !rounded-[6.4px] !border-2 !border-primary-2 !text-primary-2 hover:!bg-primary-2 hover:!text-white active:!bg-primary-2 active:!text-white"
-        onClick={() =>
-          router.push(`/hospital/${'58d2deca-3aec-4692-ac0d-a5943041a390'}`)
-        }
+        onClick={() => {
+          setSelectedHospital(id);
+          setSelectedHospitalName(hospitalName);
+          router.push(`/hospital/${id}`);
+        }}
       >
         Select Hospital
       </FbtButton>
@@ -117,26 +93,50 @@ const HospitalCard = ({
 };
 
 const HospitalSelector = () => {
+  const { selectedProcedure, selectedCountry, selectedHospital } =
+    useAppStore();
+  const allHospitals = useGetHospitalByProcedureId({
+    hospitalId: selectedProcedure,
+  });
+  const nameType = {
+    en: '',
+    nb: '',
+    da: '',
+    sv: '',
+  };
+  const costType = {
+    en: 0,
+    nb: 0,
+    da: 0,
+    sv: 0,
+  };
+  const selectedLanguageName = selectedCountry as keyof typeof nameType;
+  const selectedLanguageCost = selectedCountry as keyof typeof costType;
   return (
     <div className="flex flex-col items-start justify-center gap-2 sm:items-center">
       <h3 className="font-poppins text-5xl font-medium text-primary-1">
         Select a hospital for your procedure
       </h3>
       <div className="mt-[109px] flex flex-wrap items-center gap-[17px]">
-        {hospitalDummyArray.map((hospital) => {
-          return (
-            <HospitalCard
-              key={hospital.hospitalName}
-              waitTime={hospital.waitTime}
-              hospitalName={hospital.hospitalName}
-              city={hospital.city}
-              country={hospital.country}
-              hospitalDesc={hospital.hospitalDesc}
-              costOfProcedure={hospital.costOfProcedure}
-              reimBursementCost={hospital.reimBursementCost}
-            />
-          );
-        })}
+        {allHospitals.data &&
+          Array.isArray(allHospitals.data.data) &&
+          allHospitals.data.data.length > 0 &&
+          allHospitals.data.data.map((hospital) => {
+            return (
+              <HospitalCard
+                selectedHospital={selectedHospital}
+                id={hospital.id}
+                key={hospital.id}
+                waitTime={hospital.waitTime}
+                hospitalName={hospital.hospitalName}
+                city={hospital.city}
+                country={hospital.country}
+                hospitalDesc={hospital.hospitalDesc[selectedLanguageName]}
+                costOfProcedure={`${hospital.costOfProcedure[selectedLanguageCost]}`}
+                reimBursementCost={`${hospital.reimBursementCost[selectedLanguageCost]}`}
+              />
+            );
+          })}
       </div>
     </div>
   );

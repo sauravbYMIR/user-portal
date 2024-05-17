@@ -73,6 +73,7 @@ export const verifyOtp = async ({
       data: {
         accessToken: response.data.accessToken,
         refreshToken: response.data.refreshToken,
+        userId: response.data.userId,
       },
     };
   } catch (err) {
@@ -109,5 +110,39 @@ export const resendOtp = async () => {
       }
     }
     throw new Error('resend-otp-failed');
+  }
+};
+export const userlogin = async ({ phoneNumber }: { phoneNumber: string }) => {
+  try {
+    const response = await axios.post(
+      `${process.env.BASE_URL}/auth/user/login`,
+      {
+        phoneNumber,
+      },
+    );
+    return {
+      success: true,
+      data: {
+        token: response.data.token,
+      },
+    };
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const serverError = err as AxiosError<{
+        error: {
+          error: string;
+          message: string;
+          statusCode: number;
+        };
+      }>;
+      if (
+        serverError &&
+        serverError.response &&
+        serverError.response.data.error.message
+      ) {
+        throw new Error(serverError.response.data.error.message);
+      }
+    }
+    throw new Error('user-login-failed');
   }
 };

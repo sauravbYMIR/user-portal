@@ -1,61 +1,103 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable no-nested-ternary */
+
 'use client';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import DatePicker from 'react-datepicker';
+import { ClipLoader } from 'react-spinners';
+import { toast } from 'sonner';
 
+import { CreateAccount } from '@/components/Auth/CreateAccount';
+import { VerifyOtp } from '@/components/Auth/VerifyOtp';
 import { SearchIcon } from '@/components/Icons/Icons';
 import { FacebookStyleLoader } from '@/components/Loader/FacebookStyleLoader';
+import { TeamMemberCard } from '@/components/TeamMemberCard/TeamMemberCard';
+import { useCreateBooking } from '@/hooks/useBooking';
 import { useGetHospitalProcedureById } from '@/hooks/useHospital';
+import { useAppStore } from '@/libs/store';
 import backArrow from '@/public/assets/icons/backArrow.svg';
 import hospitalLogo from '@/public/assets/icons/sampleLogo.svg';
-import sampleProfile from '@/public/assets/icons/sampleProfile.svg';
+import { handleGetLocalStorage } from '@/utils/global';
 
 import style from './style.module.scss';
 
-function TeamMemberCard({ name, role }: { name: string; role: string }) {
-  return (
-    <div
-      className="flex items-start rounded-xl border border-neutral-5 py-5 pl-5 pr-10"
-      style={{
-        boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
-      }}
-    >
-      <Image
-        src={sampleProfile}
-        alt="sample profile image"
-        className="size-12 rounded-full"
-      />
-      <div className="ml-3 flex flex-col items-start">
-        <p className="font-poppins text-xl font-medium text-neutral-1">
-          {name}
-        </p>
-        <p className="font-lexend text-base font-light text-neutral-2">
-          {role}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-export { TeamMemberCard };
-
 function HospitalDetailsPage({ params }: { params: { id: string } }) {
+  const { selectedHospitalName } = useAppStore();
+  const router = useRouter();
+  const { setIsLoginModalActive, isLoginModalActive, isOtpVerifyModalActive } =
+    useAppStore();
+  const userId = handleGetLocalStorage({ tokenKey: 'user_id' });
+  const createBooking = useCreateBooking();
   const [searchMemberQuery, setSearchMemberQuery] = React.useState<string>('');
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
   const hospitalProcedureId = useGetHospitalProcedureById({
     id: params.id,
   });
-  console.log({ hospitalProcedureId });
-  const router = useRouter();
+  const [startDate, setStartDate] = React.useState<null | Date>(null);
+  const [endDate, setEndDate] = React.useState<null | Date>(null);
+  const [error, setError] = React.useState<string>('');
+  React.useEffect(() => {
+    if (createBooking.isSuccess) {
+      window.location.href = `booking-success/${JSON.stringify(selectedHospitalName)}`;
+      // router.push(`booking-success/${selectedHospitalName}`);
+    }
+  }, [createBooking.isSuccess, router, selectedHospitalName]);
+
+  React.useEffect(() => {
+    if (startDate && !endDate) {
+      setError('Please select end date');
+      return;
+    }
+    if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
+      setError('Start date cannot be greater than end date');
+      return;
+    }
+    if (endDate && startDate) {
+      const days = Math.round(
+        (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24),
+      );
+      if (days < 14) {
+        setError('Please select a range of minimum 14 days');
+        return;
+      }
+    }
+    setError('');
+  }, [endDate, startDate]);
+  const { selectedHospital, selectedGender, selectedCountry } = useAppStore();
   React.useEffect(() => {
     setIsMounted(true);
   }, []);
   if (!isMounted) {
     return null;
   }
-
+  const handleCreateBooking = () => {
+    if (!startDate || !endDate) {
+      toast.error('Please select treatment date to continue');
+      return;
+    }
+    if (!userId) {
+      setIsLoginModalActive(true);
+      return;
+    }
+    if (!startDate || !endDate) {
+      toast.error('Please select treatment date to book procedure');
+      return;
+    }
+    createBooking.mutate({
+      hospitalProcedureId: selectedHospital,
+      gender: selectedGender,
+      claimCountry: selectedCountry,
+      userId,
+      patientPreferredStartDate: startDate,
+      patientPreferredEndDate: endDate,
+    });
+  };
   return (
     <div className={style.hospitalDetailPageContainer}>
       <button
@@ -65,7 +107,6 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
       >
         <Image src={backArrow} alt="back arrow icon" />
       </button>
-
       {hospitalProcedureId.isLoading ? (
         <FacebookStyleLoader />
       ) : (
@@ -102,12 +143,59 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          <h3 className={style.subTitle}>About the procedure</h3>
-          {hospitalProcedureId.isSuccess && hospitalProcedureId.data.data && (
-            <p className={style.hospitalDesc}>
-              {hospitalProcedureId.data.data.description.en}
-            </p>
-          )}
+          <div className="flex w-full items-center justify-between">
+            <div className="flex w-1/2 flex-col items-start">
+              <h3 className={style.subTitle}>About the procedure</h3>
+              {hospitalProcedureId.isSuccess &&
+                hospitalProcedureId.data.data && (
+                  <p className={style.hospitalDesc}>
+                    {hospitalProcedureId.data.data.description.en}
+                  </p>
+                )}
+            </div>
+            <div className="flex w-[400px] flex-col items-start rounded-lg bg-neutral-7 px-4 py-11">
+              <h3 className="font-poppins text-2xl font-medium text-gray77">
+                When do you want to get your treatment done?
+              </h3>
+              <p className="font-lexend text-base font-light text-neutral-3">
+                Select a range of minimum 14 days
+              </p>
+              <label
+                id="date"
+                className="mb-2 mt-6 font-lexend text-base font-normal text-neutral-2"
+              >
+                Date range
+              </label>
+              <div className="flex flex-col items-start">
+                <div className="flex items-center justify-between gap-[9.46px]">
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => date && setStartDate(date)}
+                    selectsStart
+                    placeholderText="From"
+                    startDate={startDate}
+                    endDate={endDate}
+                    className="w-[160.77px] rounded-[10px] border border-gray169 px-3 py-4"
+                  />
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => date && setEndDate(date)}
+                    selectsEnd
+                    placeholderText="To"
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={startDate}
+                    className="w-[160.77px] rounded-[10px] border border-gray169 px-3 py-4"
+                  />
+                </div>
+                {error && (
+                  <small className="mt-1 text-start font-lexend text-base font-normal text-error">
+                    {error}
+                  </small>
+                )}
+              </div>
+            </div>
+          </div>
 
           {hospitalProcedureId.isSuccess && hospitalProcedureId.data.data && (
             <div className="flex w-[520px] flex-wrap items-center gap-10">
@@ -219,7 +307,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               veniammodo
             </p>
           </div>
-          <div className="mb-[47px] mt-[62px] flex w-full items-center justify-between rounded-[6.4px] bg-darkslategray px-9 py-[34px]">
+          <div className="sticky inset-x-1/2 bottom-0 mb-[47px] mt-[62px] flex w-full translate-x-0 items-center justify-between rounded-[6.4px] bg-darkslategray px-9 py-[34px]">
             <div className="flex flex-col items-start">
               <span className="font-poppins text-3xl font-medium text-neutral-7">
                 {hospitalProcedureId?.data?.data.procedure.name.en}
@@ -230,15 +318,29 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             </div>
             <button
               type="button"
-              className="fixed h-[64px] w-[348px] rounded-[6.4px] bg-primary-5"
+              className={`${error.length > 0 ? 'cursor-not-allowed bg-primary-5/90' : 'cursor-pointer'} h-[64px] w-[348px] rounded-[6.4px] bg-primary-5`}
+              disabled={error.length > 0}
+              onClick={handleCreateBooking}
             >
-              <span className="font-poppins text-2xl font-normal text-darkslategray">
-                Request an appointment
-              </span>
+              {createBooking.isPending ? (
+                <ClipLoader
+                  loading={createBooking.isPending}
+                  color="#333"
+                  size={30}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              ) : (
+                <span className="font-poppins text-2xl font-normal text-darkslategray">
+                  Request an appointment
+                </span>
+              )}
             </button>
           </div>
         </>
       )}
+      {isLoginModalActive && <CreateAccount />}
+      {isOtpVerifyModalActive && <VerifyOtp />}
     </div>
   );
 }

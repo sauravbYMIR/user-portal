@@ -6,10 +6,12 @@ import React, { useEffect, useState } from 'react';
 
 import headerStyle from '@/components/Header/header.module.scss';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
+import { useAppStore } from '@/libs/store';
 import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
 import irelandFlag from '@/public/assets/icons/ireland.svg';
 import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
 import brandLogo from '@/public/assets/images/brandLogo.svg';
+import { handleGetLocalStorage, handleLogOut } from '@/utils/global';
 
 import { CreateAccount } from '../Auth/CreateAccount';
 import { VerifyOtp } from '../Auth/VerifyOtp';
@@ -39,12 +41,13 @@ interface HeaderPropType {
 }
 
 function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
+  // TODO: create me endpoint to check
+  const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState<boolean>(false);
   const [activeLink, setActiveLink] = useState<string>('');
   const { matches } = useScreenWidth(500);
-  const [isLoginModalActive, setIsLoginModalActive] = useState<boolean>(false);
-  const [isOtpVerifyModalActive, setIsOtpVerifyModalActive] =
-    React.useState<boolean>(false);
+  const { isLoginModalActive, setIsLoginModalActive, isOtpVerifyModalActive } =
+    useAppStore();
 
   const scrollToSection = (ref: any) => {
     ref.current.scrollIntoView({ behavior: 'smooth' });
@@ -150,14 +153,25 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
 
         <FbtHeaderContent>
           <FbtHeaderItem>
-            <FbtButton
-              className={headerStyle.headerLoginBtn}
-              size="lg"
-              variant="outline"
-              onClick={() => setIsLoginModalActive(true)}
-            >
-              Log in
-            </FbtButton>
+            {accessToken ? (
+              <FbtButton
+                className={headerStyle.headerLoginBtn}
+                size="lg"
+                variant="outline"
+                onClick={handleLogOut}
+              >
+                Log out
+              </FbtButton>
+            ) : (
+              <FbtButton
+                className={headerStyle.headerLoginBtn}
+                size="lg"
+                variant="outline"
+                onClick={() => setIsLoginModalActive(true)}
+              >
+                Log in
+              </FbtButton>
+            )}
           </FbtHeaderItem>
         </FbtHeaderContent>
 
@@ -254,26 +268,29 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
             })}
 
             <FbtHeaderMenuItem className={headerStyle.liWrapper}>
-              <Link
-                className={headerStyle.menuItemBtn}
-                href="./"
-                onClick={() => setIsLoginModalActive(true)}
-              >
-                Log in
-              </Link>
+              {accessToken ? (
+                <Link
+                  className={headerStyle.menuItemBtn}
+                  href="./"
+                  onClick={handleLogOut}
+                >
+                  Log out
+                </Link>
+              ) : (
+                <Link
+                  className={headerStyle.menuItemBtn}
+                  href="./"
+                  onClick={() => setIsLoginModalActive(true)}
+                >
+                  Log in
+                </Link>
+              )}
             </FbtHeaderMenuItem>
           </FbtHeaderMenu>
         )}
       </FbtHeader>
-      {isLoginModalActive && (
-        <CreateAccount
-          setIsLoginModalActive={setIsLoginModalActive}
-          setIsOtpVerifyModalActive={setIsOtpVerifyModalActive}
-        />
-      )}
-      {isOtpVerifyModalActive && (
-        <VerifyOtp setIsOtpVerifyModalActive={setIsOtpVerifyModalActive} />
-      )}
+      {isLoginModalActive && <CreateAccount />}
+      {isOtpVerifyModalActive && <VerifyOtp />}
     </>
   );
 }

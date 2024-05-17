@@ -12,6 +12,7 @@ import {
   FbtAvatarStatus,
 } from './Avatar/Avatar';
 import { FbtButton } from './Button/Button';
+import { FbtCalendar } from './Calendar/Calendar';
 import {
   FbtDropdownMenu,
   FbtDropdownMenuCheckboxItem,
@@ -50,6 +51,12 @@ import {
   FbtModalTitle,
   FbtModalTrigger,
 } from './Modal/Modal';
+import {
+  FbtPopover,
+  FbtPopoverAnchor,
+  FbtPopoverContent,
+  FbtPopoverTrigger,
+} from './Popover/Popover';
 import { FbtProgress } from './Progress/Progress';
 import {
   FbtSelect,
@@ -75,6 +82,7 @@ export {
   FbtAvatarImage,
   FbtAvatarStatus,
   FbtButton,
+  FbtCalendar,
   FbtDropdownMenu,
   FbtDropdownMenuCheckboxItem,
   FbtDropdownMenuContent,
@@ -107,6 +115,10 @@ export {
   FbtModalPortal,
   FbtModalTitle,
   FbtModalTrigger,
+  FbtPopover,
+  FbtPopoverAnchor,
+  FbtPopoverContent,
+  FbtPopoverTrigger,
   FbtProgress,
   FbtSelect,
   FbtSelectContent,

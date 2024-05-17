@@ -5,11 +5,11 @@ import { useGetAllDepartmentWithProcedure } from '@/hooks/useDepartment';
 import CustomAccordion from '../CustomAccordion/CustomAccordion';
 import proceduresStyle from './Procedure.module.scss';
 
-function ReimbursementWrapper({ key, value }: { key: string; value: number }) {
+function ReimbursementWrapper({ id, value }: { id: string; value: number }) {
   return (
-    <div key={key} className="w-1/2 p-3">
+    <div key={id} className="w-1/2 p-3">
       <p className="font-lexend text-xl font-normal text-neutral-2">
-        Reimbursement for {key}
+        Reimbursement for {id}
       </p>
       <p className="font-lexend text-base font-light">{value}</p>
     </div>
@@ -39,23 +39,18 @@ const ProcedureSelector = () => {
               return (
                 <div key={procedureData.id} className="mb-3">
                   <CustomAccordion
-                    // editClickHandler={() => {
-                    //   // setUpdateId(procedureData.id);
-                    //   // setIsEditData(true);
-                    //   // setEditDepartmentModalOpen(true);
-                    // }}
+                    type="DEPARTMENT"
                     title={procedureData.name.en}
                   >
                     {procedureData.subCategoryWithProcedures.length > 0 &&
                       procedureData.subCategoryWithProcedures.map(
-                        (subCategoryData, index) => {
+                        (subCategoryData) => {
                           return (
-                            <ol key={subCategoryData.id}>
+                            <ul key={subCategoryData.id}>
                               <li className="flex items-center justify-between px-4 py-2">
-                                <p className="font-poppins text-sm font-medium text-primary-2">
-                                  <span className="mr-1">{index + 1}.</span>
-                                  <span>{subCategoryData.name.en}</span>
-                                </p>
+                                <span className="font-poppins text-sm font-medium text-primary-2">
+                                  {subCategoryData.name.en}
+                                </span>
                               </li>
 
                               {subCategoryData.procedures.length > 0 && (
@@ -70,11 +65,8 @@ const ProcedureSelector = () => {
                                         <CustomAccordion
                                           key={procedure.id}
                                           title={procedure.name.en}
-                                          // editClickHandler={() => {
-                                          //   // setUpdateId(procedure.id);
-                                          //   // setIsEditData(true);
-                                          //   // setEditProcedureModalOpen(true);
-                                          // }}
+                                          type="SUB-CATEGORY"
+                                          procedureId={procedure.id}
                                         >
                                           <div className="flex flex-wrap items-center">
                                             {Object.entries(
@@ -83,6 +75,7 @@ const ProcedureSelector = () => {
                                               return (
                                                 <ReimbursementWrapper
                                                   key={key}
+                                                  id={key}
                                                   value={value}
                                                 />
                                               );
@@ -94,7 +87,7 @@ const ProcedureSelector = () => {
                                   )}
                                 </div>
                               )}
-                            </ol>
+                            </ul>
                           );
                         },
                       )}
@@ -105,13 +98,10 @@ const ProcedureSelector = () => {
                         {procedureData.procedures.map((procedure) => {
                           return (
                             <CustomAccordion
-                              // editClickHandler={() => {
-                              //   // setUpdateId(procedure.id);
-                              //   // setIsEditData(true);
-                              //   // setEditProcedureModalOpen(true);
-                              // }}
+                              type="PROCEDURE"
                               key={procedure.id}
                               title={procedure.name.en}
+                              procedureId={procedure.id}
                             >
                               <div className="flex flex-wrap items-center">
                                 {Object.entries(procedure.reimbursement).map(
@@ -119,6 +109,7 @@ const ProcedureSelector = () => {
                                     return (
                                       <ReimbursementWrapper
                                         key={key}
+                                        id={key}
                                         value={value}
                                       />
                                     );
