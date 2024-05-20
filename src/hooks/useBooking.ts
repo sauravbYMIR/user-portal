@@ -115,27 +115,30 @@ export const useGetBookingDetails = (bookingId: string) => {
   });
 };
 
-export const updateElgsightStatus = async ({
+export const updateElfsightStatus = async ({
   bookingId,
   status,
+  userId,
 }: {
   bookingId: string;
-  status: string;
+  status: boolean;
+  userId: string;
 }): Promise<any> => {
   await axiosInstance.patch<any>(
     `${process.env.BASE_URL}/bookings/update-elfsight-status/${bookingId}`,
     {
       status,
+      userId,
     },
   );
   return {
     success: true,
   };
 };
-export const useUpdateElgsightStatus = (bookingId: string) => {
+export const useUpdateElfsightStatus = (bookingId: string) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: updateElgsightStatus,
+    mutationFn: updateElfsightStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [`bookings`, `booking-detail`, bookingId],
