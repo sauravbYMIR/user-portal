@@ -37,7 +37,7 @@ const BookingSuccess = ({ params }: { params: { hospitalName: string } }) => {
           <button
             type="button"
             className="flex cursor-pointer items-center justify-between rounded-[6.4px] bg-primary-2 px-[88px] py-[14px] text-white"
-            onClick={() => router.push('/profile')}
+            onClick={() => router.push(`/profile?view=${'procedures'}`)}
           >
             Home
           </button>

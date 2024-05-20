@@ -1,3 +1,5 @@
+/* eslint-disable tailwindcss/no-custom-classname */
+
 'use client';
 
 import Image from 'next/image';
@@ -6,16 +8,17 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { FacebookStyleLoader } from '@/components/Loader/FacebookStyleLoader';
-import { useGetHospitalProcedureById } from '@/hooks/useHospital';
+import { useGetBookingDetails } from '@/hooks/useBooking';
 import backArrow from '@/public/assets/icons/backArrow.svg';
 
 import style from '../../hospital/[id]/style.module.scss';
 
 function HospitalDetailsPage({ params }: { params: { id: string } }) {
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
-  const hospitalProcedureId = useGetHospitalProcedureById({
-    id: params.id,
-  });
+  const bookingDetails = useGetBookingDetails(params.id);
+  // const hospitalProcedureId = useGetHospitalProcedureById({
+  //   id: '58d2deca-3aec-4692-ac0d-a5943041a390',
+  // });
   const router = useRouter();
   React.useEffect(() => {
     setIsMounted(true);
@@ -23,9 +26,15 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   if (!isMounted) {
     return null;
   }
-
   return (
     <div className={style.hospitalDetailPageContainer}>
+      {!bookingDetails.isLoading && (
+        <div
+          // TODO: CHANGE LANG
+          className={`elfsight-app-${bookingDetails.data.data.elfSightScript.en}`}
+          data-elfsight-app-lazy
+        />
+      )}
       <button
         type="button"
         className="cursor-pointer"
@@ -34,32 +43,24 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
         <Image src={backArrow} alt="back arrow icon" />
       </button>
 
-      {hospitalProcedureId.isLoading ? (
+      {bookingDetails.isLoading ? (
         <FacebookStyleLoader />
       ) : (
         <>
           <div className={style.headerSection}>
             <div className={style.titleContainer}>
               <div className={style.titleBreadCrumbContainer}>
-                {hospitalProcedureId.isSuccess &&
-                  hospitalProcedureId.data.data && (
-                    <h3>{hospitalProcedureId.data.data.procedure.name.en}</h3>
-                  )}
+                {bookingDetails.isSuccess && bookingDetails.data.data && (
+                  <h3>{bookingDetails.data.data.procedureName.en}</h3>
+                )}
 
-                {hospitalProcedureId.isSuccess &&
-                  hospitalProcedureId.data.data && (
-                    <div className={style.breadcrumb}>
-                      <Link href="/">
-                        {
-                          hospitalProcedureId.data.data.procedure.category.name
-                            .en
-                        }{' '}
-                        department
-                      </Link>
-                      <span>/</span>
-                      <Link href="/">Procedure details</Link>
-                    </div>
-                  )}
+                {bookingDetails.isSuccess && bookingDetails.data.data && (
+                  <div className={style.breadcrumb}>
+                    <Link href="/">Orthopedic department</Link>
+                    <span>/</span>
+                    <Link href="/">Procedure details</Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -71,21 +72,20 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             </span>
             <button
               type="button"
-              className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 sm:mt-0 sm:w-[348px]"
+              className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
+              data-elfsight-show-form={`${bookingDetails.data.data.elfSightScript.en}`}
             >
-              <span className="font-poppins text-2xl font-normal text-white">
-                Add case details
-              </span>
+              Add case details
             </button>
           </div>
-          {hospitalProcedureId.isSuccess && hospitalProcedureId.data.data && (
+          {bookingDetails.isSuccess && bookingDetails.data.data && (
             <div className="grid grid-cols-2 gap-20">
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
                   Cost of procedure
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
-                  {hospitalProcedureId.data.data.cost.en}
+                  {bookingDetails.data.data.costOfProcedure.en}
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
@@ -93,7 +93,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   Wait of procedure
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
-                  {hospitalProcedureId.data.data.waitingTime}
+                  {bookingDetails.data.data.waitTime}
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
@@ -101,7 +101,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   Duration of city stay
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
-                  {hospitalProcedureId.data.data.stayInCity}
+                  {bookingDetails.data.data?.stayInCity ?? 8}
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
@@ -109,7 +109,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   Duration of hospital stay
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
-                  {hospitalProcedureId.data.data.stayInHospital}
+                  {bookingDetails.data.data.hospitalStay}
                 </p>
               </div>
             </div>

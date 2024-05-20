@@ -1,5 +1,6 @@
 import '@/styles/global.css';
 
+import Script from 'next/script';
 import { Toaster } from 'sonner';
 
 import Providers from '@/utils/providers';
@@ -7,6 +8,11 @@ import Providers from '@/utils/providers';
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <Script
+        src="https://static.elfsight.com/platform/platform.js"
+        data-use-service-core
+        defer
+      />
       <body>
         <Toaster position="top-center" richColors closeButton />
         <Providers>{props.children}</Providers>

@@ -1,5 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
+
+import { axiosInstance } from '@/utils/axiosInstance';
 
 export type ServerError = {
   error: {
@@ -145,4 +148,36 @@ export const userlogin = async ({ phoneNumber }: { phoneNumber: string }) => {
     }
     throw new Error('user-login-failed');
   }
+};
+export const getUserDetails = async () => {
+  const response = (await axiosInstance.get(
+    `${process.env.BASE_URL}/user/me`,
+  )) as {
+    data: {
+      data: {
+        createdAt: string;
+        deletedAt: string;
+        email: string;
+        id: string;
+        phoneNumber: string;
+        preferedLanguage: string;
+        role: string;
+        updatedAt: string;
+      };
+      status: number;
+      success: boolean;
+    };
+  };
+  return {
+    success: response.data.success,
+    status: response.data.status,
+    data: response.data.data,
+  };
+};
+export const useGetUserDetails = () => {
+  return useQuery({
+    queryKey: [`user`],
+    queryFn: () => getUserDetails(),
+    refetchOnWindowFocus: false,
+  });
 };

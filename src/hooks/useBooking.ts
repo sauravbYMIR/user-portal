@@ -14,6 +14,7 @@ export type BookingType = {
   hospitalStay: string;
   applicationStatus: string;
   waitTime: string;
+  elfsightStatus: boolean;
 };
 export type BookingResponse = {
   data: Array<BookingType>;
