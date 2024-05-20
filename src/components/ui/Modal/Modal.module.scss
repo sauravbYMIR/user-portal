@@ -1,0 +1,131 @@
+.modaloverlay {
+  position: fixed;
+  inset: 0px;
+  z-index: 9998;
+}
+
+.modalcontent {
+  position: fixed;
+  z-index: 9999;
+  display: grid;
+  width: 100%;
+  max-width: 32rem;
+  max-height: 380px;
+  --tw-translate-x: -50%;
+  transform: translate(-50%, 0) rotate(var(--tw-rotate)) skewX(0) skewY(0)
+    scaleX(1) scaleY(1);
+  transform: translate(0, -50%) rotate(var(--tw-rotate)) skewX(0) skewY(0)
+    scaleX(1) scaleY(1);
+  gap: 1rem;
+  border-width: 1px;
+  background-color: hsl(var(--background, 0 0% 100%));
+  padding: 1.5rem;
+  transition-duration: 200ms;
+  overflow: scroll;
+}
+.modalheader {
+  display: flex;
+  flex-direction: column;
+  margin: 0.375rem 0rem;
+  text-align: center;
+}
+.modalfooter {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.modaltitle {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.modaldescription {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%));
+}
+.modalclose {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  border-radius: calc(var(--radius, 0.5rem) - 4px);
+  opacity: 0.7;
+
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.modalclose:hover {
+  opacity: 1;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.modalclose:disabled {
+  pointer-events: none;
+}
+.modalclose[data-state="open"] {
+  background-color: hsl(var(--accent, 60 100% 95.3%));
+  color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%));
+}
+.modalcloseicon {
+  height: 1rem;
+  width: 1rem;
+}
+.modalclosespan {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.opaque {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.blur {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+.transparent {
+  background-color: transparent;
+}
+.top {
+  top: 0;
+  transform: translate(0, 0);
+}
+.bottom {
+  bottom: 0;
+  transform: translate(0, 0);
+}
+.center {
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.topcenter {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.bottomcenter {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+@media (min-width: 640px) {
+  .modalcontent {
+    border-radius: var(--radius, 0.5rem);
+  }
+  .modalheader {
+    text-align: left;
+  }
+  .modalfooter {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 0 0.5rem;
+  }
+}

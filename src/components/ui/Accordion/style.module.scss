@@ -1,0 +1,82 @@
+.accordianItem {
+  border-bottom-width: 1px;
+}
+.accordianTrigger {
+  display: flex;
+  flex: 1 1 0%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px 20px 28px;
+
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+
+  font-family: Poppins;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  border: none;
+  background: none;
+}
+.accordianTrigger[data-state="open"] > svg {
+  transform: translate(0, 0) rotate(180deg) skewX(0) skewY(0) scaleX(1)
+    scaleY(1);
+}
+.accordianTrigger[data-state="open"] {
+  background-color: hsl(0 0% 97.6%);
+}
+.accordianHeader {
+  display: flex;
+}
+.chevronDownIcon {
+  height: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+  color: (var(--muted-foreground));
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+.accordianContent {
+  overflow: hidden;
+  text-align: start;
+  padding: 20px 28px 20px 28px;
+}
+@keyframes accordian-down {
+  from {
+    height: 0px;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+}
+@keyframes accordian-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0px;
+    opacity: 0;
+  }
+}
+.accordianContent[data-state="open"] {
+  animation: accordian-down 0.3s ease-in-out;
+  background-color: hsl(0 0% 97.6%);
+}
+.accordianContent[data-state="closed"] {
+  animation: accordian-up 0.3s ease-in-out;
+}
+.accordianContentChildren {
+  padding: 0 0 1rem 0;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+}

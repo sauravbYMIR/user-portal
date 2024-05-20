@@ -1,0 +1,72 @@
+.avatar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  overflow: hidden;
+  border-radius: 9999px;
+}
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+}
+.avatarFallback {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: (var(--muted));
+}
+.avatarContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.avatarInfoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-left: 12px;
+}
+.avatarInfoName {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.avatarInfoUsername {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
+.avatarDefaultImage {
+  width: 24px;
+  height: 24px;
+}
+.avatarStatus {
+  position: absolute;
+  bottom: 0;
+  left: 28px;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+}
+.active {
+  background-color: (var(--avatar-active));
+}
+.inactive {
+  background-color: (var(--avatar-inactive));
+}
+.waiting {
+  background-color: (var(--avatar-waiting));
+}
+.busy {
+  background-color: (var(--avatar-busy));
+}
