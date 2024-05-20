@@ -71,13 +71,9 @@ export const useCreateBooking = () => {
     },
   });
 };
-export const getBookingByUserId = async ({
-  userId,
-}: {
-  userId: string;
-}): Promise<BookingResponse> => {
+export const getBookingByUserId = async (): Promise<BookingResponse> => {
   const response = await axiosInstance.get<BookingResponse>(
-    `${process.env.BASE_URL}/bookings/${userId}`,
+    `${process.env.BASE_URL}/bookings/get-booking-details-by-user`,
   );
   return {
     success: response.data.success,
@@ -85,10 +81,10 @@ export const getBookingByUserId = async ({
     data: response.data.data,
   };
 };
-export const useGetBookingByUserId = (userId: string) => {
+export const useGetBookingByUserId = () => {
   return useQuery({
-    queryKey: [`bookings`, userId],
-    queryFn: () => getBookingByUserId({ userId }),
+    queryKey: [`bookings`],
+    queryFn: () => getBookingByUserId(),
     refetchOnWindowFocus: false,
   });
 };

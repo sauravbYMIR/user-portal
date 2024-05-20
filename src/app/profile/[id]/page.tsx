@@ -82,22 +82,24 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               </div>
             </div>
           </div>
-          {!bookingDetails.data.data.elfSightFormSubmitStatus && (
-            <div className="mb-[47px] mt-[62px] w-full items-center justify-between rounded-[6.4px] border border-neutral-7 bg-neutral-7 px-9 py-[34px] sm:flex">
-              <span className="w-[90%] font-poppins text-xl font-normal text-neutral-1">
-                Your application has been approved by PSH Hospitall, please
-                complete the information capture form to continue with the
-                booking process
-              </span>
-              <button
-                type="button"
-                className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
-                data-elfsight-show-form={`${bookingDetails.data.data.elfSightScript.en}`}
-              >
-                Add case details
-              </button>
-            </div>
-          )}
+          {bookingDetails.data &&
+            bookingDetails.data.data &&
+            !bookingDetails.data.data.elfSightFormSubmitStatus && (
+              <div className="mb-[47px] mt-[62px] w-full items-center justify-between rounded-[6.4px] border border-neutral-7 bg-neutral-7 px-9 py-[34px] sm:flex">
+                <span className="w-[90%] font-poppins text-xl font-normal text-neutral-1">
+                  Your application has been approved by PSH Hospitall, please
+                  complete the information capture form to continue with the
+                  booking process
+                </span>
+                <button
+                  type="button"
+                  className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
+                  data-elfsight-show-form={`${bookingDetails.data.data.elfSightScript.en}`}
+                >
+                  Add case details
+                </button>
+              </div>
+            )}
           {bookingDetails.isSuccess && bookingDetails.data.data && (
             <div className="grid grid-cols-2 gap-20">
               <div className="flex flex-col items-start justify-start">
