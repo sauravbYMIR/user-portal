@@ -41,7 +41,7 @@ const ApplicationStatusRenderer = ({ status }: { status: string }) => {
           </p>
         </div>
       );
-    case 'pending':
+    case 'requested':
       return (
         <div
           style={{

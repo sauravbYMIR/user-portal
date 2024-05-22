@@ -44,8 +44,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   const [error, setError] = React.useState<string>('');
   React.useEffect(() => {
     if (createBooking.isSuccess) {
-      window.location.href = `booking-success/${JSON.stringify(selectedHospitalName)}`;
-      // router.push(`booking-success/${selectedHospitalName}`);
+      window.location.href = `${process.env.APP_URL}/booking-success/?name=${selectedHospitalName}`;
     }
   }, [createBooking.isSuccess, router, selectedHospitalName]);
 
@@ -235,6 +234,41 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           )}
 
           <h3 className={style.subTitle} style={{ marginTop: '40px' }}>
+            Hospital procedure image
+          </h3>
+
+          <div className=" flex w-full flex-wrap items-center gap-4">
+            {hospitalProcedureId &&
+            hospitalProcedureId.data &&
+            hospitalProcedureId.data.data &&
+            Array.isArray(
+              hospitalProcedureId.data?.data.hospitalProcedureImages,
+            ) &&
+            hospitalProcedureId.data?.data.hospitalProcedureImages.length >
+              0 ? (
+              hospitalProcedureId.data?.data.hospitalProcedureImages.map(
+                (image) => {
+                  return (
+                    <Image
+                      key={image.id}
+                      src={image.imageUrl}
+                      width={300}
+                      height={300}
+                      alt="procedureImage"
+                      className="my-2 rounded-lg"
+                    />
+                  );
+                },
+              )
+            ) : (
+              <p>No images found</p>
+            )}
+          </div>
+
+          <h3 className={style.subTitle} style={{ marginTop: '40px' }}>
+            Procedure team
+          </h3>
+          <h3 className={style.subTitle} style={{ marginTop: '40px' }}>
             Procedure team
           </h3>
           {hospitalProcedureId.isSuccess && hospitalProcedureId.data.data && (
@@ -272,6 +306,11 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                                 name={member.name}
                                 role={member.position.en}
                                 key={member.id}
+                                profile={
+                                  member.profilePictureUploaded
+                                    ? member.profile
+                                    : false
+                                }
                               />
                             );
                           })
@@ -282,6 +321,11 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                                 name={member.name}
                                 role={member.position.en}
                                 key={member.id}
+                                profile={
+                                  member.profilePictureUploaded
+                                    ? member.profile
+                                    : false
+                                }
                               />
                             );
                           },
@@ -297,15 +341,35 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               About the hospital
             </h3>
             <p className="font-lexend text-base font-light text-neutral-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniammodo Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniammodo Lorem ipsum dolor
-              sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniammodo
+              {hospitalProcedureId.data?.data.hospitalDescription.en}
             </p>
+
+            <h3 className={style.subTitle} style={{ marginTop: '40px' }}>
+              Hospital image
+            </h3>
+
+            <div className=" flex w-full flex-wrap items-center gap-6">
+              {hospitalProcedureId &&
+              hospitalProcedureId.data &&
+              hospitalProcedureId.data.data &&
+              Array.isArray(hospitalProcedureId.data?.data.hospitalImages) &&
+              hospitalProcedureId.data?.data.hospitalImages.length > 0 ? (
+                hospitalProcedureId.data?.data.hospitalImages.map((image) => {
+                  return (
+                    <div className="relative my-4 size-[220px]" key={image.id}>
+                      <Image
+                        src={image.imageUrl}
+                        fill
+                        alt="procedureImage"
+                        className="rounded-lg"
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <p>No images found</p>
+              )}
+            </div>
           </div>
           <div className="sticky inset-x-1/2 bottom-0 mb-[47px] mt-[62px] flex w-full translate-x-0 items-center justify-between rounded-[6.4px] bg-darkslategray px-9 py-[34px]">
             <div className="flex flex-col items-start">

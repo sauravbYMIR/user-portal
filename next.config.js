@@ -14,9 +14,16 @@ module.exports = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'drfasttrack-dev.s3.eu-north-1.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   env: {
     BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+    APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
 };

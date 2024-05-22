@@ -9,6 +9,7 @@ export type HospitalMember = {
   name: string;
   qualification: string;
   profilePictureUploaded: boolean;
+  profile: string;
   hospitalId: string;
   createdAt: string | null;
   updatedAt: string | null;
@@ -47,6 +48,24 @@ export type HospitalProcedureByIdType = {
   stayInHospital: string;
   updatedAt: string | null;
   waitingTime: string;
+  hospitalProcedureImages: Array<{
+    id: string;
+    hospitalProcedureId: string;
+    imageUrl: string;
+    fileName: string;
+    originalFileName: string;
+  }>;
+  hospitalImages: Array<{
+    id: string;
+    hospitalId: string;
+    fileName: string;
+    originalFileName: string;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: null | string;
+    imageUrl: string;
+  }>;
+  hospitalDescription: NameJSONType;
 };
 
 export const getHospitalProcedureById = async (

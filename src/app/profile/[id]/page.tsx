@@ -47,7 +47,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             {!bookingDetails.data.data.elfSightFormSubmitStatus && (
               <div
                 // TODO: CHANGE LANG
-                className={`elfsight-app-${bookingDetails.data.data.elfSightScript.en}`}
+                className={`elfsight-app-${bookingDetails.data.data?.elfSightScript.en}`}
                 data-elfsight-app-lazy
               />
             )}
@@ -94,7 +94,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                 <button
                   type="button"
                   className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
-                  data-elfsight-show-form={`${bookingDetails.data.data.elfSightScript.en}`}
+                  data-elfsight-show-form="00e19ab8-b869-460e-ac3c-0aa9cbf597fb"
                 >
                   Add case details
                 </button>

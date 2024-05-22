@@ -1,13 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 
 import { useScreenWidth } from '@/hooks/useScreenWidth';
 import brandLogo from '@/public/assets/images/brandLogo.svg';
 
-const BookingSuccess = ({ params }: { params: { hospitalName: string } }) => {
+const BookingSuccess = ({ hospitalName }: { hospitalName: string | null }) => {
   const { matches } = useScreenWidth(500);
   const router = useRouter();
   return (
@@ -28,10 +28,12 @@ const BookingSuccess = ({ params }: { params: { hospitalName: string } }) => {
           <p className="mb-[60px] mt-8 font-lexend text-2xl font-normal">
             You will hear from us within 48 hours to let you know if your
             application to
-            <span className="font-lexend text-2xl font-bold">
-              {' '}
-              {params.hospitalName}{' '}
-            </span>
+            {hospitalName && (
+              <span className="font-lexend text-2xl font-bold">
+                {' '}
+                {hospitalName}{' '}
+              </span>
+            )}
             has been approved after which you can fill in your patient forms
           </p>
           <button
@@ -47,4 +49,10 @@ const BookingSuccess = ({ params }: { params: { hospitalName: string } }) => {
   );
 };
 
-export default BookingSuccess;
+const BookingSuccessSuspense = () => {
+  const searchParams = useSearchParams();
+  const hospitalName = searchParams.get('name');
+  return <BookingSuccess hospitalName={hospitalName} />;
+};
+
+export default BookingSuccessSuspense;
