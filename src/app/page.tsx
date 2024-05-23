@@ -151,7 +151,7 @@ function LandingPage() {
             width={matches ? 375 : 571}
             height={matches ? 340 : 601}
             src={landingPageBannerImg}
-            alt="landing page banner img"
+            alt="landing page banner image"
           />
         </div>
       </div>
