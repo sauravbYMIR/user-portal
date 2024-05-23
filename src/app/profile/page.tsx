@@ -7,11 +7,18 @@ import { ProfileHeader } from '@/components/Header/ProfileHeader';
 import { ProcedureCard } from '@/components/ProcedureCard/ProcedureCard';
 import { useGetUserDetails } from '@/hooks/useAuth';
 import { useGetBookingByUserId } from '@/hooks/useBooking';
+import useTranslation from '@/hooks/useTranslation';
+import type { LocaleType } from '@/types/component';
+import { handleGetLocalStorage } from '@/utils/global';
 
 const Profile = ({ view }: { view: string | null }) => {
   const router = useRouter();
   const bookingsByUserId = useGetBookingByUserId();
   const getUserDetails = useGetUserDetails();
+  const { t } = useTranslation();
+  const selectedLanguage = (handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  }) ?? 'en') as LocaleType;
   return (
     <main className="flex w-screen flex-col">
       <ProfileHeader />
@@ -22,21 +29,21 @@ const Profile = ({ view }: { view: string | null }) => {
             type="button"
             onClick={() => router.push(`/profile/?view=${'procedures'}`)}
           >
-            My procedures
+            {t('My-procedures')}
           </button>
           <button
             className={`flex w-[262px] items-start rounded-xl ${view === 'profile' ? 'bg-neutral-6' : ''} px-5 py-4 font-poppins text-xl font-medium text-primary-2`}
             type="button"
             onClick={() => router.push(`/profile/?view=${'profile'}`)}
           >
-            My profile
+            {t('My-profile')}
           </button>
         </aside>
 
         {view === 'procedures' ? (
           <div className="flex flex-col items-start px-20">
             <h2 className="mb-[73px] text-start font-poppins text-5xl font-normal text-neutral-1">
-              My procedures
+              {t('My-procedures')}
             </h2>
             <div className="flex flex-col gap-4">
               {bookingsByUserId.data &&
@@ -47,7 +54,7 @@ const Profile = ({ view }: { view: string | null }) => {
                     <ProcedureCard
                       key={booking.id}
                       bookingId={booking.id}
-                      procedureName={booking.procedureName.en}
+                      procedureName={booking.procedureName[selectedLanguage]}
                       hospitalName={booking.hospitalName}
                       city={booking.city}
                       country={booking.country}

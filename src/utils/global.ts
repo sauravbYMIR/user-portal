@@ -94,8 +94,28 @@ const handleLogOut = () => {
   handleRemoveFromLocalStorage({ tokenKey: 'user_id' });
 };
 
+const getMonth = (date: string | Date) => {
+  const monthNum = new Date(date).getMonth();
+  const month = {
+    '1': 'Jan',
+    '2': 'Feb',
+    '3': 'Mar',
+    '4': 'Apr',
+    '5': 'May',
+    '6': 'Jun',
+    '7': 'Aug',
+    '8': 'Sept',
+    '9': 'Oct',
+    '10': 'Nov',
+    '11': 'Dec',
+  };
+
+  return month[monthNum.toString() as keyof typeof month];
+};
+
 export {
   countryData,
+  getMonth,
   handleGetLocalStorage,
   handleLogOut,
   handleRemoveFromLocalStorage,

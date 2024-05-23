@@ -5,13 +5,19 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 import headerStyle from '@/components/Header/header.module.scss';
+import useTranslation from '@/hooks/useTranslation';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
 import { useAppStore } from '@/libs/store';
 import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
 import irelandFlag from '@/public/assets/icons/ireland.svg';
 import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
 import brandLogo from '@/public/assets/images/brandLogo.svg';
-import { handleGetLocalStorage, handleLogOut } from '@/utils/global';
+import type { LocaleType } from '@/types/component';
+import {
+  handleGetLocalStorage,
+  handleLogOut,
+  handleSetLocalStorage,
+} from '@/utils/global';
 
 import { CreateAccount } from '../Auth/CreateAccount';
 import { VerifyOtp } from '../Auth/VerifyOtp';
@@ -32,7 +38,11 @@ import {
   FbtSelectValue,
 } from '../ui';
 
-const menuItems = ['How it works', 'Our Hospitals', 'FAQs'];
+const menuItems = [
+  { value: 'How it works', label: 'How-it-works' },
+  { value: 'Our Hospitals', label: 'Our-Hospitals' },
+  { value: 'FAQs', label: 'FAQs' },
+];
 
 interface HeaderPropType {
   howItWorksRef: any;
@@ -41,8 +51,12 @@ interface HeaderPropType {
 }
 
 function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
+  const { t } = useTranslation();
   // TODO: create me endpoint to check
   const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
+  const selectedLanguage = handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  });
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState<boolean>(false);
   const [activeLink, setActiveLink] = useState<string>('');
   const { matches } = useScreenWidth(500);
@@ -96,16 +110,16 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
         <FbtHeaderContent className={headerStyle.headerLinkContainer}>
           {menuItems.map((menu) => {
             return (
-              <FbtHeaderItem key={menu}>
+              <FbtHeaderItem key={menu.value}>
                 <Link
                   onClick={() => {
-                    handleLinkClick(menu);
-                    handleScrollOnClick(menu);
+                    handleLinkClick(menu.value);
+                    handleScrollOnClick(menu.value);
                   }}
-                  className={`${headerStyle.headerLink} ${activeLink === menu && headerStyle.headerActiveLink}`}
+                  className={`${headerStyle.headerLink} ${activeLink === menu.value && headerStyle.headerActiveLink}`}
                   href="./"
                 >
-                  {menu}
+                  {t(menu.label)}
                 </Link>
               </FbtHeaderItem>
             );
@@ -113,7 +127,15 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
         </FbtHeaderContent>
 
         <FbtHeaderContent>
-          <FbtSelect defaultValue="NOR">
+          <FbtSelect
+            defaultValue={selectedLanguage ?? 'en'}
+            onValueChange={(value: LocaleType) =>
+              handleSetLocalStorage({
+                tokenKey: 'selected_language',
+                tokenValue: value,
+              })
+            }
+          >
             <FbtSelectTrigger
               selectIconClassName={headerStyle.headerSelectTriggerIcon}
               className={headerStyle.headerSelectTrigger}
@@ -126,7 +148,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
                 <FbtSelectItem
                   checkIconClassName={headerStyle.headerSelectTickIcon}
                   className={headerStyle.headerSelectItem}
-                  value="NOR"
+                  value="no"
                 >
                   NOR
                 </FbtSelectItem>
@@ -134,7 +156,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
                 <FbtSelectItem
                   checkIconClassName={headerStyle.headerSelectTickIcon}
                   className={headerStyle.headerSelectItem}
-                  value="EN"
+                  value="en"
                 >
                   EN
                 </FbtSelectItem>
@@ -142,9 +164,17 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
                 <FbtSelectItem
                   checkIconClassName={headerStyle.headerSelectTickIcon}
                   className={headerStyle.headerSelectItem}
-                  value="DN"
+                  value="da"
                 >
+                  {' '}
                   DN
+                </FbtSelectItem>
+                <FbtSelectItem
+                  checkIconClassName={headerStyle.headerSelectTickIcon}
+                  className={headerStyle.headerSelectItem}
+                  value="sv"
+                >
+                  SV
                 </FbtSelectItem>
               </FbtSelectGroup>
             </FbtSelectContent>
@@ -248,20 +278,23 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
               />
             </FbtHeaderMenuItem>
 
-            {menuItems.map((menu: string) => {
+            {menuItems.map((menu: { value: string; label: string }) => {
               return (
-                <FbtHeaderMenuItem className={headerStyle.liWrapper} key={menu}>
+                <FbtHeaderMenuItem
+                  className={headerStyle.liWrapper}
+                  key={menu.value}
+                >
                   <Link
                     onClick={() => {
                       setIsHeaderMenuOpen(false);
 
-                      handleScrollOnClick(menu);
-                      handleLinkClick(menu);
+                      handleScrollOnClick(menu.value);
+                      handleLinkClick(menu.value);
                     }}
-                    className={`${headerStyle.menuItem} ${activeLink === menu && headerStyle.menuItemActive}`}
+                    className={`${headerStyle.menuItem} ${activeLink === menu.value && headerStyle.menuItemActive}`}
                     href="./"
                   >
-                    {menu}
+                    {t(menu.label)}
                   </Link>
                 </FbtHeaderMenuItem>
               );

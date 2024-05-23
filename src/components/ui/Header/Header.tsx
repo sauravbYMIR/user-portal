@@ -7,8 +7,6 @@ import closeIcon from '@/public/assets/icons/close.svg';
 import hamburgerIcon from '@/public/assets/icons/hamburger.svg';
 
 import styles from './style.module.scss';
-// TODO: 1. add mobile animation when nav links are revealed
-// 2. add types and ref to all components
 
 const FbtHeader = ({
   children,

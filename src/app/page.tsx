@@ -13,6 +13,7 @@ import LandingPageContentCard from '@/components/LandingPageContentCard/LandingP
 import LandingPageImage from '@/components/LandingPageImage/LandingPageImage';
 import LandingPageStepper from '@/components/LandingPageStepper/LandingPageStepper';
 import { FbtAccordion, FbtButton } from '@/components/ui';
+import useTranslation from '@/hooks/useTranslation';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
 import carouselActiveCircle from '@/public/assets/icons/carouselActiveCircle.svg';
 import carouselCircle from '@/public/assets/icons/carouselCircle.svg';
@@ -85,6 +86,7 @@ const landingMobIconList = [
 ];
 
 function LandingPage() {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { matches } = useScreenWidth(500);
 
@@ -122,11 +124,13 @@ function LandingPage() {
         <div className={pageStyle.firstSecLeftContainer}>
           <div className={pageStyle.firstSecLeftWrapper}>
             <h1 className={pageStyle.firstSecTitle}>
-              Are you still <br /> waiting in line for <br /> treatment?
+              {t('Are-you-still')} <br /> {t('waiting-in-line-for')} <br />{' '}
+              {t('treatment?')}
             </h1>
             <p className={pageStyle.firstSecDesc}>
-              Making it easier for EU & EEA citizens to get access to treatments
-              through our network of premium hospitals
+              {t(
+                'Making-it-easier-for-EU-&-EEA-citizens-to-get-access-to-treatments-through-our-network-of-premium-hospitals',
+              )}
             </p>
 
             <FbtButton
@@ -135,7 +139,7 @@ function LandingPage() {
               variant="solid"
               onClick={() => router.push('/book-procedure')}
             >
-              <p className={pageStyle.ctaBtnText}>Get me started</p>
+              <p className={pageStyle.ctaBtnText}>{t('Get-me-started')}</p>
               <Image src={arrowIcon} alt="arrow icon cta button" />
             </FbtButton>
           </div>
@@ -191,8 +195,7 @@ function LandingPage() {
           <div className={pageStyle.cardContainer}>
             {landingCardsInfo.map(({ title, desc }, index) => (
               <LandingPageContentCard
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
+                key={desc}
                 index={index}
                 inView={inView}
                 title={title}

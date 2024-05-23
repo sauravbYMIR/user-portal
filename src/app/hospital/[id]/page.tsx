@@ -20,14 +20,20 @@ import { FacebookStyleLoader } from '@/components/Loader/FacebookStyleLoader';
 import { TeamMemberCard } from '@/components/TeamMemberCard/TeamMemberCard';
 import { useCreateBooking } from '@/hooks/useBooking';
 import { useGetHospitalProcedureById } from '@/hooks/useHospital';
+import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import backArrow from '@/public/assets/icons/backArrow.svg';
 import hospitalLogo from '@/public/assets/icons/sampleLogo.svg';
-import { handleGetLocalStorage } from '@/utils/global';
+import type { LocaleType } from '@/types/component';
+import { getMonth, handleGetLocalStorage } from '@/utils/global';
 
 import style from './style.module.scss';
 
 function HospitalDetailsPage({ params }: { params: { id: string } }) {
+  const selectedLanguage = (handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  }) ?? 'en') as LocaleType;
+  const { t } = useTranslation();
   const { selectedHospitalName } = useAppStore();
   const router = useRouter();
   const { setIsLoginModalActive, isLoginModalActive, isOtpVerifyModalActive } =
@@ -121,7 +127,13 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               <div className={style.titleBreadCrumbContainer}>
                 {hospitalProcedureId.isSuccess &&
                   hospitalProcedureId.data.data && (
-                    <h3>{hospitalProcedureId.data.data.procedure.name.en}</h3>
+                    <h3>
+                      {
+                        hospitalProcedureId.data.data.procedure.name[
+                          selectedLanguage
+                        ]
+                      }
+                    </h3>
                   )}
 
                 {hospitalProcedureId.isSuccess &&
@@ -129,13 +141,14 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                     <div className={style.breadcrumb}>
                       <Link href="/">
                         {
-                          hospitalProcedureId.data.data.procedure.category.name
-                            .en
+                          hospitalProcedureId.data.data.procedure.category.name[
+                            selectedLanguage
+                          ]
                         }{' '}
-                        department
+                        {t('department')}
                       </Link>
                       <span>/</span>
-                      <Link href="/">Procedure details</Link>
+                      <Link href="/">{t('Procedure-details')}</Link>
                     </div>
                   )}
               </div>
@@ -144,26 +157,30 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
 
           <div className="flex w-full items-center justify-between">
             <div className="flex w-1/2 flex-col items-start">
-              <h3 className={style.subTitle}>About the procedure</h3>
+              <h3 className={style.subTitle}>{t('About-the-procedure')}</h3>
               {hospitalProcedureId.isSuccess &&
                 hospitalProcedureId.data.data && (
                   <p className={style.hospitalDesc}>
-                    {hospitalProcedureId.data.data.description.en}
+                    {
+                      hospitalProcedureId.data.data.description[
+                        selectedLanguage
+                      ]
+                    }
                   </p>
                 )}
             </div>
             <div className="flex w-[400px] flex-col items-start rounded-lg bg-neutral-7 px-4 py-11">
               <h3 className="font-poppins text-2xl font-medium text-gray77">
-                When do you want to get your treatment done?
+                {t('When-do-you-want-to-get-your-treatment-done')}
               </h3>
               <p className="font-lexend text-base font-light text-neutral-3">
-                Select a range of minimum 14 days
+                {t('Select-a-range-of-minimum-14-days')}
               </p>
               <label
                 id="date"
                 className="mb-2 mt-6 font-lexend text-base font-normal text-neutral-2"
               >
-                Date range
+                {t('Date-range')}
               </label>
               <div className="flex flex-col items-start">
                 <div className="flex items-center justify-between gap-[9.46px]">
@@ -200,15 +217,15 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             <div className="flex w-[520px] flex-wrap items-center gap-10">
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
-                  Cost of procedure
+                  {t('Cost-of-procedure')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
-                  {hospitalProcedureId.data.data.cost.en}
+                  {hospitalProcedureId.data.data.cost[selectedLanguage]}
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
-                  Wait of procedure
+                  {t('Wait-of-procedure')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
                   {hospitalProcedureId.data.data.waitingTime}
@@ -216,7 +233,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               </div>
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
-                  Duration of city stay
+                  {t('Duration-of-city-stay')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
                   {hospitalProcedureId.data.data.stayInCity}
@@ -224,7 +241,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               </div>
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
-                  Duration of hospital stay
+                  {t('Duration-of-hospital-stay')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
                   {hospitalProcedureId.data.data.stayInHospital}
@@ -234,7 +251,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           )}
 
           <h3 className={style.subTitle} style={{ marginTop: '40px' }}>
-            Hospital procedure image
+            {t('Hospital-procedure-image')}
           </h3>
 
           <div className=" flex w-full flex-wrap items-center gap-4">
@@ -266,14 +283,10 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           </div>
 
           <h3 className={style.subTitle} style={{ marginTop: '40px' }}>
-            Procedure team
-          </h3>
-          <h3 className={style.subTitle} style={{ marginTop: '40px' }}>
-            Procedure team
+            {t('Procedure-team')}
           </h3>
           {hospitalProcedureId.isSuccess && hospitalProcedureId.data.data && (
-            // eslint-disable-next-line react/jsx-no-useless-fragment
-            <>
+            <div>
               {!(
                 hospitalProcedureId.data.data.hospitalMembers.length === 0
               ) && (
@@ -304,7 +317,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                             return (
                               <TeamMemberCard
                                 name={member.name}
-                                role={member.position.en}
+                                role={member.position[selectedLanguage]}
                                 key={member.id}
                                 profile={
                                   member.profilePictureUploaded
@@ -319,7 +332,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                             return (
                               <TeamMemberCard
                                 name={member.name}
-                                role={member.position.en}
+                                role={member.position[selectedLanguage]}
                                 key={member.id}
                                 profile={
                                   member.profilePictureUploaded
@@ -334,18 +347,22 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   </div>
                 </div>
               )}
-            </>
+            </div>
           )}
           <div className="flex flex-col items-start ">
             <h3 className="mb-6 font-poppins text-2xl font-medium text-gray77">
-              About the hospital
+              {t('About-the-hospital')}
             </h3>
             <p className="font-lexend text-base font-light text-neutral-3">
-              {hospitalProcedureId.data?.data.hospitalDescription.en}
+              {
+                hospitalProcedureId.data?.data.hospitalDescription[
+                  selectedLanguage
+                ]
+              }
             </p>
 
             <h3 className={style.subTitle} style={{ marginTop: '40px' }}>
-              Hospital image
+              {t('Hospital-image')}
             </h3>
 
             <div className=" flex w-full flex-wrap items-center gap-6">
@@ -367,17 +384,29 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   );
                 })
               ) : (
-                <p>No images found</p>
+                <p>{t('No-images-found')}</p>
               )}
             </div>
           </div>
           <div className="sticky inset-x-1/2 bottom-0 mb-[47px] mt-[62px] flex w-full translate-x-0 items-center justify-between rounded-[6.4px] bg-darkslategray px-9 py-[34px]">
             <div className="flex flex-col items-start">
               <span className="font-poppins text-3xl font-medium text-neutral-7">
-                {hospitalProcedureId?.data?.data.procedure.name.en}
+                {
+                  hospitalProcedureId?.data?.data.procedure.name[
+                    selectedLanguage
+                  ]
+                }
               </span>
               <span className="font-poppins text-xl font-normal text-neutral-6">
-                12/Feb/2024 - 23/May/2024
+                {startDate &&
+                  `${new Date(startDate).getDate()} /
+                    ${getMonth(startDate)} /
+                    ${new Date(startDate).getFullYear()}`}{' '}
+                -{' '}
+                {endDate &&
+                  `${new Date(endDate).getDate()} /
+                    ${getMonth(endDate)} /
+                    ${new Date(endDate).getFullYear()}`}
               </span>
             </div>
             <button
@@ -396,7 +425,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                 />
               ) : (
                 <span className="font-poppins text-2xl font-normal text-darkslategray">
-                  Request an appointment
+                  {t('Request-an-appointment')}
                 </span>
               )}
             </button>

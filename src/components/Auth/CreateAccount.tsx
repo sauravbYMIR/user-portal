@@ -16,6 +16,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { createUser, userlogin } from '@/hooks/useAuth';
+import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import { countryData, handleSetLocalStorage } from '@/utils/global';
 
@@ -116,6 +117,7 @@ const CreateAccount = () => {
       toast.error(error as string);
     }
   };
+  const { t } = useTranslation();
   return (
     <ModalWrapper
       parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
@@ -131,14 +133,13 @@ const CreateAccount = () => {
       <div className="mt-10 flex flex-col items-center">
         <h1 className="font-poppins text-5xl font-medium text-primary-1">
           {!isLogin ? (
-            <span>Create an account</span>
+            <span>{t('Create-an-account')}</span>
           ) : (
-            <span>Welcome back.</span>
+            <span>{t('Welcome-back')}</span>
           )}
         </h1>
         <p className="text-center font-lexend text-xl font-light text-neutral-2">
-          Empowering EU & EEC citizens awaiting medical treatments to take
-          charge of their own health.
+          {t('Empowering-EU-&-EEC')}
         </p>
       </div>
       {!isLogin ? (
@@ -151,7 +152,7 @@ const CreateAccount = () => {
               className="font-inter text-xl font-normal text-black"
               htmlFor="email"
             >
-              Email
+              {t('Email')}
             </label>
             <input
               placeholder="Enter your email"
@@ -171,7 +172,7 @@ const CreateAccount = () => {
               htmlFor="phoneNumber"
               className="font-inter text-xl font-normal text-black"
             >
-              Phone Number
+              {t('Phone-Number')}
             </label>
             <Controller
               name="phoneNumber"
@@ -202,7 +203,7 @@ const CreateAccount = () => {
               className="font-inter text-xl font-normal text-black"
               htmlFor="preferredLanguage"
             >
-              Preferred language of communication
+              {t('Preferred-language-of-communication')}
             </label>
             <Controller
               name="preferredLanguage"
@@ -233,7 +234,7 @@ const CreateAccount = () => {
           </div>
           <div className="mb-4 flex items-center">
             <span className="font-lexend text-xl font-normal text-primary-2">
-              Already have an account?
+              {t('Already-have-an-account')}
             </span>
             <button
               type="button"
@@ -241,7 +242,7 @@ const CreateAccount = () => {
               onClick={() => setIsLogin(true)}
             >
               <span className="font-lexend text-xl font-medium text-primary-2">
-                Login
+                {t('Login')}
               </span>
             </button>
           </div>
@@ -261,7 +262,7 @@ const CreateAccount = () => {
               />
             ) : (
               <p className="font-poppins text-2xl font-normal text-neutral-7">
-                Get code via sms
+                {t('Get-code-via-sms')}
               </p>
             )}
           </FbtButton>
@@ -276,7 +277,7 @@ const CreateAccount = () => {
               htmlFor="phoneNumber"
               className="font-inter text-xl font-normal text-black"
             >
-              Phone Number
+              {t('Phone-Number')}
             </label>
             <Controller
               name="phoneNumber"
@@ -304,7 +305,7 @@ const CreateAccount = () => {
           </div>
           <div className="mb-4 flex items-center justify-center">
             <span className="font-lexend text-base font-normal text-primary-2">
-              Don&apos;t have an account?
+              {t('Dont-have-an-account')}
             </span>
             <button
               type="button"
@@ -312,7 +313,7 @@ const CreateAccount = () => {
               onClick={() => setIsLogin(false)}
             >
               <span className="font-lexend text-base font-medium text-primary-2">
-                Book a procedure first
+                {t('Book-a-procedure-first')}
               </span>
             </button>
           </div>
@@ -332,7 +333,7 @@ const CreateAccount = () => {
               />
             ) : (
               <p className="font-poppins text-2xl font-normal text-neutral-7">
-                Get code via sms
+                {t('Get-code-via-sms')}
               </p>
             )}
           </FbtButton>

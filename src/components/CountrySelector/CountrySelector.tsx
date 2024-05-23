@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
+import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import { countryData } from '@/utils/global';
 
@@ -8,14 +9,14 @@ import { FbtButton } from '../ui';
 
 const CountrySelector = () => {
   const { selectedCountry, setSelectedCountry } = useAppStore();
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col items-start justify-center gap-2 sm:items-center">
       <h3 className="font-poppins text-5xl font-medium text-primary-1">
-        Tell us which country you will be claiming this policy from
+        {t('Tell-us-which-country-you-will-be-claiming-this-policy-from')}
       </h3>
       <p className="mt-2 font-lexend text-2xl font-light text-gray77">
-        To begin we are piloting with a limited number of countries, more
-        countries will be added in the near future.
+        {t('To-begin-we-are-piloting-with-a')}
       </p>
       <div className="mb-44 mt-20 flex flex-col items-start sm:grid sm:grid-cols-2 sm:gap-4">
         {countryData.map((country) => {

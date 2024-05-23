@@ -11,10 +11,12 @@ import { HospitalSelector } from '@/components/HospitalSelector/HospitalSelector
 import { ArrowBackIcon, ArrowIcon, CloseIcon } from '@/components/Icons/Icons';
 import { ProcedureSelector } from '@/components/ProcedureSelector/ProcedureSelector';
 import { FbtButton, FbtProgress } from '@/components/ui';
+import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import brandTitle from '@/public/assets/icons/brandTitle.svg';
 
 const BookProcedure = () => {
+  const { t } = useTranslation();
   const { selectedCountry, selectedGender, selectedProcedure } = useAppStore();
   const router = useRouter();
   const [step, setStep] = React.useState<number>(1);
@@ -82,7 +84,13 @@ const BookProcedure = () => {
       <button
         type="button"
         className="absolute left-8 top-16 flex items-center justify-between"
-        onClick={() => setStep((prevState) => prevState - 1)}
+        onClick={() => {
+          if (step > 1) {
+            setStep((prevState) => prevState - 1);
+            return;
+          }
+          router.back();
+        }}
       >
         <ArrowBackIcon stroke="rgba(9, 111, 144, 1)" />
         <span className="ml-4 font-poppins text-2xl font-medium text-primary-2">
@@ -108,33 +116,11 @@ const BookProcedure = () => {
         <span className="absolute right-[-30px] top-10">{step}/4</span>
       </div>
       <div className="m-20">
-        {step === 1 && (
-          <CountrySelector
-          // selectedCountry={selectedCountry}
-          // setSelectedCountry={setSelectedCountry}
-          />
-        )}
-        {step === 2 && (
-          <GenderSelector
-          // selectedGender={selectedGender}
-          // setSelectedGender={setSelectedGender}
-          />
-        )}
+        {step === 1 && <CountrySelector />}
+        {step === 2 && <GenderSelector />}
 
-        {step === 3 && (
-          <ProcedureSelector
-          // selectedProcedure={selectedProcedure}
-          // setSelectedProcedure={setSelectedProcedure}
-          />
-        )}
-        {step === 4 && (
-          <HospitalSelector
-          // selectedCountry={selectedCountry}
-          // selectedProcedure={selectedProcedure}
-          // selectedHospital={selectedHospital}
-          // setSelectedHospital={setSelectedHospital}
-          />
-        )}
+        {step === 3 && <ProcedureSelector />}
+        {step === 4 && <HospitalSelector />}
       </div>
 
       {step < 4 && (
@@ -149,7 +135,7 @@ const BookProcedure = () => {
           }}
         >
           <span className="mr-3 font-poppins text-2xl font-normal text-neutral-7">
-            Continue
+            {t('Continue')}
           </span>
           <ArrowIcon stroke="#fff" className="size-[25.6px]" />
         </FbtButton>

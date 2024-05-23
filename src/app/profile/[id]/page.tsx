@@ -9,7 +9,9 @@ import React from 'react';
 
 import { FacebookStyleLoader } from '@/components/Loader/FacebookStyleLoader';
 import { updateElfsightStatus, useGetBookingDetails } from '@/hooks/useBooking';
+import useTranslation from '@/hooks/useTranslation';
 import backArrow from '@/public/assets/icons/backArrow.svg';
+import type { LocaleType } from '@/types/component';
 import { handleGetLocalStorage } from '@/utils/global';
 
 import style from '../../hospital/[id]/style.module.scss';
@@ -32,6 +34,10 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
       }
     }, 0);
   }, [params.id, userId]);
+  const { t } = useTranslation();
+  const selectedLanguage = (handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  }) ?? 'en') as LocaleType;
   React.useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -46,8 +52,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           <div>
             {!bookingDetails.data.data.elfSightFormSubmitStatus && (
               <div
-                // TODO: CHANGE LANG
-                className={`elfsight-app-${bookingDetails.data.data?.elfSightScript.en}`}
+                className={`elfsight-app-${bookingDetails.data.data?.elfSightScript[selectedLanguage]}`}
                 data-elfsight-app-lazy
               />
             )}
@@ -69,7 +74,9 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             <div className={style.titleContainer}>
               <div className={style.titleBreadCrumbContainer}>
                 {bookingDetails.isSuccess && bookingDetails.data.data && (
-                  <h3>{bookingDetails.data.data.procedureName.en}</h3>
+                  <h3>
+                    {bookingDetails.data.data.procedureName[selectedLanguage]}
+                  </h3>
                 )}
 
                 {bookingDetails.isSuccess && bookingDetails.data.data && (
@@ -87,16 +94,15 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             !bookingDetails.data.data.elfSightFormSubmitStatus && (
               <div className="mb-[47px] mt-[62px] w-full items-center justify-between rounded-[6.4px] border border-neutral-7 bg-neutral-7 px-9 py-[34px] sm:flex">
                 <span className="w-[90%] font-poppins text-xl font-normal text-neutral-1">
-                  Your application has been approved by PSH Hospitall, please
-                  complete the information capture form to continue with the
-                  booking process
+                  {/* // TODO: SHOW MESSAGE WRT BOOKING STATUS */}
+                  {t('Your-application-has-been')}
                 </span>
                 <button
                   type="button"
                   className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
                   data-elfsight-show-form="00e19ab8-b869-460e-ac3c-0aa9cbf597fb"
                 >
-                  Add case details
+                  {t('Add-case-details')}
                 </button>
               </div>
             )}
@@ -104,15 +110,15 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             <div className="grid grid-cols-2 gap-20">
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
-                  Cost of procedure
+                  {t('Cost-of-procedure')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
-                  {bookingDetails.data.data.costOfProcedure.en}
+                  {bookingDetails.data.data.costOfProcedure[selectedLanguage]}
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
-                  Wait of procedure
+                  {t('Wait-of-procedure')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
                   {bookingDetails.data.data.waitTime}
@@ -120,7 +126,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               </div>
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
-                  Duration of city stay
+                  {t('Duration-of-city-stay')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
                   {bookingDetails.data.data?.stayInCity ?? 8}
@@ -128,7 +134,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               </div>
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
-                  Duration of hospital stay
+                  {t('Duration-of-hospital-stay')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
                   {bookingDetails.data.data.hospitalStay}

@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { useGetHospitalByProcedureId } from '@/hooks/useHospital';
+import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import brandLogo from '@/public/assets/images/brandLogo.svg';
 
@@ -29,6 +30,7 @@ const HospitalCard = ({
   costOfProcedure: string;
   reimBursementCost: string;
 }) => {
+  const { t } = useTranslation();
   const { setSelectedHospital, setSelectedHospitalName } = useAppStore();
   const router = useRouter();
   return (
@@ -86,13 +88,14 @@ const HospitalCard = ({
           router.push(`/hospital/${id}`);
         }}
       >
-        Select Hospital
+        {t('Select-Hospital')}
       </FbtButton>
     </div>
   );
 };
 
 const HospitalSelector = () => {
+  const { t } = useTranslation();
   const { selectedProcedure, selectedCountry, selectedHospital } =
     useAppStore();
   const allHospitals = useGetHospitalByProcedureId({
@@ -115,7 +118,7 @@ const HospitalSelector = () => {
   return (
     <div className="flex flex-col items-start justify-center gap-2 sm:items-center">
       <h3 className="font-poppins text-5xl font-medium text-primary-1">
-        Select a hospital for your procedure
+        {t('Select-a-hospital-for-your-procedure')}
       </h3>
       <div className="mt-[109px] flex flex-wrap items-center gap-[17px]">
         {allHospitals.data &&

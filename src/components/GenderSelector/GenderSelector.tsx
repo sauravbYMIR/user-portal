@@ -1,5 +1,6 @@
 import React from 'react';
 
+import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 
 import { FbtButton } from '../ui';
@@ -16,11 +17,12 @@ const genderData = [
 ];
 
 const GenderSelector = () => {
+  const { t } = useTranslation();
   const { selectedGender, setSelectedGender } = useAppStore();
   return (
     <div className="flex flex-col items-start justify-center gap-2 sm:items-center">
       <h3 className="font-poppins text-5xl font-medium text-primary-1">
-        Select your gender
+        {t('Select-your-gender')}
       </h3>
       <div className="mb-44 mt-20 flex flex-col items-start sm:grid sm:grid-cols-2 sm:gap-4">
         {genderData.map((gender) => {
@@ -32,7 +34,7 @@ const GenderSelector = () => {
               onClick={() => setSelectedGender(gender.value)}
             >
               <span className="!py-5 font-poppins text-2xl font-normal">
-                {gender.label}
+                {t(gender.label)}
               </span>
             </FbtButton>
           );

@@ -1,6 +1,9 @@
 import React from 'react';
 
 import { useGetAllDepartmentWithProcedure } from '@/hooks/useDepartment';
+import useTranslation from '@/hooks/useTranslation';
+import type { LocaleType } from '@/types/component';
+import { handleGetLocalStorage } from '@/utils/global';
 
 import CustomAccordion from '../CustomAccordion/CustomAccordion';
 import proceduresStyle from './Procedure.module.scss';
@@ -17,15 +20,18 @@ function ReimbursementWrapper({ id, value }: { id: string; value: number }) {
 }
 
 const ProcedureSelector = () => {
+  const { t } = useTranslation();
   const departmentProcedureList = useGetAllDepartmentWithProcedure();
+  const selectedLanguage = (handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  }) ?? 'en') as LocaleType;
   return (
     <div className="flex flex-col items-start justify-center gap-2 sm:items-center">
       <h3 className="font-poppins text-5xl font-medium text-primary-1">
-        Select your procedure
+        {t('Select-your-procedure')}
       </h3>
       <p className="mt-2 font-lexend text-2xl font-light text-gray77">
-        To begin we are piloting with a limited number of non elective
-        procedures, more procedures will be added in the near future..
+        {t('To-begin-we-are-piloting-with-a-limited-number-of-non')}
       </p>
       <div className="mt-16 w-full">
         {departmentProcedureList.isSuccess &&
@@ -40,7 +46,7 @@ const ProcedureSelector = () => {
                 <div key={procedureData.id} className="mb-3">
                   <CustomAccordion
                     type="DEPARTMENT"
-                    title={procedureData.name.en}
+                    title={procedureData.name[selectedLanguage]}
                   >
                     {procedureData.subCategoryWithProcedures.length > 0 &&
                       procedureData.subCategoryWithProcedures.map(
@@ -49,7 +55,7 @@ const ProcedureSelector = () => {
                             <ul key={subCategoryData.id}>
                               <li className="flex items-center justify-between px-4 py-2">
                                 <span className="font-poppins text-sm font-medium text-primary-2">
-                                  {subCategoryData.name.en}
+                                  {subCategoryData.name[selectedLanguage]}
                                 </span>
                               </li>
 
@@ -64,7 +70,9 @@ const ProcedureSelector = () => {
                                       return (
                                         <CustomAccordion
                                           key={procedure.id}
-                                          title={procedure.name.en}
+                                          title={
+                                            procedure.name[selectedLanguage]
+                                          }
                                           type="SUB-CATEGORY"
                                           procedureId={procedure.id}
                                         >
@@ -100,7 +108,7 @@ const ProcedureSelector = () => {
                             <CustomAccordion
                               type="PROCEDURE"
                               key={procedure.id}
-                              title={procedure.name.en}
+                              title={procedure.name[selectedLanguage]}
                               procedureId={procedure.id}
                             >
                               <div className="flex flex-wrap items-center">

@@ -4,6 +4,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
 import { resendOtp, verifyOtp } from '@/hooks/useAuth';
+import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
 
@@ -13,6 +14,7 @@ import { FbtButton } from '../ui';
 import OTPInputWrapper from './OtpInputWrapper';
 
 const VerifyOtp = () => {
+  const { t } = useTranslation();
   const { setIsOtpVerifyModalActive } = useAppStore();
   const searchParams = useSearchParams();
   const phoneNumber = searchParams.get('phonenumber');
@@ -85,11 +87,11 @@ const VerifyOtp = () => {
         <CloseIcon className="size-10" stroke="#333" />
       </FbtButton>
       <h1 className="font-poppins text-5xl font-medium text-primary-1">
-        Verify with OTP
+        {t('Verify-with-OTP')}
       </h1>
       <Suspense>
         <p className="text-center font-lexend text-xl font-light text-neutral-2">
-          A 6 digit code has been sent to {phoneNumber}
+          {t('A-6-digit-code-has-been-sent-to')} {phoneNumber}
         </p>
       </Suspense>
       <div className="mt-12 flex flex-col items-start">
@@ -97,7 +99,7 @@ const VerifyOtp = () => {
         <OTPInputWrapper otp={otp} setOtp={setOtp} />
         <div className="mb-6 mt-12 flex w-full items-center justify-center">
           <span className="font-poppins text-xl font-normal text-primary-2">
-            Didn&apos;t receive OTP?
+            {t('Didnt-receive-OTP')}
           </span>
           <button
             type="button"
@@ -115,7 +117,7 @@ const VerifyOtp = () => {
               />
             ) : (
               <span className="font-poppins text-xl font-medium text-primary-2">
-                Resend
+                {t('Resend')}
               </span>
             )}
           </button>
@@ -137,7 +139,7 @@ const VerifyOtp = () => {
             />
           ) : (
             <p className="font-poppins text-2xl font-normal text-neutral-7">
-              Verify code
+              {t('Verify-code')}
             </p>
           )}
         </FbtButton>

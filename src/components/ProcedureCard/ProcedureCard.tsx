@@ -3,7 +3,10 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
+import useTranslation from '@/hooks/useTranslation';
+
 const ApplicationStatusRenderer = ({ status }: { status: string }) => {
+  const { t } = useTranslation();
   switch (status) {
     case 'accepted':
       return (
@@ -19,7 +22,7 @@ const ApplicationStatusRenderer = ({ status }: { status: string }) => {
               color: 'rgba(0, 59, 212, 1)',
             }}
           >
-            Request accepted
+            {t('Request-accepted')}
           </p>
         </div>
       );
@@ -37,7 +40,7 @@ const ApplicationStatusRenderer = ({ status }: { status: string }) => {
               color: 'rgba(203, 0, 25, 1)',
             }}
           >
-            Request rejected
+            {t('Request-rejected')}
           </p>
         </div>
       );
@@ -55,7 +58,7 @@ const ApplicationStatusRenderer = ({ status }: { status: string }) => {
               color: 'rgba(220, 104, 3, 1)',
             }}
           >
-            Application sent
+            {t('Application-sent')}
           </p>
         </div>
       );
@@ -70,6 +73,7 @@ const ElfSightStatusRenderer = ({
   applicationStatus: string;
   elfSightStatus: boolean;
 }) => {
+  const { t } = useTranslation();
   if (elfSightStatus) {
     if (applicationStatus === 'accepted') {
       return (
@@ -85,7 +89,7 @@ const ElfSightStatusRenderer = ({
               color: 'rgba(0, 59, 212, 1)',
             }}
           >
-            Form submitted
+            {t('Form-submitted')}
           </p>
         </div>
       );
@@ -106,7 +110,7 @@ const ElfSightStatusRenderer = ({
               color: 'rgba(144, 0, 18, 1)',
             }}
           >
-            Form pending
+            {t('Form-pending')}
           </p>
         </div>
       ) : (
@@ -138,6 +142,7 @@ const ProcedureCard = ({
   elfSightStatus: boolean;
 }) => {
   const router = useRouter();
+  const { t } = useTranslation();
   return (
     <button
       type="button"
@@ -153,7 +158,7 @@ const ProcedureCard = ({
             {procedureName}
           </h3>
           <p className="font-lexend text-base font-normal text-neutral-2">
-            Hospital stay
+            {t('Hospital-stay')}
           </p>
         </div>
         <div className="flex w-full items-center justify-between">
@@ -170,7 +175,7 @@ const ProcedureCard = ({
             </span>
           </div>
           <span className="font-lexend text-base font-light text-neutral-2">
-            {hospitalStay} days
+            {hospitalStay} {t('days')}
           </span>
         </div>
       </div>
@@ -184,10 +189,10 @@ const ProcedureCard = ({
         </div>
         <div className="flex flex-col items-end">
           <span className="font-lexend text-base font-normal text-neutral-2">
-            Wait time
+            {t('Wait-time')}
           </span>
           <span className="font-lexend text-base font-light text-neutral-2">
-            {waitTime} days
+            {waitTime} {t('days')}
           </span>
         </div>
       </div>

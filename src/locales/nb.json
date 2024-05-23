@@ -1,11 +1,11 @@
 {
-  "Are-you-still": "Are you still",
+  "Are-you-still": "er du fortsatt",
   "How-it-works": "How it works",
   "Our-Hospitals": "Our Hospitals",
   "FAQs": "FAQs",
   "waiting-in-line-for": "waiting in line for",
-  "Making-it-easier-for-EU-&-EEA-citizens-to-get-access-to-treatments-through-our-network-of-premium-hospitals": "Making it easier for EU & EEA citizens to get access to treatments through our network of premium hospitals",
   "Get-me-started": "Get me started",
+  "Making-it-easier-for-EU-&-EEA-citizens-to-get-access-to-treatments-through-our-network-of-premium-hospitals": "Making it easier for EU & EEA citizens to get access to treatments through our network of premium hospitals",
   "Tell-us-which-country-you-will-be-claiming-this-policy-from": "Tell us which country you will be claiming this policy from",
   "To-begin-we-are-piloting-with-a": "To begin we are piloting with a limited number of countries, more countries will be added in the near future.",
   "Continue": "Continue",
@@ -45,7 +45,7 @@
   "Didnt-receive-OTP": "Didn't receive OTP",
   "Resend": "Resend",
   "Verify-code": "Verify code",
-  "Email": "Email",
+  "Email": "E-post",
   "Procedure-details": "Procedure details",
   "department": "department",
   "My-procedures": "My procedures",
@@ -62,6 +62,5 @@
   "You-will-hear": "You-will-hear from us within 48 hours to let you know if your application to",
   "has-been-approved": "has been approved after which you can fill in your patient forms",
   "Home": "Home",
-  "Add-case-details": "Add case details",
-  "Your-application-has-been": "Your application has been approved by PSH Hospital, please complete the information capture form to continue with the booking process"
+  "Add-case-details": "Add case details"
 }
