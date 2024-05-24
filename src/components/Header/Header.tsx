@@ -20,7 +20,7 @@ import {
 } from '@/utils/global';
 
 import { CreateAccount } from '../Auth/CreateAccount';
-import { VerifyOtp } from '../Auth/VerifyOtp';
+import { VerifyOtpSuspense } from '../Auth/VerifyOtp';
 import {
   FbtButton,
   FbtHeader,
@@ -323,7 +323,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
         )}
       </FbtHeader>
       {isLoginModalActive && <CreateAccount />}
-      {isOtpVerifyModalActive && <VerifyOtp />}
+      {isOtpVerifyModalActive && <VerifyOtpSuspense />}
     </>
   );
 }

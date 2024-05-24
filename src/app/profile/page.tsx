@@ -11,7 +11,9 @@ import useTranslation from '@/hooks/useTranslation';
 import type { LocaleType } from '@/types/component';
 import { handleGetLocalStorage } from '@/utils/global';
 
-const Profile = ({ view }: { view: string | null }) => {
+const Profile = () => {
+  const searchParams = useSearchParams();
+  const view = searchParams.get('view');
   const router = useRouter();
   const bookingsByUserId = useGetBookingByUserId();
   const getUserDetails = useGetUserDetails();
@@ -105,11 +107,9 @@ const Profile = ({ view }: { view: string | null }) => {
 };
 
 const ProfileSuspense = () => {
-  const searchParams = useSearchParams();
-  const view = searchParams.get('view');
   return (
     <Suspense>
-      <Profile view={view} />
+      <Profile />
     </Suspense>
   );
 };

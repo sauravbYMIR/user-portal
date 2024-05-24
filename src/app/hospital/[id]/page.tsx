@@ -14,7 +14,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
 import { CreateAccount } from '@/components/Auth/CreateAccount';
-import { VerifyOtp } from '@/components/Auth/VerifyOtp';
+import { VerifyOtpSuspense } from '@/components/Auth/VerifyOtp';
 import { SearchIcon } from '@/components/Icons/Icons';
 import { FacebookStyleLoader } from '@/components/Loader/FacebookStyleLoader';
 import { TeamMemberCard } from '@/components/TeamMemberCard/TeamMemberCard';
@@ -50,7 +50,9 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   const [error, setError] = React.useState<string>('');
   React.useEffect(() => {
     if (createBooking.isSuccess) {
-      window.location.href = `${process.env.APP_URL}/booking-success/?name=${selectedHospitalName}`;
+      router.push(
+        `${window.location.origin}/booking-success/?name=${selectedHospitalName}`,
+      );
     }
   }, [createBooking.isSuccess, router, selectedHospitalName]);
 
@@ -433,7 +435,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
         </>
       )}
       {isLoginModalActive && <CreateAccount />}
-      {isOtpVerifyModalActive && <VerifyOtp />}
+      {isOtpVerifyModalActive && <VerifyOtpSuspense />}
     </div>
   );
 }

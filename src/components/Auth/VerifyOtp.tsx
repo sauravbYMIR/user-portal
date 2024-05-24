@@ -89,11 +89,9 @@ const VerifyOtp = () => {
       <h1 className="font-poppins text-5xl font-medium text-primary-1">
         {t('Verify-with-OTP')}
       </h1>
-      <Suspense>
-        <p className="text-center font-lexend text-xl font-light text-neutral-2">
-          {t('A-6-digit-code-has-been-sent-to')} {phoneNumber}
-        </p>
-      </Suspense>
+      <p className="text-center font-lexend text-xl font-light text-neutral-2">
+        {t('A-6-digit-code-has-been-sent-to')} {phoneNumber}
+      </p>
       <div className="mt-12 flex flex-col items-start">
         <p className="font-lexend text-xl font-light">OTP</p>
         <OTPInputWrapper otp={otp} setOtp={setOtp} />
@@ -148,4 +146,12 @@ const VerifyOtp = () => {
   );
 };
 
-export { VerifyOtp };
+const VerifyOtpSuspense = () => {
+  return (
+    <Suspense>
+      <VerifyOtp />
+    </Suspense>
+  );
+};
+
+export { VerifyOtpSuspense };

@@ -2,13 +2,15 @@
 
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { useScreenWidth } from '@/hooks/useScreenWidth';
 import useTranslation from '@/hooks/useTranslation';
 import brandLogo from '@/public/assets/images/brandLogo.svg';
 
-const BookingSuccess = ({ hospitalName }: { hospitalName: string | null }) => {
+const BookingSuccess = () => {
+  const searchParams = useSearchParams();
+  const hospitalName = searchParams.get('name');
   const { matches } = useScreenWidth(500);
   const router = useRouter();
   const { t } = useTranslation();
@@ -51,9 +53,11 @@ const BookingSuccess = ({ hospitalName }: { hospitalName: string | null }) => {
 };
 
 const BookingSuccessSuspense = () => {
-  const searchParams = useSearchParams();
-  const hospitalName = searchParams.get('name');
-  return <BookingSuccess hospitalName={hospitalName} />;
+  return (
+    <Suspense>
+      <BookingSuccess />
+    </Suspense>
+  );
 };
 
 export default BookingSuccessSuspense;
