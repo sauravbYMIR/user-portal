@@ -298,6 +298,35 @@
   transition: opacity 1s;
 }
 
+.previousBtn {
+  border: 2px solid var(--Colour-Primary-2, #096f90);
+  border-radius: 8px;
+  color: var(--Colour-Primary-2, #096f90);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14rem;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1rem;
+  font-size: 0.875rem;
+  padding-block: 14px;
+  padding-inline: 40px;
+  gap: 12px;
+  font-size: 1.375rem;
+}
+
+.nextBtn {
+  border: 2px solid var(--Colour-Primary-2, #096f90);
+  background-color: var(--Colour-Primary-2, #096f90);
+  border-radius: 8px;
+  color: white;
+}
+
 @media only screen and (max-width: 500px) {
   .firstSectionContainer {
     height: auto;
@@ -462,5 +491,14 @@
     .faqContainer {
       padding: 0;
     }
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .btn {
+    padding-inline: 20px;
+    padding-block: 10px;
+    font-size: 14px;
+    width: 8rem;
   }
 }

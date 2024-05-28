@@ -1,139 +1,153 @@
 import React from 'react';
+import ContentLoader from 'react-content-loader';
 
 import { useGetAllDepartmentWithProcedure } from '@/hooks/useDepartment';
 import useTranslation from '@/hooks/useTranslation';
+import { useAppStore } from '@/libs/store';
 import type { LocaleType } from '@/types/component';
 import { handleGetLocalStorage } from '@/utils/global';
 
 import CustomAccordion from '../CustomAccordion/CustomAccordion';
 import proceduresStyle from './Procedure.module.scss';
 
-function ReimbursementWrapper({ id, value }: { id: string; value: number }) {
-  return (
-    <div key={id} className="w-1/2 p-3">
-      <p className="font-lexend text-xl font-normal text-neutral-2">
-        Reimbursement for {id}
-      </p>
-      <p className="font-lexend text-base font-light">{value}</p>
-    </div>
-  );
-}
-
 const ProcedureSelector = () => {
   const { t } = useTranslation();
+  const { selectedProcedure, setSelectedProcedure } = useAppStore();
   const departmentProcedureList = useGetAllDepartmentWithProcedure();
   const selectedLanguage = (handleGetLocalStorage({
     tokenKey: 'selected_language',
   }) ?? 'en') as LocaleType;
   return (
-    <div className="flex flex-col items-start justify-center gap-2 sm:items-center">
-      <h3 className="font-poppins text-5xl font-medium text-primary-1">
-        {t('Select-your-procedure')}
-      </h3>
-      <p className="mt-2 font-lexend text-2xl font-light text-gray77">
-        {t('To-begin-we-are-piloting-with-a-limited-number-of-non')}
-      </p>
-      <div className="mt-16 w-full">
+    <div className="flex w-full flex-col items-center justify-center gap-2 ">
+      <div className="flex w-10/12 flex-col items-center justify-center gap-2 ">
+        <h3 className="text-center font-poppins text-[24px] font-medium text-primary-1 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
+          {t('Select-your-procedure')}
+        </h3>
+        <p className="mt-2 text-center font-lexend text-sm font-light text-gray77 sm:text-2xl">
+          {t('To-begin-we-are-piloting-with-a-limited-number-of-non')}
+        </p>
+      </div>
+
+      <div className=" mt-[40px] flex w-full flex-col gap-[16px] sm:mt-16 sm:w-full md:w-11/12 xl:w-9/12">
         {departmentProcedureList.isSuccess &&
-          Array.isArray(
-            departmentProcedureList.data.data.allCategoryWithProcedure,
-          ) &&
-          departmentProcedureList.data.data.allCategoryWithProcedure.length >
-            0 &&
+        Array.isArray(
+          departmentProcedureList.data.data.allCategoryWithProcedure,
+        ) &&
+        departmentProcedureList.data.data.allCategoryWithProcedure.length >
+          0 ? (
           departmentProcedureList.data.data.allCategoryWithProcedure.map(
             (procedureData) => {
               return (
-                <div key={procedureData.id} className="mb-3">
+                <div key={procedureData.id}>
                   <CustomAccordion
                     type="DEPARTMENT"
                     title={procedureData.name[selectedLanguage]}
+                    className={proceduresStyle.boxShadow}
                   >
+                    {procedureData.procedures.length > 0 && (
+                      <div
+                        className={`${proceduresStyle.proceduresAccordionContainer} flex flex-col gap-[24px]`}
+                      >
+                        {procedureData.procedures.map((procedure) => {
+                          return (
+                            <div
+                              key={procedure.id}
+                              className=" flex w-full items-center"
+                            >
+                              <input
+                                className="mr-[16px] size-[20px] sm:mr-[24px] sm:size-[24px]"
+                                type="radio"
+                                id={procedure.id}
+                                value={procedure.id}
+                                checked={selectedProcedure === procedure.id}
+                                onChange={(e) =>
+                                  setSelectedProcedure &&
+                                  setSelectedProcedure(e.target.value)
+                                }
+                              />
+
+                              <label
+                                htmlFor={procedure.id}
+                                className="sm: cursor-pointer font-poppins text-base text-neutral-2 sm:text-2xl"
+                              >
+                                {procedure.name[selectedLanguage]}
+                              </label>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                     {procedureData.subCategoryWithProcedures.length > 0 &&
                       procedureData.subCategoryWithProcedures.map(
                         (subCategoryData) => {
                           return (
-                            <ul key={subCategoryData.id}>
-                              <li className="flex items-center justify-between px-4 py-2">
-                                <span className="font-poppins text-sm font-medium text-primary-2">
-                                  {subCategoryData.name[selectedLanguage]}
-                                </span>
-                              </li>
-
+                            <CustomAccordion
+                              key={subCategoryData.name[selectedLanguage]}
+                              type="SUB-CATEGORY-WITH-PROCEDURE"
+                              title={subCategoryData.name[selectedLanguage]}
+                              className="font-medium"
+                            >
                               {subCategoryData.procedures.length > 0 && (
                                 <div
-                                  className={
-                                    proceduresStyle.subCategoryAccordionContainer
-                                  }
+                                  className={`${proceduresStyle.proceduresAccordionContainer} mb-[10px] flex flex-col gap-[24px]`}
                                 >
                                   {subCategoryData.procedures.map(
                                     (procedure) => {
                                       return (
-                                        <CustomAccordion
+                                        <div
                                           key={procedure.id}
-                                          title={
-                                            procedure.name[selectedLanguage]
-                                          }
-                                          type="SUB-CATEGORY"
-                                          procedureId={procedure.id}
+                                          className="mt-[10px] flex w-full items-center"
                                         >
-                                          <div className="flex flex-wrap items-center">
-                                            {Object.entries(
-                                              procedure.reimbursement,
-                                            ).map(([key, value]) => {
-                                              return (
-                                                <ReimbursementWrapper
-                                                  key={key}
-                                                  id={key}
-                                                  value={value}
-                                                />
-                                              );
-                                            })}
-                                          </div>
-                                        </CustomAccordion>
+                                          <input
+                                            className="mr-[16px] size-[20px] sm:mr-[24px] sm:size-[24px]"
+                                            type="radio"
+                                            id={procedure.id}
+                                            value={procedure.id}
+                                            checked={
+                                              selectedProcedure === procedure.id
+                                            }
+                                            onChange={(e) =>
+                                              setSelectedProcedure &&
+                                              setSelectedProcedure(
+                                                e.target.value,
+                                              )
+                                            }
+                                          />
+
+                                          <label
+                                            htmlFor={procedure.id}
+                                            className="sm: cursor-pointer font-poppins text-base text-neutral-2 sm:text-2xl"
+                                          >
+                                            {procedure.name[selectedLanguage]}
+                                          </label>
+                                        </div>
                                       );
                                     },
                                   )}
                                 </div>
                               )}
-                            </ul>
+                            </CustomAccordion>
                           );
                         },
                       )}
-                    {procedureData.procedures.length > 0 && (
-                      <div
-                        className={proceduresStyle.proceduresAccordionContainer}
-                      >
-                        {procedureData.procedures.map((procedure) => {
-                          return (
-                            <CustomAccordion
-                              type="PROCEDURE"
-                              key={procedure.id}
-                              title={procedure.name[selectedLanguage]}
-                              procedureId={procedure.id}
-                            >
-                              <div className="flex flex-wrap items-center">
-                                {Object.entries(procedure.reimbursement).map(
-                                  ([key, value]) => {
-                                    return (
-                                      <ReimbursementWrapper
-                                        key={key}
-                                        id={key}
-                                        value={value}
-                                      />
-                                    );
-                                  },
-                                )}
-                              </div>
-                            </CustomAccordion>
-                          );
-                        })}
-                      </div>
-                    )}
                   </CustomAccordion>
                 </div>
               );
             },
-          )}
+          )
+        ) : (
+          <ContentLoader
+            speed={2}
+            height={500}
+            backgroundColor="#f3f3f3"
+            foregroundColor="#ecebeb"
+          >
+            <rect x="25" y="15" rx="5" ry="5" width="100%" height="64" />
+            <rect x="25" y="89" rx="5" ry="5" width="100%" height="64" />
+            <rect x="25" y="163" rx="5" ry="5" width="100%" height="64" />
+            <rect x="25" y="237" rx="5" ry="5" width="100%" height="64" />
+          </ContentLoader>
+        )}
       </div>
     </div>
   );

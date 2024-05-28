@@ -63,5 +63,7 @@
   "has-been-approved": "has been approved after which you can fill in your patient forms",
   "Home": "Home",
   "Add-case-details": "Add case details",
-  "Your-application-has-been": "Your application has been approved by PSH Hospital, please complete the information capture form to continue with the booking process"
+  "Your-application-has-been": "Your application has been approved by PSH Hospital, please complete the information capture form to continue with the booking process",
+  "Next": "Next",
+  "Previous": "Previous"
 }
