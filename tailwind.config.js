@@ -15,6 +15,7 @@ module.exports = {
       base: '1rem',
       lg: '1.125rem',
       xl: '1.25rem',
+      md: '2rem',
       '2xl': '1.5rem',
       '3xl': '1.875rem',
       '4xl': '2.25rem',
@@ -71,6 +72,10 @@ module.exports = {
         poppins: ['Poppins', 'sans-serif'],
         lexend: ['Lexend', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
+      },
+      lineHeight: {
+        15: '3.75rem',
+        12: '3rem',
       },
     },
   },
