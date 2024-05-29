@@ -2,7 +2,7 @@
 
 'use client';
 
-import { type ReactNode, useState } from 'react';
+import { type ReactNode, useEffect, useState } from 'react';
 
 import { useAppStore } from '@/libs/store';
 
@@ -19,6 +19,7 @@ interface AccordionProps {
     | 'SUB-CATEGORY-WITH-PROCEDURE';
   procedureId?: string;
   className?: string;
+  isAccordianOpen: boolean;
 }
 
 function CustomAccordion({
@@ -27,9 +28,19 @@ function CustomAccordion({
   procedureId,
   type,
   className,
+  isAccordianOpen,
 }: AccordionProps) {
   const [isOpen, setIsOpen] = useState(false);
   const { selectedProcedure, setSelectedProcedure } = useAppStore();
+
+  const setAccordianState = (isopen: boolean) => {
+    setIsOpen(isopen);
+  };
+
+  useEffect(() => {
+    setAccordianState(isAccordianOpen);
+  }, []);
+
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
   };

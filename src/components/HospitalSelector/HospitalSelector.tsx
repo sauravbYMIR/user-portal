@@ -124,7 +124,7 @@ const HospitalSelector = () => {
         </h3>
       </div>
       <div className="w-full">
-        <div className="mt-[40px] flex flex-wrap justify-start gap-[24px] sm:mt-[60px]">
+        <div className="mt-[40px] flex flex-wrap justify-center gap-[24px] sm:mt-[60px]">
           {allHospitals.data &&
           Array.isArray(allHospitals.data.data) &&
           allHospitals.data.data.length > 0 ? (

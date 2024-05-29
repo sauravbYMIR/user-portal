@@ -22,11 +22,16 @@ import brandTitle from '@/public/assets/icons/brandTitle.svg';
 
 const BookProcedure = () => {
   const { t } = useTranslation();
-  const { selectedCountry, selectedGender, selectedProcedure } = useAppStore();
+  const {
+    selectedCountry,
+    selectedGender,
+    selectedProcedure,
+    stepNumber,
+    setStepNumber,
+  } = useAppStore();
   const router = useRouter();
-  const [step, setStep] = React.useState<number>(1);
   const handleCountueBtnDisableStatus = () => {
-    switch (step) {
+    switch (stepNumber) {
       case 1:
         if (selectedCountry.length === 0) {
           toast.error('Please select country to proceed');
@@ -56,8 +61,9 @@ const BookProcedure = () => {
     }
     return false;
   };
+
   const handleClassNameCountueBtnDisableStatus = () => {
-    switch (step) {
+    switch (stepNumber) {
       case 1:
         if (selectedCountry.length === 0) {
           return true;
@@ -96,26 +102,21 @@ const BookProcedure = () => {
       <button
         type="button"
         className="absolute right-0 top-8  flex items-center justify-between pr-[32px] md:top-16  md:pr-[100px]"
-        onClick={() => {
-          // if (handleCountueBtnDisableStatus()) {
-          //   return;
-          // }
-          setStep((prevState) => prevState + 1);
-        }}
+        onClick={() => router.push('/')}
       >
         <span className="mr-4 hidden font-poppins text-2xl font-medium text-primary-2 sm:block">
-          Close
+          {t('Close')}
         </span>
         <CloseIcon className="size-8" />
       </button>
 
       <div className="relative mt-[50px] flex w-full items-baseline justify-between">
         <FbtProgress
-          value={Number(step) * 25}
+          value={Number(stepNumber) * 25}
           className="!h-2 w-[92%] sm:w-[95%] "
         />
         <span className="top-10 text-base sm:right-[-40px] sm:text-xl">
-          {step}/4
+          {stepNumber}/4
         </span>
       </div>
       <div className="relative flex w-full items-center justify-between py-[27px] ">
@@ -124,8 +125,8 @@ const BookProcedure = () => {
           className={` ${pageStyle.previousBtn} ${pageStyle.btn}`}
           type="button"
           onClick={() => {
-            if (step > 1) {
-              setStep((prevState) => prevState - 1);
+            if (stepNumber > 1) {
+              setStepNumber(stepNumber - 1);
               return;
             }
             router.back();
@@ -141,8 +142,8 @@ const BookProcedure = () => {
             if (handleCountueBtnDisableStatus()) {
               return;
             }
-            if (step < 4) {
-              setStep((prevState) => prevState + 1);
+            if (stepNumber < 4) {
+              setStepNumber(stepNumber + 1);
             }
           }}
         >
@@ -151,11 +152,11 @@ const BookProcedure = () => {
         </button>
       </div>
       <div className="m-5 w-full">
-        {step === 1 && <CountrySelector />}
-        {step === 2 && <GenderSelector />}
+        {stepNumber === 1 && <CountrySelector />}
+        {stepNumber === 2 && <GenderSelector />}
 
-        {step === 3 && <ProcedureSelector />}
-        {step === 4 && <HospitalSelector />}
+        {stepNumber === 3 && <ProcedureSelector />}
+        {stepNumber === 4 && <HospitalSelector />}
       </div>
     </div>
   );
