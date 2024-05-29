@@ -95,7 +95,7 @@ const handleLogOut = () => {
 };
 
 const getMonth = (date: string | Date) => {
-  const monthNum = new Date(date).getMonth();
+  const monthNum = new Date(date).getMonth() + 1;
   const month = {
     '1': 'Jan',
     '2': 'Feb',
