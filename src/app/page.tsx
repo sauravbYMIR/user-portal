@@ -15,6 +15,7 @@ import LandingPageStepper from '@/components/LandingPageStepper/LandingPageStepp
 import { FbtAccordion, FbtButton } from '@/components/ui';
 import useTranslation from '@/hooks/useTranslation';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
+import { useAppStore } from '@/libs/store';
 import carouselActiveCircle from '@/public/assets/icons/carouselActiveCircle.svg';
 import carouselCircle from '@/public/assets/icons/carouselCircle.svg';
 import appointmentIcon from '@/public/assets/icons/landingPageAppointment.svg';
@@ -89,6 +90,7 @@ function LandingPage() {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { matches } = useScreenWidth(500);
+  const { setStepNumber } = useAppStore();
 
   const howItWorksRef = useRef(null);
   const ourHospitalRef = useRef(null);
@@ -137,7 +139,10 @@ function LandingPage() {
               className={pageStyle.landingPageCtaBtn}
               size="sm"
               variant="solid"
-              onClick={() => router.push('/book-procedure')}
+              onClick={() => {
+                setStepNumber(1);
+                router.push('/book-procedure');
+              }}
             >
               <p className={pageStyle.ctaBtnText}>{t('Get-me-started')}</p>
               <Image src={arrowIcon} alt="arrow icon cta button" />

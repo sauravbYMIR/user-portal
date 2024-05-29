@@ -32,3 +32,15 @@ export const createBookingInfoSlice: StateCreator<CreateBookingInfoType> = (
   setSelectedHospitalName: (hospitalName: string) =>
     set(() => ({ selectedHospitalName: hospitalName })),
 });
+
+export type BookProcedureStepNumberType = {
+  stepNumber: number;
+  setStepNumber: (stepNumber: number) => void;
+};
+
+export const createBookingStepNumberSlice: StateCreator<
+  BookProcedureStepNumberType
+> = (set) => ({
+  stepNumber: 1,
+  setStepNumber: (num: number) => set(() => ({ stepNumber: num })),
+});

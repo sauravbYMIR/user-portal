@@ -34,7 +34,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
     tokenKey: 'selected_language',
   }) ?? 'en') as LocaleType;
   const { t } = useTranslation();
-  const { selectedHospitalName } = useAppStore();
+  const { selectedHospitalName, setStepNumber } = useAppStore();
   const router = useRouter();
   const { setIsLoginModalActive, isLoginModalActive, isOtpVerifyModalActive } =
     useAppStore();
@@ -110,7 +110,10 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
       <button
         type="button"
         className="cursor-pointer"
-        onClick={() => router.back()}
+        onClick={() => {
+          setStepNumber(4);
+          router.back();
+        }}
       >
         <Image src={backArrow} alt="back arrow icon" />
       </button>

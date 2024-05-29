@@ -43,6 +43,17 @@ const ProcedureSelector = () => {
                     type="DEPARTMENT"
                     title={procedureData.name[selectedLanguage]}
                     className={proceduresStyle.boxShadow}
+                    isAccordianOpen={
+                      procedureData.procedures.some(
+                        (ele) => ele.id === selectedProcedure,
+                      ) ||
+                      procedureData.subCategoryWithProcedures.some((subCat) => {
+                        return subCat.procedures.some(
+                          (subProcedureId) =>
+                            subProcedureId.id === selectedProcedure,
+                        );
+                      })
+                    }
                   >
                     {procedureData.procedures.length > 0 && (
                       <div
@@ -86,6 +97,9 @@ const ProcedureSelector = () => {
                               type="SUB-CATEGORY-WITH-PROCEDURE"
                               title={subCategoryData.name[selectedLanguage]}
                               className="font-medium"
+                              isAccordianOpen={subCategoryData.procedures.some(
+                                (ele) => ele.id === selectedProcedure,
+                              )}
                             >
                               {subCategoryData.procedures.length > 0 && (
                                 <div
