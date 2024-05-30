@@ -35,6 +35,7 @@ export type HospitalProcedureByIdType = {
   hospitalId: string;
   id: string;
   hospitalMembers: Array<HospitalMember>;
+  procedureMembers: Array<HospitalMember>;
   procedure: {
     category: {
       id: string;
