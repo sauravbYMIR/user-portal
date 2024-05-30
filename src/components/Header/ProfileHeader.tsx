@@ -1,74 +1,70 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 
+import headerStyles from '@/components/Header/header.module.scss';
 import brandTitle from '@/public/assets/icons/brandTitle.svg';
 
 import { ArrowDownIcon, ProfileIcon } from '../Icons/Icons';
-import {
-  FbtButton,
-  FbtDropdownMenu,
-  FbtDropdownMenuContent,
-  FbtDropdownMenuGroup,
-  FbtDropdownMenuItem,
-  FbtDropdownMenuLabel,
-  FbtDropdownMenuSeparator,
-  FbtDropdownMenuTrigger,
-} from '../ui';
 
-const ProfileHeader = () => {
+const ProfileHeader = ({
+  showLogo,
+  className,
+}: {
+  showLogo?: boolean;
+  className?: string;
+}) => {
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   return (
-    <nav className="flex items-center justify-between px-20 py-6">
-      <Image src={brandTitle} alt="brand-title" width={120} height={48} />
+    <nav
+      className={`${className}  flex items-center justify-between px-20 py-6`}
+    >
+      {showLogo && (
+        <Image src={brandTitle} alt="brand-title" width={120} height={48} />
+      )}
       <div className="flex items-center">
-        <ProfileIcon
-          className="size-12 rounded-full bg-primary-2 p-3"
-          stroke="#fff"
-        />
-        <FbtDropdownMenu>
-          <FbtDropdownMenuTrigger asChild>
-            <FbtButton variant="link">
-              <ArrowDownIcon />
-            </FbtButton>
-          </FbtDropdownMenuTrigger>
-          <FbtDropdownMenuContent>
-            <FbtDropdownMenuGroup className="!px-6 !py-2">
-              <FbtDropdownMenuItem>
-                <span className="font-lexend text-xl font-light text-neutral-2">
-                  Home Page
+        <div className="relative inline-block pl-[16px]">
+          <button type="button" onClick={() => setDropdownOpen(!dropdownOpen)}>
+            <div className="flex items-center gap-[10px]">
+              <ProfileIcon
+                className="size-12 rounded-full bg-primary-2 p-3"
+                stroke="#fff"
+              />
+              <ArrowDownIcon
+                className={`${dropdownOpen ? 'rotate-180' : 'rotate-0'} h-[20px]`}
+                stroke="rgba(9, 111, 144, 1)"
+                width="2"
+              />
+            </div>
+            <p className="hidden">d</p>
+          </button>
+          <div
+            style={{
+              display: dropdownOpen === true ? 'block' : 'none',
+            }}
+            className={`absolute right-[-30px] z-[2px] mt-[10px] w-[220px] rounded-[8px] bg-white ${headerStyles.boxShadow} `}
+          >
+            <div className="px-[20px]">
+              <div className="my-[20px] flex items-center justify-start gap-[20px]">
+                <span className="font-poppins text-[20px] text-neutral-2">
+                  <a href="/book-procedure" className="font-[16px] leading-6">
+                    Book procedure
+                  </a>
                 </span>
-              </FbtDropdownMenuItem>
-              <FbtDropdownMenuItem>
-                <span className="font-lexend text-xl font-light text-neutral-2">
-                  How it works
+              </div>
+            </div>
+            <div className="px-[20px]">
+              <div className="my-[20px] flex items-center justify-start gap-[20px]">
+                <span className="font-poppins text-[20px] text-neutral-2">
+                  <a href="/" className="font-[16px] leading-6">
+                    Logout
+                  </a>
                 </span>
-              </FbtDropdownMenuItem>
-              <FbtDropdownMenuItem>
-                <span className="font-lexend text-xl font-light text-neutral-2">
-                  Our hospitals
-                </span>
-              </FbtDropdownMenuItem>
-              <FbtDropdownMenuItem>
-                <span className="font-lexend text-xl font-light text-neutral-2">
-                  FAQs
-                </span>
-              </FbtDropdownMenuItem>
-            </FbtDropdownMenuGroup>
-            <FbtDropdownMenuSeparator />
-            <FbtDropdownMenuLabel className="!px-6 !py-2">
-              <span className="font-lexend text-xl font-light text-neutral-2">
-                Book a procedure
-              </span>
-            </FbtDropdownMenuLabel>
-            <FbtDropdownMenuSeparator />
-            <FbtDropdownMenuItem className="!px-6 !py-2">
-              <span className="font-lexend text-xl font-light text-neutral-2">
-                Log out
-              </span>
-            </FbtDropdownMenuItem>
-          </FbtDropdownMenuContent>
-        </FbtDropdownMenu>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   );

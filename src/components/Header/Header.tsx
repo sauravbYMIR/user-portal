@@ -8,16 +8,13 @@ import headerStyle from '@/components/Header/header.module.scss';
 import useTranslation from '@/hooks/useTranslation';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
 import { useAppStore } from '@/libs/store';
-import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
-import irelandFlag from '@/public/assets/icons/ireland.svg';
-import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
 import brandLogo from '@/public/assets/images/brandLogo.svg';
+import denmarkFlag from '@/public/assets/images/demark_flag.png';
+import irelandFlag from '@/public/assets/images/ireland_flag.png';
+import norwayFlag from '@/public/assets/images/norway_flag.png';
+import swedenFlag from '@/public/assets/images/sweden_flag.png';
 import type { LocaleType } from '@/types/component';
-import {
-  handleGetLocalStorage,
-  handleLogOut,
-  handleSetLocalStorage,
-} from '@/utils/global';
+import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
 
 import { CreateAccount } from '../Auth/CreateAccount';
 import { VerifyOtpSuspense } from '../Auth/VerifyOtp';
@@ -37,6 +34,7 @@ import {
   FbtSelectTrigger,
   FbtSelectValue,
 } from '../ui';
+import { ProfileHeader } from './ProfileHeader';
 
 const menuItems = [
   { value: 'How it works', label: 'How-it-works' },
@@ -126,62 +124,94 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
           })}
         </FbtHeaderContent>
 
-        <FbtHeaderContent>
-          <FbtSelect
-            defaultValue={selectedLanguage ?? 'en'}
-            onValueChange={(value: LocaleType) =>
-              handleSetLocalStorage({
-                tokenKey: 'selected_language',
-                tokenValue: value,
-              })
-            }
-          >
-            <FbtSelectTrigger
-              selectIconClassName={headerStyle.headerSelectTriggerIcon}
-              className={headerStyle.headerSelectTrigger}
+        <div className="flex items-center justify-center gap-[48px]">
+          <FbtHeaderContent>
+            <FbtSelect
+              defaultValue={selectedLanguage ?? 'en'}
+              onValueChange={(value: LocaleType) =>
+                handleSetLocalStorage({
+                  tokenKey: 'selected_language',
+                  tokenValue: value,
+                })
+              }
             >
-              <FbtSelectValue placeholder="Select" />
-            </FbtSelectTrigger>
+              <FbtSelectTrigger
+                selectIconClassName={headerStyle.headerSelectTriggerIcon}
+                className={headerStyle.headerSelectTrigger}
+              >
+                <FbtSelectValue placeholder="Select" />
+              </FbtSelectTrigger>
 
-            <FbtSelectContent className={headerStyle.headerSelectContent}>
-              <FbtSelectGroup>
-                <FbtSelectItem
-                  checkIconClassName={headerStyle.headerSelectTickIcon}
-                  className={headerStyle.headerSelectItem}
-                  value="no"
-                >
-                  NOR
-                </FbtSelectItem>
+              <FbtSelectContent className={headerStyle.headerSelectContent}>
+                <FbtSelectGroup>
+                  <FbtSelectItem
+                    checkIconClassName={headerStyle.headerSelectTickIcon}
+                    className={headerStyle.headerSelectItem}
+                    value="no"
+                  >
+                    <Image
+                      src={norwayFlag}
+                      alt="norway flag"
+                      width={38}
+                      height={38}
+                    />
+                  </FbtSelectItem>
 
-                <FbtSelectItem
-                  checkIconClassName={headerStyle.headerSelectTickIcon}
-                  className={headerStyle.headerSelectItem}
-                  value="en"
-                >
-                  EN
-                </FbtSelectItem>
+                  <FbtSelectItem
+                    checkIconClassName={headerStyle.headerSelectTickIcon}
+                    className={headerStyle.headerSelectItem}
+                    value="en"
+                  >
+                    <Image
+                      src={irelandFlag}
+                      alt="norway flag"
+                      width={38}
+                      height={38}
+                    />
+                  </FbtSelectItem>
 
-                <FbtSelectItem
-                  checkIconClassName={headerStyle.headerSelectTickIcon}
-                  className={headerStyle.headerSelectItem}
-                  value="da"
-                >
-                  {' '}
-                  DN
-                </FbtSelectItem>
-                <FbtSelectItem
-                  checkIconClassName={headerStyle.headerSelectTickIcon}
-                  className={headerStyle.headerSelectItem}
-                  value="sv"
-                >
-                  SV
-                </FbtSelectItem>
-              </FbtSelectGroup>
-            </FbtSelectContent>
-          </FbtSelect>
-        </FbtHeaderContent>
-
-        <FbtHeaderContent>
+                  <FbtSelectItem
+                    checkIconClassName={headerStyle.headerSelectTickIcon}
+                    className={headerStyle.headerSelectItem}
+                    value="da"
+                  >
+                    <Image
+                      src={denmarkFlag}
+                      alt="norway flag"
+                      width={38}
+                      height={38}
+                    />
+                  </FbtSelectItem>
+                  <FbtSelectItem
+                    checkIconClassName={headerStyle.headerSelectTickIcon}
+                    className={headerStyle.headerSelectItem}
+                    value="sv"
+                  >
+                    <Image
+                      src={swedenFlag}
+                      alt="norway flag"
+                      width={38}
+                      height={38}
+                    />
+                  </FbtSelectItem>
+                </FbtSelectGroup>
+              </FbtSelectContent>
+            </FbtSelect>
+          </FbtHeaderContent>
+          {accessToken ? (
+            <ProfileHeader showLogo={false} className="px-px py-0" />
+          ) : (
+            <FbtButton
+              className={headerStyle.headerLoginBtn}
+              size="lg"
+              variant="outline"
+              onClick={() => setIsLoginModalActive(true)}
+            >
+              Log in
+            </FbtButton>
+          )}
+        </div>
+        {/* <FbtHeaderContent>
           <FbtHeaderItem>
             {accessToken ? (
               <FbtButton
@@ -203,7 +233,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
               </FbtButton>
             )}
           </FbtHeaderItem>
-        </FbtHeaderContent>
+        </FbtHeaderContent> */}
 
         {matches && (
           <div className={headerStyle.headerMobIconContainer}>
@@ -302,11 +332,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
 
             <FbtHeaderMenuItem className={headerStyle.liWrapper}>
               {accessToken ? (
-                <Link
-                  className={headerStyle.menuItemBtn}
-                  href="./"
-                  onClick={handleLogOut}
-                >
+                <Link className={headerStyle.menuItemBtn} href="./">
                   Log out
                 </Link>
               ) : (
