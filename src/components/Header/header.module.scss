@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   background: var(--Colour-Primary-5, #e1f7fe) !important;
-  padding: 0px 80px;
+  padding: 24px 80px;
   gap: 149px;
   border: none;
   z-index: 9990;
@@ -38,7 +38,7 @@
     border: 2px solid #d9dee7;
     background: var(--colour-neutral-6, #f9f9f9);
     width: 128px;
-    height: 64px;
+    height: 50px;
     box-sizing: border-box;
     outline: none;
     overflow: hidden;
@@ -152,6 +152,7 @@
   font-weight: 400 !important;
   line-height: 20px !important;
   letter-spacing: 0.4px !important;
+  display: flex;
 }
 
 .headerSelectTickIcon {
@@ -163,6 +164,10 @@
   background: var(--Colour-Neutral-6, #eceff3) !important;
   color: var(--Colour-Neutral-1, #181b20);
   font-weight: 500 !important;
+}
+
+.boxShadow {
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.1) !important;
 }
 
 @media only screen and (max-width: 500px) {

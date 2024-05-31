@@ -293,7 +293,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           {hospitalProcedureId.isSuccess && hospitalProcedureId.data.data && (
             <div>
               {!(
-                hospitalProcedureId.data.data.hospitalMembers.length === 0
+                hospitalProcedureId.data.data.procedureMembers.length === 0
               ) && (
                 <div className={style.teamMemberViewSection}>
                   <div className="my-[32px] flex items-center justify-between">
@@ -312,7 +312,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
 
                   <div className={style.teamMemberCardsContainer}>
                     {searchMemberQuery
-                      ? hospitalProcedureId.data.data.hospitalMembers
+                      ? hospitalProcedureId.data.data.procedureMembers
                           .filter((member) =>
                             member.name
                               .toLowerCase()
@@ -332,7 +332,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                               />
                             );
                           })
-                      : hospitalProcedureId.data.data.hospitalMembers.map(
+                      : hospitalProcedureId.data.data.procedureMembers.map(
                           (member) => {
                             return (
                               <TeamMemberCard
