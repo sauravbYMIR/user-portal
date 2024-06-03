@@ -25,7 +25,11 @@ import { useAppStore } from '@/libs/store';
 import backArrow from '@/public/assets/icons/backArrow.svg';
 import hospitalLogo from '@/public/assets/icons/sampleLogo.svg';
 import type { LocaleType } from '@/types/component';
-import { getMonth, handleGetLocalStorage } from '@/utils/global';
+import {
+  convertToValidCurrency,
+  getMonth,
+  handleGetLocalStorage,
+} from '@/utils/global';
 
 import style from './style.module.scss';
 
@@ -83,6 +87,9 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   if (!isMounted) {
     return null;
   }
+  const selectedLanguageFromUserDropdown = handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  });
   const handleCreateBooking = () => {
     if (!startDate || !endDate) {
       toast.error('Please select treatment date to continue');
@@ -225,7 +232,11 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   {t('Cost-of-procedure')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
-                  {hospitalProcedureId.data.data.cost[selectedLanguage]}
+                  {convertToValidCurrency({
+                    price: hospitalProcedureId.data.data.cost.price,
+                    locale: selectedLanguageFromUserDropdown ?? 'en',
+                    currency: hospitalProcedureId.data.data.cost.currency,
+                  })}
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">

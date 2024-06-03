@@ -23,15 +23,22 @@ export type Hospital = {
   city: string;
   country: string;
   hospitalDesc: NameJSONType;
-  costOfProcedure: ReimbursementJSONType;
+  costOfProcedure: {
+    price: number;
+    currency: string;
+  };
   reimBursementCost: ReimbursementJSONType;
+  hospitalLogo: string | false;
 };
 
 export type HospitalProcedureByIdType = {
   createdAt: string | null;
   deletedAt: string | null;
   description: NameJSONType;
-  cost: ReimbursementJSONType;
+  cost: {
+    price: number;
+    currency: string;
+  };
   hospitalId: string;
   id: string;
   hospitalMembers: Array<HospitalMember>;

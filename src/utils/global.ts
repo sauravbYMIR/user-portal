@@ -4,6 +4,8 @@ import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
 import swedenFlag from '@/public/assets/icons/swedenFlag.svg';
 import type { LanguagesType } from '@/types/component';
 
+export type CountryCodeType = 'ie' | 'no' | 'dk' | 'se';
+
 type CountryData = {
   name: string;
   language: LanguagesType;
@@ -92,6 +94,7 @@ const handleLogOut = () => {
   handleRemoveFromLocalStorage({ tokenKey: 'access_token' });
   handleRemoveFromLocalStorage({ tokenKey: 'refresh_token' });
   handleRemoveFromLocalStorage({ tokenKey: 'user_id' });
+  handleRemoveFromLocalStorage({ tokenKey: 'otp_verify_token' });
 };
 
 const getMonth = (date: string | Date) => {
@@ -113,7 +116,18 @@ const getMonth = (date: string | Date) => {
   return month[monthNum.toString() as keyof typeof month];
 };
 
+const convertToValidCurrency = ({
+  locale,
+  price,
+  currency,
+}: {
+  locale: string;
+  price: number;
+  currency: string;
+}) => price.toLocaleString(locale, { style: 'currency', currency });
+
 export {
+  convertToValidCurrency,
   countryData,
   getMonth,
   handleGetLocalStorage,

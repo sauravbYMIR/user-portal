@@ -211,29 +211,6 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
             </FbtButton>
           )}
         </div>
-        {/* <FbtHeaderContent>
-          <FbtHeaderItem>
-            {accessToken ? (
-              <FbtButton
-                className={headerStyle.headerLoginBtn}
-                size="lg"
-                variant="outline"
-                onClick={handleLogOut}
-              >
-                Log out
-              </FbtButton>
-            ) : (
-              <FbtButton
-                className={headerStyle.headerLoginBtn}
-                size="lg"
-                variant="outline"
-                onClick={() => setIsLoginModalActive(true)}
-              >
-                Log in
-              </FbtButton>
-            )}
-          </FbtHeaderItem>
-        </FbtHeaderContent> */}
 
         {matches && (
           <div className={headerStyle.headerMobIconContainer}>

@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 import headerStyles from '@/components/Header/header.module.scss';
 import brandTitle from '@/public/assets/icons/brandTitle.svg';
+import { handleLogOut } from '@/utils/global';
 
 import { ArrowDownIcon, ProfileIcon } from '../Icons/Icons';
 
@@ -55,13 +56,15 @@ const ProfileHeader = ({
               </div>
             </div>
             <div className="px-[20px]">
-              <div className="my-[20px] flex items-center justify-start gap-[20px]">
+              <button
+                type="button"
+                className="my-[20px] flex items-center justify-start gap-[20px] border-2 border-red-500"
+                onClick={handleLogOut}
+              >
                 <span className="font-poppins text-[20px] text-neutral-2">
-                  <a href="/" className="font-[16px] leading-6">
-                    Logout
-                  </a>
+                  <span className="font-[16px] leading-6">Logout</span>
                 </span>
-              </div>
+              </button>
             </div>
           </div>
         </div>

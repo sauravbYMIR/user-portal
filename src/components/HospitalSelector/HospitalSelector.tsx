@@ -5,9 +5,14 @@ import React from 'react';
 import { useGetHospitalByProcedureId } from '@/hooks/useHospital';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
-import brandLogo from '@/public/assets/images/brandLogo.svg';
 import noHospital from '@/public/assets/images/noHospital.png';
+import {
+  convertToValidCurrency,
+  countryData,
+  handleGetLocalStorage,
+} from '@/utils/global';
 
+import { HospitalIcon } from '../Icons/Icons';
 import { FbtButton } from '../ui';
 
 const HospitalCard = ({
@@ -20,6 +25,7 @@ const HospitalCard = ({
   hospitalDesc,
   costOfProcedure,
   reimBursementCost,
+  hospitalLogo,
 }: {
   selectedHospital: string;
   id: string;
@@ -30,6 +36,7 @@ const HospitalCard = ({
   hospitalDesc: string;
   costOfProcedure: string;
   reimBursementCost: string;
+  hospitalLogo: false | string;
 }) => {
   const { t } = useTranslation();
   const { setSelectedHospital, setSelectedHospitalName } = useAppStore();
@@ -45,11 +52,17 @@ const HospitalCard = ({
         {waitTime} days
       </div>
       <div className="mt-[21px] flex items-center justify-between">
-        <Image
-          src={brandLogo}
-          className="size-12 rounded-full border-2 border-neutral-5"
-          alt="hospital-logo"
-        />
+        {hospitalLogo && typeof hospitalLogo === 'string' ? (
+          <Image
+            src={hospitalLogo}
+            className="size-12 rounded-full border-2 border-neutral-5"
+            alt="hospital-logo"
+            height={48}
+            width={48}
+          />
+        ) : (
+          <HospitalIcon className="size-12 rounded-full border-2 border-neutral-5" />
+        )}
         <div className="ml-3 flex flex-col items-start">
           <h3 className="font-poppins text-xl font-medium text-neutral-1">
             {hospitalName}
@@ -108,14 +121,13 @@ const HospitalSelector = () => {
     da: '',
     sv: '',
   };
-  const costType = {
-    en: 0,
-    nb: 0,
-    da: 0,
-    sv: 0,
-  };
-  const selectedLanguageName = selectedCountry as keyof typeof nameType;
-  const selectedLanguageCost = selectedCountry as keyof typeof costType;
+  const selectedReimbursementCountry = selectedCountry as keyof typeof nameType;
+  const selectedLanguageFromUserDropdown = handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  });
+  const selectedCountryInfo = countryData.find(
+    (countryInfo) => countryInfo.locale === selectedReimbursementCountry,
+  );
   return (
     <div className="flex flex-col items-center justify-center gap-2 ">
       <div className="w-8/12">
@@ -138,9 +150,27 @@ const HospitalSelector = () => {
                   hospitalName={hospital.hospitalName}
                   city={hospital.city}
                   country={hospital.country}
-                  hospitalDesc={hospital.hospitalDesc[selectedLanguageName]}
-                  costOfProcedure={`${hospital.costOfProcedure[selectedLanguageCost]}`}
-                  reimBursementCost={`${hospital.reimBursementCost[selectedLanguageCost]}`}
+                  hospitalDesc={
+                    hospital.hospitalDesc[
+                      (selectedLanguageFromUserDropdown as keyof typeof nameType) ??
+                        'en'
+                    ]
+                  }
+                  costOfProcedure={convertToValidCurrency({
+                    price: hospital.costOfProcedure.price,
+                    locale: selectedLanguageFromUserDropdown ?? 'en',
+                    currency: hospital.costOfProcedure.currency,
+                  })}
+                  reimBursementCost={`${
+                    selectedCountryInfo?.countryCode
+                      ? convertToValidCurrency({
+                          price: hospital.reimBursementCost.ie,
+                          currency: selectedCountryInfo.currency,
+                          locale: selectedCountryInfo.locale,
+                        })
+                      : ''
+                  }`}
+                  hospitalLogo={hospital.hospitalLogo}
                 />
               );
             })
