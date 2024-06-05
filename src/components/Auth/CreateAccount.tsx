@@ -5,7 +5,6 @@
 import 'react-phone-number-input/style.css';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
@@ -54,8 +53,11 @@ const LoginUserAccountSchema = z.object({
 export type LoginUserAccountFormFields = z.infer<typeof LoginUserAccountSchema>;
 const CreateAccount = () => {
   const [isLogin, setIsLogin] = React.useState<boolean>(false);
-  const { setIsLoginModalActive, setIsOtpVerifyModalActive } = useAppStore();
-  const router = useRouter();
+  const {
+    setIsLoginModalActive,
+    setIsOtpVerifyModalActive,
+    setSelectedPhoneNumber,
+  } = useAppStore();
   const languageList: Array<PreferredLanguageType> = countryData.map(
     (data) => ({
       label: data.language,
@@ -66,14 +68,11 @@ const CreateAccount = () => {
     label: string;
     value: string;
   } | null>(null);
-  const {
-    register,
-    handleSubmit,
-    control,
-    getValues,
-    formState: { errors, isSubmitting },
-  } = useForm<CreateUserAccountFormFields>({
+  const createUserRHF = useForm<CreateUserAccountFormFields>({
     resolver: zodResolver(createUserAccountSchema),
+  });
+  const loginUserRHF = useForm<CreateUserAccountFormFields>({
+    resolver: zodResolver(LoginUserAccountSchema),
   });
   const onCreateAccountFormSubmit: SubmitHandler<
     CreateUserAccountFormFields
@@ -91,7 +90,7 @@ const CreateAccount = () => {
         });
         setIsOtpVerifyModalActive(true);
         setIsLoginModalActive(false);
-        router.replace(`/?phonenumber=${getValues('phoneNumber')}`);
+        setSelectedPhoneNumber(createUserRHF.getValues('phoneNumber'));
       }
     } catch (error) {
       toast.error(error as string);
@@ -100,6 +99,7 @@ const CreateAccount = () => {
   const onLoginFormSubmit: SubmitHandler<LoginUserAccountFormFields> = async (
     data: LoginUserAccountFormFields,
   ) => {
+    console.log('here');
     try {
       const response = await userlogin({
         phoneNumber: data.phoneNumber,
@@ -111,7 +111,7 @@ const CreateAccount = () => {
         });
         setIsOtpVerifyModalActive(true);
         setIsLoginModalActive(false);
-        router.replace(`/?phonenumber=${getValues('phoneNumber')}`);
+        setSelectedPhoneNumber(loginUserRHF.getValues('phoneNumber'));
       }
     } catch (error) {
       toast.error(error as string);
@@ -144,7 +144,7 @@ const CreateAccount = () => {
       </div>
       {!isLogin ? (
         <form
-          onSubmit={handleSubmit(onCreateAccountFormSubmit)}
+          onSubmit={createUserRHF.handleSubmit(onCreateAccountFormSubmit)}
           className="my-12 flex w-full flex-col items-center px-10"
         >
           <div className="mb-8 flex w-full flex-col items-start">
@@ -159,11 +159,11 @@ const CreateAccount = () => {
               className="mt-2 w-full rounded-[10.67px] border-2 border-lightsilver px-3 py-5"
               id="email"
               type="text"
-              {...register('email')}
+              {...createUserRHF.register('email')}
             />
-            {errors.email && (
+            {createUserRHF.formState.errors.email && (
               <div className="mt-2 text-center font-lexend text-base font-normal text-error">
-                {errors.email.message}
+                {createUserRHF.formState.errors.email.message}
               </div>
             )}
           </div>
@@ -176,7 +176,7 @@ const CreateAccount = () => {
             </label>
             <Controller
               name="phoneNumber"
-              control={control}
+              control={createUserRHF.control}
               rules={{
                 validate: (value) => isValidPhoneNumber(value),
               }}
@@ -192,9 +192,9 @@ const CreateAccount = () => {
                 />
               )}
             />
-            {errors.phoneNumber && (
+            {createUserRHF.formState.errors.phoneNumber && (
               <p className="mt-2 font-lexend text-base font-normal text-error">
-                {errors.phoneNumber.message}
+                {createUserRHF.formState.errors.phoneNumber.message}
               </p>
             )}
           </div>
@@ -207,7 +207,7 @@ const CreateAccount = () => {
             </label>
             <Controller
               name="preferredLanguage"
-              control={control}
+              control={createUserRHF.control}
               defaultValue={
                 selectedOption?.label
                   ? selectedOption
@@ -226,9 +226,9 @@ const CreateAccount = () => {
                 />
               )}
             />
-            {errors.preferredLanguage && (
+            {createUserRHF.formState.errors.preferredLanguage && (
               <div className="mt-1 text-start font-lexend text-base font-normal text-error">
-                {errors.preferredLanguage.message}
+                {createUserRHF.formState.errors.preferredLanguage.message}
               </div>
             )}
           </div>
@@ -249,12 +249,12 @@ const CreateAccount = () => {
           <FbtButton
             type="submit"
             variant="solid"
-            disabled={isSubmitting}
+            disabled={createUserRHF.formState.isSubmitting}
             className="!h-[64px] !w-full !rounded-[6.4px]"
           >
-            {isSubmitting ? (
+            {createUserRHF.formState.isSubmitting ? (
               <ClipLoader
-                loading={isSubmitting}
+                loading={createUserRHF.formState.isSubmitting}
                 color="#fff"
                 size={30}
                 aria-label="Loading Spinner"
@@ -269,7 +269,7 @@ const CreateAccount = () => {
         </form>
       ) : (
         <form
-          onSubmit={handleSubmit(onLoginFormSubmit)}
+          onSubmit={loginUserRHF.handleSubmit(onLoginFormSubmit)}
           className="my-12 flex w-full flex-col items-center px-10"
         >
           <div className="mb-8 w-full flex-col items-start">
@@ -281,7 +281,7 @@ const CreateAccount = () => {
             </label>
             <Controller
               name="phoneNumber"
-              control={control}
+              control={loginUserRHF.control}
               rules={{
                 validate: (value) => isValidPhoneNumber(value),
               }}
@@ -297,9 +297,9 @@ const CreateAccount = () => {
                 />
               )}
             />
-            {errors.phoneNumber && (
+            {loginUserRHF.formState.errors.phoneNumber && (
               <p className="mt-2 font-lexend text-base font-normal text-error">
-                {errors.phoneNumber.message}
+                {loginUserRHF.formState.errors.phoneNumber.message}
               </p>
             )}
           </div>
@@ -320,12 +320,12 @@ const CreateAccount = () => {
           <FbtButton
             type="submit"
             variant="solid"
-            disabled={isSubmitting}
+            disabled={loginUserRHF.formState.isSubmitting}
             className="!h-[64px] !w-full !rounded-[6.4px]"
           >
-            {isSubmitting ? (
+            {loginUserRHF.formState.isSubmitting ? (
               <ClipLoader
-                loading={isSubmitting}
+                loading={loginUserRHF.formState.isSubmitting}
                 color="#fff"
                 size={30}
                 aria-label="Loading Spinner"

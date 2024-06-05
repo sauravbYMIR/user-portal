@@ -20,7 +20,7 @@ const Procedure = () => {
 
   return (
     <ProfileLayout heading="My procedures">
-      <main className="flex  flex-col">
+      <main className="flex flex-col">
         <div className="flex items-start">
           <div className="flex flex-col items-start">
             <div className="flex flex-col gap-4">

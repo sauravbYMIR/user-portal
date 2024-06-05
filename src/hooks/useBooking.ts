@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 
 import { axiosInstance } from '@/utils/axiosInstance';
 
-import type { NameJSONType } from './useDepartment';
+import type { NameJSONType, ReimbursementJSONType } from './useDepartment';
 
 export type BookingType = {
   id: string;
@@ -21,16 +21,39 @@ export type BookingResponse = {
   success: boolean;
   status: number;
 };
+
+export type ApplicationBookingStatusType =
+  | 'rejected'
+  | 'accepted'
+  | 'requested';
+
+export type BookingDetailType = {
+  id: string;
+  gender: string;
+  claimCountry: string;
+  applicationDate: string;
+  preferredLanguage: string;
+  procedureName: NameJSONType;
+  patientPreferredStartDate: string;
+  patientPreferredEndDate: string;
+  applicationStatus: ApplicationBookingStatusType;
+  hospitalName: string;
+  elfSightScript: null | NameJSONType;
+  hospitalStay: string;
+  waitTime: string;
+  costOfProcedure: { price: number; currency: string };
+  reimbursementCost: ReimbursementJSONType;
+  elfSightFormSubmitStatus: boolean;
+  cityStay: string;
+};
 export const createBooking = async ({
   hospitalProcedureId,
-  userId,
   gender,
   claimCountry,
   patientPreferredStartDate,
   patientPreferredEndDate,
 }: {
   hospitalProcedureId: string;
-  userId: string;
   gender: string;
   claimCountry: string;
   patientPreferredStartDate: Date;
@@ -42,7 +65,6 @@ export const createBooking = async ({
     data: string;
   }>(`${process.env.BASE_URL}/bookings`, {
     hospitalProcedureId,
-    userId,
     gender,
     claimCountry,
     patientPreferredStartDate,
@@ -93,10 +115,12 @@ export const getBookingDetails = async ({
   bookingId,
 }: {
   bookingId: string;
-}): Promise<any> => {
-  const response = await axiosInstance.get<any>(
-    `${process.env.BASE_URL}/bookings/booking-detail/${bookingId}`,
-  );
+}): Promise<{ success: boolean; status: number; data: BookingDetailType }> => {
+  const response = await axiosInstance.get<{
+    success: boolean;
+    status: number;
+    data: BookingDetailType;
+  }>(`${process.env.BASE_URL}/bookings/booking-detail/${bookingId}`);
   return {
     success: response.data.success,
     status: response.data.status,
@@ -114,17 +138,14 @@ export const useGetBookingDetails = (bookingId: string) => {
 export const updateElfsightStatus = async ({
   bookingId,
   status,
-  userId,
 }: {
   bookingId: string;
   status: boolean;
-  userId: string;
 }): Promise<any> => {
   await axiosInstance.patch<any>(
     `${process.env.BASE_URL}/bookings/update-elfsight-status/${bookingId}`,
     {
       status,
-      userId,
     },
   );
   return {

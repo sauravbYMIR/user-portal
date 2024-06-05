@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 import headerStyles from '@/components/Header/header.module.scss';
@@ -17,12 +18,15 @@ const ProfileHeader = ({
   className?: string;
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const router = useRouter();
   return (
     <nav
       className={`${className}  flex items-center justify-between px-20 py-6`}
     >
       {showLogo && (
-        <Image src={brandTitle} alt="brand-title" width={120} height={48} />
+        <button type="button" onClick={() => router.push('/')}>
+          <Image src={brandTitle} alt="brand-title" width={120} height={48} />
+        </button>
       )}
       <div className="flex items-center">
         <div className="relative inline-block pl-[16px]">
@@ -58,7 +62,7 @@ const ProfileHeader = ({
             <div className="px-[20px]">
               <button
                 type="button"
-                className="my-[20px] flex items-center justify-start gap-[20px] border-2 border-red-500"
+                className="my-[20px] flex items-center justify-start gap-[20px]"
                 onClick={handleLogOut}
               >
                 <span className="font-poppins text-[20px] text-neutral-2">

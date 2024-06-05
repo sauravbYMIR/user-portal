@@ -1,5 +1,5 @@
-import { useSearchParams } from 'next/navigation';
-import React, { Suspense } from 'react';
+import { useRouter } from 'next/navigation';
+import React from 'react';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
@@ -14,10 +14,10 @@ import { FbtButton } from '../ui';
 import OTPInputWrapper from './OtpInputWrapper';
 
 const VerifyOtp = () => {
+  const router = useRouter();
   const { t } = useTranslation();
-  const { setIsOtpVerifyModalActive } = useAppStore();
-  const searchParams = useSearchParams();
-  const phoneNumber = searchParams.get('phonenumber');
+  const { setIsOtpVerifyModalActive, selectedHospital, selectedPhoneNumber } =
+    useAppStore();
   const [otp, setOtp] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isResendOtpLoader, setIsResendOtpLoader] =
@@ -63,10 +63,9 @@ const VerifyOtp = () => {
           tokenKey: 'refresh_token',
           tokenValue: response.data.refreshToken,
         });
-        handleSetLocalStorage({
-          tokenKey: 'user_id',
-          tokenValue: response.data.userId,
-        });
+        if (selectedHospital) {
+          router.push(`/hospital/${selectedHospital}`);
+        }
       }
     } catch (e) {
       setIsLoading(false);
@@ -90,7 +89,7 @@ const VerifyOtp = () => {
         {t('Verify-with-OTP')}
       </h1>
       <p className="text-center font-lexend text-xl font-light text-neutral-2">
-        {t('A-6-digit-code-has-been-sent-to')} {phoneNumber}
+        {t('A-6-digit-code-has-been-sent-to')} {selectedPhoneNumber}
       </p>
       <div className="mt-12 flex flex-col items-start">
         <p className="font-lexend text-xl font-light">OTP</p>
@@ -146,12 +145,4 @@ const VerifyOtp = () => {
   );
 };
 
-const VerifyOtpSuspense = () => {
-  return (
-    <Suspense>
-      <VerifyOtp />
-    </Suspense>
-  );
-};
-
-export { VerifyOtpSuspense };
+export { VerifyOtp };

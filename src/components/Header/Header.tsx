@@ -17,7 +17,7 @@ import type { LocaleType } from '@/types/component';
 import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
 
 import { CreateAccount } from '../Auth/CreateAccount';
-import { VerifyOtpSuspense } from '../Auth/VerifyOtp';
+import { VerifyOtp } from '../Auth/VerifyOtp';
 import {
   FbtButton,
   FbtHeader,
@@ -326,7 +326,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
         )}
       </FbtHeader>
       {isLoginModalActive && <CreateAccount />}
-      {isOtpVerifyModalActive && <VerifyOtpSuspense />}
+      {isOtpVerifyModalActive && <VerifyOtp />}
     </>
   );
 }

@@ -25,12 +25,11 @@ const Sidebar = (): JSX.Element => {
           key={item.name}
           onClick={() => router.push(item.route)}
         >
-          <button
+          <span
             className={`flex w-[262px] items-start rounded-xl ${item.route === pathname ? 'bg-neutral-6' : ''} px-5 py-4 font-poppins text-xl font-medium text-primary-2`}
-            type="button"
           >
             {t(item.name)}
-          </button>
+          </span>
         </button>
       ))}
     </div>

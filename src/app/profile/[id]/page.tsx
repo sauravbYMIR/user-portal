@@ -2,24 +2,95 @@
 
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
+import { BackArrowIcon } from '@/components/Icons/Icons';
 import { FacebookStyleLoader } from '@/components/Loader/FacebookStyleLoader';
+import type { ApplicationBookingStatusType } from '@/hooks/useBooking';
 import { updateElfsightStatus, useGetBookingDetails } from '@/hooks/useBooking';
 import useTranslation from '@/hooks/useTranslation';
-import backArrow from '@/public/assets/icons/backArrow.svg';
 import type { LocaleType } from '@/types/component';
-import { handleGetLocalStorage } from '@/utils/global';
+import { convertToValidCurrency, handleGetLocalStorage } from '@/utils/global';
 
 import style from '../../hospital/[id]/style.module.scss';
+
+const BookingStatus = ({
+  status,
+}: {
+  status: ApplicationBookingStatusType;
+}) => {
+  switch (status) {
+    case 'accepted':
+      return (
+        <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
+          Your application has been approved by PSH Hospitall, please complete
+          the information capture form to continue with the booking process
+        </span>
+      );
+    case 'rejected':
+      return (
+        <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
+          Your application has been declined by PSH Hospital, please apply to
+          different hospital that offers the same procedure
+        </span>
+      );
+    case 'requested':
+      return (
+        <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
+          Your application has been sent to PSH Hospital, after the hospital
+          accepts your request, you will be notified of your status and must
+          fill up your declaration form
+        </span>
+      );
+
+    default:
+      return <div />;
+  }
+};
+
+const BookingStatusButton = ({
+  status,
+}: {
+  status: ApplicationBookingStatusType;
+}) => {
+  const { t } = useTranslation();
+  const router = useRouter();
+  switch (status) {
+    case 'accepted':
+      return (
+        <button
+          type="button"
+          className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
+          data-elfsight-show-form="00e19ab8-b869-460e-ac3c-0aa9cbf597fb"
+        >
+          {t('Add-case-details')}
+        </button>
+      );
+
+    case 'rejected':
+      return (
+        <button
+          type="button"
+          className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
+          onClick={() => router.push('/book-procedure')}
+        >
+          {t('Apply-for-another-procedure')}
+        </button>
+      );
+
+    case 'requested':
+      return <div />;
+
+    default:
+      return <div />;
+  }
+};
 
 function HospitalDetailsPage({ params }: { params: { id: string } }) {
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
   const bookingDetails = useGetBookingDetails(params.id);
-  const userId = handleGetLocalStorage({ tokenKey: 'user_id' });
   const router = useRouter();
   React.useEffect(() => {
     setTimeout(() => {
@@ -28,12 +99,11 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           updateElfsightStatus({
             bookingId: params.id,
             status: true,
-            userId: userId ?? '',
           });
         });
       }
     }, 0);
-  }, [params.id, userId]);
+  }, [params.id]);
   const { t } = useTranslation();
   const selectedLanguage = (handleGetLocalStorage({
     tokenKey: 'selected_language',
@@ -44,6 +114,9 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   if (!isMounted) {
     return null;
   }
+  const selectedLanguageFromUserDropdown = handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  });
   return (
     <div className={style.hospitalDetailPageContainer}>
       {!bookingDetails.isLoading &&
@@ -51,10 +124,14 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
         bookingDetails.data.data && (
           <div>
             {!bookingDetails.data.data.elfSightFormSubmitStatus && (
-              <div
-                className={`elfsight-app-${bookingDetails.data.data?.elfSightScript[selectedLanguage]}`}
-                data-elfsight-app-lazy
-              />
+              <div>
+                {bookingDetails.data.data?.elfSightScript && (
+                  <div
+                    className={`elfsight-app-${bookingDetails.data.data?.elfSightScript[selectedLanguage]}`}
+                    data-elfsight-app-lazy
+                  />
+                )}
+              </div>
             )}
           </div>
         )}
@@ -63,7 +140,8 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
         className="cursor-pointer"
         onClick={() => router.back()}
       >
-        <Image src={backArrow} alt="back arrow icon" />
+        <span style={{ display: 'none' }}>back arrow</span>
+        <BackArrowIcon strokeWidth="2" stroke="rgba(17, 17, 17, 0.8)" />
       </button>
 
       {bookingDetails.isLoading ? (
@@ -93,17 +171,12 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             bookingDetails.data.data &&
             !bookingDetails.data.data.elfSightFormSubmitStatus && (
               <div className="mb-[47px] mt-[62px] w-full items-center justify-between rounded-[6.4px] border border-neutral-7 bg-neutral-7 px-9 py-[34px] sm:flex">
-                <span className="w-[90%] font-poppins text-xl font-normal text-neutral-1">
-                  {/* // TODO: SHOW MESSAGE WRT BOOKING STATUS */}
-                  {t('Your-application-has-been')}
-                </span>
-                <button
-                  type="button"
-                  className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
-                  data-elfsight-show-form="00e19ab8-b869-460e-ac3c-0aa9cbf597fb"
-                >
-                  {t('Add-case-details')}
-                </button>
+                <BookingStatus
+                  status={bookingDetails.data.data.applicationStatus}
+                />
+                <BookingStatusButton
+                  status={bookingDetails.data.data.applicationStatus}
+                />
               </div>
             )}
           {bookingDetails.isSuccess && bookingDetails.data.data && (
@@ -113,7 +186,11 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   {t('Cost-of-procedure')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
-                  {bookingDetails.data.data.costOfProcedure[selectedLanguage]}
+                  {convertToValidCurrency({
+                    price: bookingDetails.data.data.costOfProcedure.price,
+                    locale: selectedLanguageFromUserDropdown ?? 'en',
+                    currency: bookingDetails.data.data.costOfProcedure.currency,
+                  })}
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
@@ -129,7 +206,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   {t('Duration-of-city-stay')}
                 </p>
                 <p className="font-lexend text-base font-light text-neutral-2">
-                  {bookingDetails.data.data?.stayInCity ?? 8}
+                  {bookingDetails.data.data?.cityStay}
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">

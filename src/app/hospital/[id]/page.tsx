@@ -14,7 +14,7 @@ import { ClipLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
 import { CreateAccount } from '@/components/Auth/CreateAccount';
-import { VerifyOtpSuspense } from '@/components/Auth/VerifyOtp';
+import { VerifyOtp } from '@/components/Auth/VerifyOtp';
 import { BackArrowIcon, SearchIcon } from '@/components/Icons/Icons';
 import { FacebookStyleLoader } from '@/components/Loader/FacebookStyleLoader';
 import { TeamMemberCard } from '@/components/TeamMemberCard/TeamMemberCard';
@@ -41,7 +41,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const { setIsLoginModalActive, isLoginModalActive, isOtpVerifyModalActive } =
     useAppStore();
-  const userId = handleGetLocalStorage({ tokenKey: 'user_id' });
+  const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   const createBooking = useCreateBooking();
   const [searchMemberQuery, setSearchMemberQuery] = React.useState<string>('');
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
@@ -94,23 +94,19 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
       toast.error('Please select treatment date to continue');
       return;
     }
-    if (!userId) {
+    if (!accessToken) {
       setIsLoginModalActive(true);
-      return;
-    }
-    if (!startDate || !endDate) {
-      toast.error('Please select treatment date to book procedure');
       return;
     }
     createBooking.mutate({
       hospitalProcedureId: selectedHospital,
       gender: selectedGender,
       claimCountry: selectedCountry,
-      userId,
       patientPreferredStartDate: startDate,
       patientPreferredEndDate: endDate,
     });
   };
+
   return (
     <div className={style.hospitalDetailPageContainer}>
       <button
@@ -471,7 +467,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
         </>
       )}
       {isLoginModalActive && <CreateAccount />}
-      {isOtpVerifyModalActive && <VerifyOtpSuspense />}
+      {isOtpVerifyModalActive && <VerifyOtp />}
     </div>
   );
 }
