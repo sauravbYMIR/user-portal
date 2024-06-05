@@ -150,7 +150,7 @@ const ProcedureCard = ({
       style={{
         boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
       }}
-      onClick={() => router.push(`profile/${bookingId}`)}
+      onClick={() => router.push(`/my-procedures/${bookingId}`)}
     >
       <div className="flex w-full flex-col items-start">
         <div className="flex w-full items-center justify-between">
@@ -162,11 +162,11 @@ const ProcedureCard = ({
           </p>
         </div>
         <div className="flex w-full items-center justify-between">
-          <div>
+          <div className="flex items-center gap-x-1">
             <span className="mr-2 font-lexend text-base font-light text-neutral-2">
               {hospitalName}
             </span>
-            -----
+            <div className="h-[1.35px] w-[32px] bg-neutral-2" />
             <span className="ml-2 font-lexend text-base font-light text-neutral-2">
               {city},
             </span>

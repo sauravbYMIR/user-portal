@@ -12,7 +12,11 @@ import type { ApplicationBookingStatusType } from '@/hooks/useBooking';
 import { updateElfsightStatus, useGetBookingDetails } from '@/hooks/useBooking';
 import useTranslation from '@/hooks/useTranslation';
 import type { LocaleType } from '@/types/component';
-import { convertToValidCurrency, handleGetLocalStorage } from '@/utils/global';
+import {
+  convertToValidCurrency,
+  countryData,
+  handleGetLocalStorage,
+} from '@/utils/global';
 
 import style from '../../hospital/[id]/style.module.scss';
 
@@ -88,6 +92,12 @@ const BookingStatusButton = ({
   }
 };
 
+const BookingStatusText = {
+  accepted: 'Application accepted',
+  rejected: 'Application rejected',
+  requested: 'Application requested',
+};
+
 function HospitalDetailsPage({ params }: { params: { id: string } }) {
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
   const bookingDetails = useGetBookingDetails(params.id);
@@ -117,6 +127,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   const selectedLanguageFromUserDropdown = handleGetLocalStorage({
     tokenKey: 'selected_language',
   });
+  const countryInfo = countryData.find((c) => c.locale === selectedLanguage);
   return (
     <div className={style.hospitalDetailPageContainer}>
       {!bookingDetails.isLoading &&
@@ -158,10 +169,20 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                 )}
 
                 {bookingDetails.isSuccess && bookingDetails.data.data && (
-                  <div className={style.breadcrumb}>
-                    <Link href="/">Orthopedic department</Link>
+                  <div className="mt-[14.5px] flex items-center gap-x-2">
+                    <Link
+                      href="/my-procedures"
+                      className="font-lexend text-base font-normal text-neutral-3"
+                    >
+                      My procedures
+                    </Link>
                     <span>/</span>
-                    <Link href="/">Procedure details</Link>
+                    <Link
+                      href={`/my-procedures/${params.id}`}
+                      className="font-lexend text-base font-normal text-primary-2"
+                    >
+                      Procedure details
+                    </Link>
                   </div>
                 )}
               </div>
@@ -170,7 +191,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           {bookingDetails.data &&
             bookingDetails.data.data &&
             !bookingDetails.data.data.elfSightFormSubmitStatus && (
-              <div className="mb-[47px] mt-[62px] w-full items-center justify-between rounded-[6.4px] border border-neutral-7 bg-neutral-7 px-9 py-[34px] sm:flex">
+              <div className="mb-[47px] mt-[62px] w-full items-center justify-between rounded-[6.4px] border border-primary-3 bg-neutral-7 px-[32px] py-[45px] text-neutral-1 sm:flex">
                 <BookingStatus
                   status={bookingDetails.data.data.applicationStatus}
                 />
@@ -180,12 +201,48 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               </div>
             )}
           {bookingDetails.isSuccess && bookingDetails.data.data && (
-            <div className="grid grid-cols-2 gap-20">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-12">
               <div className="flex flex-col items-start justify-start">
-                <p className="font-lexend text-xl font-normal text-neutral-2">
+                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                  {t('Hospital-name')}
+                </p>
+                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                  {bookingDetails.data.data.hospitalName}
+                </p>
+              </div>
+              <div className="flex flex-col items-start justify-start">
+                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                  {t('Application-status')}
+                </p>
+                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                  {
+                    BookingStatusText[
+                      bookingDetails.data.data.applicationStatus
+                    ]
+                  }
+                </p>
+              </div>
+              <div className="flex flex-col items-start justify-start">
+                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                  {t('Hospital-stay')}
+                </p>
+                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                  {bookingDetails.data.data.hospitalStay} Days
+                </p>
+              </div>
+              <div className="flex flex-col items-start justify-start">
+                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                  {t('Wait-time')}
+                </p>
+                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                  {bookingDetails.data.data.waitTime} Days
+                </p>
+              </div>
+              <div className="flex flex-col items-start justify-start">
+                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
                   {t('Cost-of-procedure')}
                 </p>
-                <p className="font-lexend text-base font-light text-neutral-2">
+                <p className="font-lexend text-2xl font-normal text-neutral-1">
                   {convertToValidCurrency({
                     price: bookingDetails.data.data.costOfProcedure.price,
                     locale: selectedLanguageFromUserDropdown ?? 'en',
@@ -194,27 +251,24 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
-                <p className="font-lexend text-xl font-normal text-neutral-2">
-                  {t('Wait-of-procedure')}
+                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                  {t('Reimbursement-offered')}
                 </p>
-                <p className="font-lexend text-base font-light text-neutral-2">
-                  {bookingDetails.data.data.waitTime}
-                </p>
-              </div>
-              <div className="flex flex-col items-start justify-start">
-                <p className="font-lexend text-xl font-normal text-neutral-2">
-                  {t('Duration-of-city-stay')}
-                </p>
-                <p className="font-lexend text-base font-light text-neutral-2">
-                  {bookingDetails.data.data?.cityStay}
-                </p>
-              </div>
-              <div className="flex flex-col items-start justify-start">
-                <p className="font-lexend text-xl font-normal text-neutral-2">
-                  {t('Duration-of-hospital-stay')}
-                </p>
-                <p className="font-lexend text-base font-light text-neutral-2">
-                  {bookingDetails.data.data.hospitalStay}
+                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                  {countryInfo ? (
+                    <span>
+                      {convertToValidCurrency({
+                        price:
+                          bookingDetails.data.data.reimbursementCost[
+                            countryInfo.countryCode as keyof typeof bookingDetails.data.data.reimbursementCost
+                          ],
+                        locale: countryInfo.locale ?? 'en',
+                        currency: countryInfo.currency,
+                      })}
+                    </span>
+                  ) : (
+                    <span>---</span>
+                  )}
                 </p>
               </div>
             </div>

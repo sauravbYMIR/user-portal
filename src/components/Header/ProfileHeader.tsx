@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -53,9 +54,12 @@ const ProfileHeader = ({
             <div className="px-[20px]">
               <div className="my-[20px] flex items-center justify-start gap-[20px]">
                 <span className="font-poppins text-[20px] text-neutral-2">
-                  <a href="/book-procedure" className="font-[16px] leading-6">
+                  <Link
+                    href="/book-procedure"
+                    className="font-[16px] leading-6"
+                  >
                     Book procedure
-                  </a>
+                  </Link>
                 </span>
               </div>
             </div>

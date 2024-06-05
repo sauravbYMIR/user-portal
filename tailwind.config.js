@@ -48,6 +48,7 @@ module.exports = {
         },
         'primary-1': 'rgba(12, 78, 100, 1)',
         'primary-2': 'rgba(9, 111, 144, 1)',
+        'primary-3': 'rgba(61, 161, 194, 1)',
         'primary-5': 'rgba(225, 247, 254, 1)',
         'info-1': 'rgba(0, 59, 212, 1)',
         'info-2': 'rgba(230, 237, 255, 1)',
