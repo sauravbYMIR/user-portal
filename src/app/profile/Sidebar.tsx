@@ -9,12 +9,12 @@ const Sidebar = (): JSX.Element => {
   const pathname = usePathname();
   const itemsList = [
     {
-      name: 'My profile',
-      route: '/profile',
-    },
-    {
       name: 'My procedures',
       route: '/my-procedures',
+    },
+    {
+      name: 'My profile',
+      route: '/profile',
     },
   ];
   return (

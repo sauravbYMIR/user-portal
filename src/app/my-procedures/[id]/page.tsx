@@ -72,7 +72,6 @@ const BookingStatusButton = ({
           {t('Add-case-details')}
         </button>
       );
-
     case 'rejected':
       return (
         <button
@@ -83,7 +82,6 @@ const BookingStatusButton = ({
           {t('Apply-for-another-procedure')}
         </button>
       );
-
     case 'requested':
       return <div />;
 
