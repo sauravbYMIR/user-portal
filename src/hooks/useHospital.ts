@@ -51,6 +51,9 @@ export type HospitalProcedureByIdType = {
     id: string;
     name: NameJSONType;
   };
+  hospital: {
+    logo: false | string;
+  };
   procedureId: string;
   stayInCity: string;
   stayInHospital: string;

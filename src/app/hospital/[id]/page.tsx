@@ -15,14 +15,13 @@ import { toast } from 'sonner';
 
 import { CreateAccount } from '@/components/Auth/CreateAccount';
 import { VerifyOtpSuspense } from '@/components/Auth/VerifyOtp';
-import { SearchIcon } from '@/components/Icons/Icons';
+import { BackArrowIcon, SearchIcon } from '@/components/Icons/Icons';
 import { FacebookStyleLoader } from '@/components/Loader/FacebookStyleLoader';
 import { TeamMemberCard } from '@/components/TeamMemberCard/TeamMemberCard';
 import { useCreateBooking } from '@/hooks/useBooking';
 import { useGetHospitalProcedureById } from '@/hooks/useHospital';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
-import backArrow from '@/public/assets/icons/backArrow.svg';
 import hospitalLogo from '@/public/assets/icons/sampleLogo.svg';
 import type { LocaleType } from '@/types/component';
 import {
@@ -122,7 +121,8 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           router.back();
         }}
       >
-        <Image src={backArrow} alt="back arrow icon" />
+        <span style={{ display: 'none' }}>back arrow</span>
+        <BackArrowIcon strokeWidth="2" stroke="rgba(17, 17, 17, 0.8)" />
       </button>
       {hospitalProcedureId.isLoading ? (
         <FacebookStyleLoader />
@@ -130,11 +130,25 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
         <>
           <div className={style.headerSection}>
             <div className={style.titleContainer}>
-              <Image
-                className={style.hospitalLogo}
-                src={hospitalLogo}
-                alt="hospital logo"
-              />
+              {hospitalProcedureId.data &&
+              hospitalProcedureId.data.data &&
+              hospitalProcedureId.data.data.hospital.logo &&
+              typeof hospitalProcedureId.data.data.hospital.logo ===
+                'string' ? (
+                <Image
+                  className="size-14 rounded-full"
+                  src={hospitalProcedureId.data.data.hospital.logo}
+                  alt="hospital logo"
+                  width={56}
+                  height={56}
+                />
+              ) : (
+                <Image
+                  className={style.hospitalLogo}
+                  src={hospitalLogo}
+                  alt="hospital logo"
+                />
+              )}
 
               <div className={style.titleBreadCrumbContainer}>
                 {hospitalProcedureId.isSuccess &&
@@ -226,7 +240,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           </div>
 
           {hospitalProcedureId.isSuccess && hospitalProcedureId.data.data && (
-            <div className="flex w-[520px] flex-wrap items-center gap-10">
+            <div className="grid w-[520px] grid-cols-2 gap-10">
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
                   {t('Cost-of-procedure')}
@@ -270,7 +284,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             {t('Hospital-procedure-image')}
           </h3>
 
-          <div className=" flex w-full flex-wrap items-center gap-4">
+          <div className="mt-10 flex w-full flex-wrap items-center gap-x-8">
             {hospitalProcedureId &&
             hospitalProcedureId.data &&
             hospitalProcedureId.data.data &&
@@ -285,16 +299,20 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                     <Image
                       key={image.id}
                       src={image.imageUrl}
-                      width={300}
-                      height={300}
+                      width={264}
+                      height={250}
                       alt="procedureImage"
-                      className="my-2 rounded-lg"
+                      priority
+                      unoptimized
+                      className="my-2 h-[250px] w-[264px] rounded-lg"
                     />
                   );
                 },
               )
             ) : (
-              <p>No images found</p>
+              <p className="mt-2 font-lexend text-base font-normal">
+                {t('No-images-found')}
+              </p>
             )}
           </div>
 
@@ -381,7 +399,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               {t('Hospital-image')}
             </h3>
 
-            <div className=" flex w-full flex-wrap items-center gap-6">
+            <div className=" mt-10 flex w-full flex-wrap items-center gap-x-6">
               {hospitalProcedureId &&
               hospitalProcedureId.data &&
               hospitalProcedureId.data.data &&
@@ -389,18 +407,22 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               hospitalProcedureId.data?.data.hospitalImages.length > 0 ? (
                 hospitalProcedureId.data?.data.hospitalImages.map((image) => {
                   return (
-                    <div className="relative my-4 size-[220px]" key={image.id}>
-                      <Image
-                        src={image.imageUrl}
-                        fill
-                        alt="procedureImage"
-                        className="rounded-lg"
-                      />
-                    </div>
+                    <Image
+                      key={image.id}
+                      src={image.imageUrl}
+                      alt="procedureImage"
+                      width={264}
+                      height={250}
+                      priority
+                      unoptimized
+                      className="my-2 h-[250px] w-[264px] rounded-lg"
+                    />
                   );
                 })
               ) : (
-                <p>{t('No-images-found')}</p>
+                <p className="mt-2 font-lexend text-base font-normal">
+                  {t('No-images-found')}
+                </p>
               )}
             </div>
           </div>
