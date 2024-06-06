@@ -66,7 +66,7 @@ const BookingStatusButton = ({
       return (
         <button
           type="button"
-          className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
+          className="mt-8 w-full rounded-[6.4px] bg-primary-2 py-4 font-poppins text-base font-normal text-white sm:mt-0 sm:w-[348px] md:mt-2 md:text-2xl"
           data-elfsight-show-form="00e19ab8-b869-460e-ac3c-0aa9cbf597fb"
         >
           {t('Add-case-details')}
@@ -76,7 +76,7 @@ const BookingStatusButton = ({
       return (
         <button
           type="button"
-          className="mt-2 w-full rounded-[6.4px] bg-primary-1 py-4 font-poppins text-2xl font-normal text-white sm:mt-0 sm:w-[348px]"
+          className="mt-8 w-full rounded-[6.4px] bg-primary-2 py-4 font-poppins text-base font-normal text-white sm:mt-0 sm:w-[348px] md:mt-2 md:text-2xl"
           onClick={() => router.push('/book-procedure')}
         >
           {t('Apply-for-another-procedure')}
@@ -127,7 +127,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   });
   const countryInfo = countryData.find((c) => c.locale === selectedLanguage);
   return (
-    <div className={style.hospitalDetailPageContainer}>
+    <div className="sxl:py-15 mt-3 px-5 sxl:px-[75px]">
       {!bookingDetails.isLoading &&
         bookingDetails.data &&
         bookingDetails.data.data && (
@@ -157,11 +157,11 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
         <FacebookStyleLoader />
       ) : (
         <>
-          <div className={style.headerSection}>
+          <div className="mt-5">
             <div className={style.titleContainer}>
               <div className={style.titleBreadCrumbContainer}>
                 {bookingDetails.isSuccess && bookingDetails.data.data && (
-                  <h3>
+                  <h3 className="font-poppins text-xl font-medium text-neutral-1 sxl:text-5xl">
                     {bookingDetails.data.data.procedureName[selectedLanguage]}
                   </h3>
                 )}
@@ -199,7 +199,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               </div>
             )}
           {bookingDetails.isSuccess && bookingDetails.data.data && (
-            <div className="grid grid-cols-2 gap-x-6 gap-y-12">
+            <div className="flex flex-col items-start gap-x-6 gap-y-12 md:grid md:grid-cols-2">
               <div className="flex flex-col items-start justify-start">
                 <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
                   {t('Hospital-name')}

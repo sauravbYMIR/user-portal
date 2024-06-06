@@ -19,20 +19,20 @@ const Profile = () => {
                 Personal
               </h3>
               {getUserDetails.isSuccess && getUserDetails.data.data && (
-                <div className="mt-[70px] grid grid-cols-2 gap-x-60 gap-y-16">
+                <div className="mt-10 flex flex-col gap-y-6 pb-10 md:grid md:grid-cols-2 md:gap-x-60">
                   <div className="flex flex-col items-start">
-                    <p className="font-lexend text-xl font-normal text-neutral-2">
+                    <p className="font-lexend text-sm font-normal text-neutral-2 lg:text-xl">
                       Email
                     </p>
-                    <p className="font-lexend text-4xl font-normal text-neutral-2">
+                    <p className="font-lexend text-lg font-normal text-neutral-2 lg:text-3xl">
                       {getUserDetails.data.data.email}
                     </p>
                   </div>
                   <div className="flex flex-col items-start">
-                    <p className="font-lexend text-xl font-normal text-neutral-2">
+                    <p className="font-lexend text-sm font-normal text-neutral-2 lg:text-xl">
                       Mobile number
                     </p>
-                    <p className="font-lexend text-4xl font-normal text-neutral-2">
+                    <p className="font-lexend text-lg font-normal text-neutral-2 lg:text-3xl">
                       {getUserDetails.data.data.phoneNumber}
                     </p>
                   </div>

@@ -23,6 +23,9 @@ module.exports = {
       '6xl': '4rem',
     },
     extend: {
+      screens: {
+        sxl: '1180px',
+      },
       colors: {
         gray: {
           100: '#f7fafc',

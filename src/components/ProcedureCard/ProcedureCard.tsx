@@ -146,7 +146,7 @@ const ProcedureCard = ({
   return (
     <button
       type="button"
-      className="flex w-full cursor-pointer flex-col items-start rounded-xl border border-neutral-6 px-9 py-[33px] sm:w-[834px]"
+      className="flex w-full cursor-pointer flex-col items-start rounded-xl border border-neutral-6 px-4 py-5 sxl:px-9 sxl:py-[33px] xl:w-[834px]"
       style={{
         boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
       }}
@@ -154,10 +154,10 @@ const ProcedureCard = ({
     >
       <div className="flex w-full flex-col items-start">
         <div className="flex w-full items-center justify-between">
-          <h3 className="font-poppins text-2xl font-medium text-neutral-1">
+          <h3 className="text-start font-poppins text-lg font-medium text-neutral-1 sxl:text-2xl">
             {procedureName}
           </h3>
-          <p className="font-lexend text-base font-normal text-neutral-2">
+          <p className="hidden font-lexend text-base font-normal text-neutral-2 sxl:block">
             {t('Hospital-stay')}
           </p>
         </div>
@@ -174,20 +174,40 @@ const ProcedureCard = ({
               {country}
             </span>
           </div>
-          <span className="font-lexend text-base font-light text-neutral-2">
+          <span className="hidden font-lexend text-base font-light text-neutral-2 sxl:block">
             {hospitalStay} {t('days')}
           </span>
         </div>
       </div>
       <div className="mt-[45px] flex w-full items-center justify-between">
-        <div className="flex items-center gap-3">
-          <ApplicationStatusRenderer status={applicationStatus} />
-          <ElfSightStatusRenderer
-            applicationStatus={applicationStatus}
-            elfSightStatus={elfSightStatus}
-          />
+        <div className="flex flex-col items-start">
+          <div className="flex items-center gap-3">
+            <ApplicationStatusRenderer status={applicationStatus} />
+            <ElfSightStatusRenderer
+              applicationStatus={applicationStatus}
+              elfSightStatus={elfSightStatus}
+            />
+          </div>
+          <div className="mt-7 flex items-center gap-x-14 sxl:hidden">
+            <div className="flex flex-col items-start gap-y-2">
+              <h3 className="font-lexend text-sm font-normal text-neutral-2">
+                {t('Hospital-stay')}
+              </h3>
+              <p className="font-lexend text-sm font-light text-neutral-2">
+                {hospitalStay} {t('days')}
+              </p>
+            </div>
+            <div className="flex flex-col items-start gap-y-2">
+              <h3 className="font-lexend text-sm font-normal text-neutral-2">
+                {t('Wait-time')}
+              </h3>
+              <p className="font-lexend text-sm font-light text-neutral-2">
+                {waitTime} {t('days')}
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col items-end">
+        <div className="hidden flex-col items-end sxl:flex">
           <span className="font-lexend text-base font-normal text-neutral-2">
             {t('Wait-time')}
           </span>

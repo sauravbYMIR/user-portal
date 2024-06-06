@@ -22,7 +22,7 @@ const ProfileHeader = ({
   const router = useRouter();
   return (
     <nav
-      className={`${className}  flex items-center justify-between px-20 py-6`}
+      className={`${className}  flex items-center justify-between px-5 py-6 sxl:px-20`}
     >
       {showLogo && (
         <button type="button" onClick={() => router.push('/')}>
