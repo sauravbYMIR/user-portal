@@ -63,7 +63,9 @@ const FbtHeaderContent = ({
   return (
     <div>
       {!matches && (
-        <ul className={`${styles.headerContentContainer} ${className ?? ''}`}>
+        <ul
+          className={`flex list-none items-center gap-8 p-0 ${className ?? ''}`}
+        >
           {children}
         </ul>
       )}
