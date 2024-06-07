@@ -126,13 +126,13 @@ const CreateAccount = () => {
     >
       <FbtButton
         variant="link"
-        className={`!fixed !right-[248px] z-10 ${isLogin ? '!top-[136px]' : '!top-2'} !p-0`}
+        className={`!fixed !right-[24%] z-10 ${isLogin ? '!top-40' : '!top-6'} !p-0`}
         onClick={() => setIsLoginModalActive(false)}
       >
         <CloseIcon className="size-8" stroke="#333" />
       </FbtButton>
       <div
-        className={`fixed top-0 ${isLogin ? 'mt-44' : 'mt-10'} flex w-[547px] items-center justify-center bg-white px-5`}
+        className={`fixed top-0 ${isLogin ? 'mt-48' : 'mt-16'} flex w-[547px] items-center justify-center bg-white px-5`}
       >
         <h1 className="font-poppins text-[40px] font-medium text-primary-1">
           {!isLogin ? (
@@ -143,7 +143,7 @@ const CreateAccount = () => {
         </h1>
       </div>
       <p
-        className={`${isLogin ? 'mt-20' : 'mt-32'} text-center font-lexend text-lg font-light text-neutral-2`}
+        className={`${isLogin ? 'mt-16' : 'mt-32'} text-center font-lexend text-lg font-light text-neutral-2`}
       >
         {t('Empowering-EU-&-EEC')}
       </p>

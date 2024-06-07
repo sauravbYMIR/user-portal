@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import * as React from 'react';
 
+import { CloseIcon } from '@/components/Icons/Icons';
 // import { useScreenWidthType } from "src/types";
 import { useScreenWidth } from '@/hooks/useScreenWidth';
-import closeIcon from '@/public/assets/icons/close.svg';
 import hamburgerIcon from '@/public/assets/icons/hamburger.svg';
 
 import styles from './style.module.scss';
@@ -122,12 +122,7 @@ const FbtHeaderMenuToggle = ({
           className={`${className ?? ''}`}
         >
           {isMenuOpen ? (
-            <Image
-              src={closeIcon}
-              alt="close icon mobile view"
-              width={25}
-              height={25}
-            />
+            <CloseIcon className="size-8" stroke="rgba(9, 111, 144, 1)" />
           ) : (
             <Image
               src={hamburgerIcon}

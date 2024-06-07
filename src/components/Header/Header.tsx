@@ -214,7 +214,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
         )}
         {isHeaderMenuOpen && (
           <FbtHeaderMenu className={headerStyle.headerMobileMenuContainer}>
-            <FbtHeaderMenuItem className={headerStyle.headerMobile}>
+            <FbtHeaderMenuItem className="flex w-full items-center justify-between px-1 py-3">
               <FbtHeaderBrand>
                 <Image
                   src={brandLogo}

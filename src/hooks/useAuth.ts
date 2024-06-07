@@ -94,9 +94,16 @@ export const verifyOtp = async ({
     throw new Error('otp-verification-failed');
   }
 };
-export const resendOtp = async () => {
+export const resendOtp = async (token: string) => {
   try {
-    const response = await axios.get(`${process.env.BASE_URL}/user/resend-otp`);
+    const response = await axios.get(
+      `${process.env.BASE_URL}/user/resend-otp`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
     return {
       success: response.data.success,
     };
