@@ -1,9 +1,22 @@
 import '@/styles/global.css';
 
+import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Toaster } from 'sonner';
 
 import Providers from '@/utils/providers';
+
+export const metadata: Metadata = {
+  title: 'Drfasttrack',
+  icons: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      sizes: '32x32',
+      url: '/drfasttrackfavicon.ico',
+    },
+  ],
+};
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
