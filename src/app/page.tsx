@@ -112,7 +112,7 @@ function LandingPage() {
     threshold: 0,
   });
 
-  const stepCount = 4;
+  const stepCount = 5;
   const router = useRouter();
   return (
     <div>

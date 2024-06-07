@@ -5,6 +5,7 @@
 import 'react-phone-number-input/style.css';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
@@ -99,7 +100,6 @@ const CreateAccount = () => {
   const onLoginFormSubmit: SubmitHandler<LoginUserAccountFormFields> = async (
     data: LoginUserAccountFormFields,
   ) => {
-    console.log('here');
     try {
       const response = await userlogin({
         phoneNumber: data.phoneNumber,
@@ -118,34 +118,39 @@ const CreateAccount = () => {
     }
   };
   const { t } = useTranslation();
+  const router = useRouter();
   return (
     <ModalWrapper
       parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
-      childrenStyle={`overflow-scroll relative z-[9999] flex flex-col items-center justify-center w-full sm:w-[547px] ${isLogin ? 'h-[500px]' : 'h-[775px]'} rounded-lg bg-white px-[24px] py-[42px] shadow-colorPickerShadow`}
+      childrenStyle={`${isLogin ? 'overflow-hidden' : 'overflow-scroll'} relative z-[9999] flex flex-col items-center justify-center w-full sm:w-[547px] ${isLogin ? 'h-[500px]' : 'h-[775px]'} rounded-lg bg-white px-[24px] py-[42px] shadow-colorPickerShadow`}
     >
       <FbtButton
         variant="link"
-        className="!absolute !right-4 !top-0 !p-0"
+        className={`!fixed !right-[248px] z-10 ${isLogin ? '!top-[136px]' : '!top-2'} !p-0`}
         onClick={() => setIsLoginModalActive(false)}
       >
         <CloseIcon className="size-8" stroke="#333" />
       </FbtButton>
-      <div className="mt-10 flex flex-col items-center">
-        <h1 className="font-poppins text-5xl font-medium text-primary-1">
+      <div
+        className={`fixed top-0 ${isLogin ? 'mt-44' : 'mt-10'} flex w-[547px] items-center justify-center bg-white px-5`}
+      >
+        <h1 className="font-poppins text-[40px] font-medium text-primary-1">
           {!isLogin ? (
             <span>{t('Create-an-account')}</span>
           ) : (
             <span>{t('Welcome-back')}</span>
           )}
         </h1>
-        <p className="text-center font-lexend text-xl font-light text-neutral-2">
-          {t('Empowering-EU-&-EEC')}
-        </p>
       </div>
+      <p
+        className={`${isLogin ? 'mt-20' : 'mt-32'} text-center font-lexend text-lg font-light text-neutral-2`}
+      >
+        {t('Empowering-EU-&-EEC')}
+      </p>
       {!isLogin ? (
         <form
           onSubmit={createUserRHF.handleSubmit(onCreateAccountFormSubmit)}
-          className="my-12 flex w-full flex-col items-center px-10"
+          className="my-12 flex w-full flex-col items-center px-5"
         >
           <div className="mb-8 flex w-full flex-col items-start">
             <label
@@ -188,7 +193,7 @@ const CreateAccount = () => {
                   international
                   defaultCountry="NO"
                   id="phoneNumber"
-                  className="mt-2 h-[64px]"
+                  className="mt-2"
                 />
               )}
             />
@@ -238,7 +243,7 @@ const CreateAccount = () => {
             </span>
             <button
               type="button"
-              className="ml-1 underline"
+              className="ml-1 underline decoration-primary-2 underline-offset-4"
               onClick={() => setIsLogin(true)}
             >
               <span className="font-lexend text-xl font-medium text-primary-2">
@@ -270,7 +275,7 @@ const CreateAccount = () => {
       ) : (
         <form
           onSubmit={loginUserRHF.handleSubmit(onLoginFormSubmit)}
-          className="my-12 flex w-full flex-col items-center px-10"
+          className="mt-12 flex w-full flex-col items-center px-10"
         >
           <div className="mb-8 w-full flex-col items-start">
             <label
@@ -293,7 +298,7 @@ const CreateAccount = () => {
                   international
                   defaultCountry="NO"
                   id="phoneNumber"
-                  className="mt-2 h-[64px]"
+                  className="mt-2"
                 />
               )}
             />
@@ -309,8 +314,8 @@ const CreateAccount = () => {
             </span>
             <button
               type="button"
-              className="ml-1 underline"
-              onClick={() => setIsLogin(false)}
+              className="ml-1 underline decoration-primary-2 underline-offset-4"
+              onClick={() => router.push('/book-procedure')}
             >
               <span className="font-lexend text-base font-medium text-primary-2">
                 {t('Book-a-procedure-first')}

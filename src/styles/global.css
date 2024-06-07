@@ -28,7 +28,9 @@ body{
   /* width: 88px; */
 }
 .PhoneInputInput {
-  height: 40px;
+  height: 47px;
+  border-top-right-radius: 10.67px !important;
+  border-bottom-right-radius: 10.67px !important;
 }
 /* React Select */
 .css-13cymwt-control {
