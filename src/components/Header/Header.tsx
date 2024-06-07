@@ -19,7 +19,6 @@ import {
 import { CreateAccount } from '../Auth/CreateAccount';
 import { VerifyOtp } from '../Auth/VerifyOtp';
 import {
-  FbtButton,
   FbtHeader,
   FbtHeaderBrand,
   FbtHeaderContent,
@@ -201,14 +200,15 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
             {accessToken ? (
               <ProfileHeader showLogo={false} className="px-px py-0" />
             ) : (
-              <FbtButton
-                className={headerStyle.headerLoginBtn}
-                size="lg"
-                variant="outline"
+              <button
+                className="rounded-[6.4px] border-2 border-primary-2 bg-primary-5 px-6 py-[6px]"
+                type="button"
                 onClick={() => setIsLoginModalActive(true)}
               >
-                Log in
-              </FbtButton>
+                <span className="font-poppins text-2xl font-medium text-primary-2">
+                  Log in
+                </span>
+              </button>
             )}
           </div>
         )}

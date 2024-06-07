@@ -126,15 +126,15 @@ const CreateAccount = () => {
     >
       <FbtButton
         variant="link"
-        className={`!fixed !right-[24%] z-10 ${isLogin ? '!top-40' : '!top-6'} !p-0`}
+        className={`!fixed !right-[5%] z-10 sxl:!right-[24%] ${isLogin ? '!top-28 sxl:!top-40' : '!top-0 sxl:!top-6'} !p-0`}
         onClick={() => setIsLoginModalActive(false)}
       >
         <CloseIcon className="size-8" stroke="#333" />
       </FbtButton>
       <div
-        className={`fixed top-0 ${isLogin ? 'mt-48' : 'mt-16'} flex w-[547px] items-center justify-center bg-white px-5`}
+        className={`fixed top-0 ${isLogin ? 'mt-40 sxl:mt-48' : 'pt-16'} flex w-[547px] items-center justify-center bg-white px-5`}
       >
-        <h1 className="font-poppins text-[40px] font-medium text-primary-1">
+        <h1 className="font-poppins text-2xl font-medium text-primary-1 sxl:text-[40px]">
           {!isLogin ? (
             <span>{t('Create-an-account')}</span>
           ) : (
@@ -143,14 +143,14 @@ const CreateAccount = () => {
         </h1>
       </div>
       <p
-        className={`${isLogin ? 'mt-16' : 'mt-32'} text-center font-lexend text-lg font-light text-neutral-2`}
+        className={`${isLogin ? 'mt-20 sxl:mt-16' : 'mt-44 sxl:mt-32'} text-center font-lexend text-base font-light text-neutral-2 sxl:text-lg`}
       >
         {t('Empowering-EU-&-EEC')}
       </p>
       {!isLogin ? (
         <form
           onSubmit={createUserRHF.handleSubmit(onCreateAccountFormSubmit)}
-          className="my-12 flex w-full flex-col items-center px-5"
+          className="my-12 flex w-full flex-col items-center px-2 sxl:px-5"
         >
           <div className="mb-8 flex w-full flex-col items-start">
             <label
@@ -238,7 +238,7 @@ const CreateAccount = () => {
             )}
           </div>
           <div className="mb-4 flex items-center">
-            <span className="font-lexend text-xl font-normal text-primary-2">
+            <span className="font-lexend text-lg font-normal text-primary-2 sxl:text-xl">
               {t('Already-have-an-account')}
             </span>
             <button
@@ -246,7 +246,7 @@ const CreateAccount = () => {
               className="ml-1 underline decoration-primary-2 underline-offset-4"
               onClick={() => setIsLogin(true)}
             >
-              <span className="font-lexend text-xl font-medium text-primary-2">
+              <span className="font-lexend text-lg font-medium text-primary-2 sxl:text-xl">
                 {t('Login')}
               </span>
             </button>
@@ -266,7 +266,7 @@ const CreateAccount = () => {
                 data-testid="loader"
               />
             ) : (
-              <p className="font-poppins text-2xl font-normal text-neutral-7">
+              <p className="font-poppins text-lg font-normal text-neutral-7 sxl:text-2xl">
                 {t('Get-code-via-sms')}
               </p>
             )}
@@ -275,7 +275,7 @@ const CreateAccount = () => {
       ) : (
         <form
           onSubmit={loginUserRHF.handleSubmit(onLoginFormSubmit)}
-          className="mt-12 flex w-full flex-col items-center px-10"
+          className="mt-12 flex w-full flex-col items-center px-2 sxl:px-10"
         >
           <div className="mb-8 w-full flex-col items-start">
             <label
@@ -337,7 +337,7 @@ const CreateAccount = () => {
                 data-testid="loader"
               />
             ) : (
-              <p className="font-poppins text-2xl font-normal text-neutral-7">
+              <p className="font-poppins text-lg font-normal text-neutral-7 sxl:text-2xl">
                 {t('Get-code-via-sms')}
               </p>
             )}
