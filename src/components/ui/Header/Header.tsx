@@ -94,7 +94,9 @@ const FbtHeaderMenu = ({
   return (
     <div>
       {matches && (
-        <ul className={`${styles.headerMenuContainer} ${className ?? ''}`}>
+        <ul
+          className={`${styles.headerMenuContainer} mt-[-13px] ${className ?? ''}`}
+        >
           {children}
         </ul>
       )}

@@ -126,14 +126,12 @@ const CreateAccount = () => {
     >
       <FbtButton
         variant="link"
-        className={`!fixed !right-[5%] z-10 sxl:!right-[24%] ${isLogin ? '!top-28 sxl:!top-40' : '!top-0 sxl:!top-6'} !p-0`}
+        className="!absolute right-4 top-2 z-10 !p-0"
         onClick={() => setIsLoginModalActive(false)}
       >
         <CloseIcon className="size-8" stroke="#333" />
       </FbtButton>
-      <div
-        className={`fixed top-0 ${isLogin ? 'mt-40 sxl:mt-48' : 'pt-16'} flex w-[547px] items-center justify-center bg-white px-5`}
-      >
+      <div className="flex w-[547px] items-center justify-center bg-white px-5">
         <h1 className="font-poppins text-2xl font-medium text-primary-1 sxl:text-[40px]">
           {!isLogin ? (
             <span>{t('Create-an-account')}</span>
@@ -142,26 +140,24 @@ const CreateAccount = () => {
           )}
         </h1>
       </div>
-      <p
-        className={`${isLogin ? 'mt-20 sxl:mt-16' : 'mt-44 sxl:mt-32'} text-center font-lexend text-base font-light text-neutral-2 sxl:text-lg`}
-      >
+      <p className="text-center font-lexend text-base font-light text-neutral-2 sxl:text-lg">
         {t('Empowering-EU-&-EEC')}
       </p>
       {!isLogin ? (
         <form
           onSubmit={createUserRHF.handleSubmit(onCreateAccountFormSubmit)}
-          className="my-12 flex w-full flex-col items-center px-2 sxl:px-5"
+          className="mt-6 flex w-full flex-col items-center px-2 sxl:my-12 sxl:px-5"
         >
-          <div className="mb-8 flex w-full flex-col items-start">
+          <div className="mb-4 flex w-full flex-col items-start sxl:mb-8">
             <label
-              className="font-inter text-xl font-normal text-black"
+              className="font-inter text-lg font-normal text-black sxl:text-xl"
               htmlFor="email"
             >
               {t('Email')}
             </label>
             <input
               placeholder="Enter your email"
-              className="mt-2 w-full rounded-[10.67px] border-2 border-lightsilver px-3 py-5"
+              className="mt-2 w-full rounded-[10.67px] border-2 border-lightsilver p-3 sxl:py-5"
               id="email"
               type="text"
               {...createUserRHF.register('email')}
@@ -172,10 +168,10 @@ const CreateAccount = () => {
               </div>
             )}
           </div>
-          <div className="mb-8 w-full flex-col items-start">
+          <div className="mb-4 w-full flex-col items-start sxl:mb-8">
             <label
               htmlFor="phoneNumber"
-              className="font-inter text-xl font-normal text-black"
+              className="font-inter text-lg font-normal text-black sxl:text-xl"
             >
               {t('Phone-Number')}
             </label>
@@ -203,9 +199,9 @@ const CreateAccount = () => {
               </p>
             )}
           </div>
-          <div className="mb-8 flex w-full flex-col items-start">
+          <div className="mb-4 flex w-full flex-col items-start sxl:mb-8">
             <label
-              className="font-inter text-xl font-normal text-black"
+              className="font-inter text-lg font-normal text-black sxl:text-xl"
               htmlFor="preferredLanguage"
             >
               {t('Preferred-language-of-communication')}
@@ -280,7 +276,7 @@ const CreateAccount = () => {
           <div className="mb-8 w-full flex-col items-start">
             <label
               htmlFor="phoneNumber"
-              className="font-inter text-xl font-normal text-black"
+              className="font-inter text-lg font-normal text-black sxl:text-xl"
             >
               {t('Phone-Number')}
             </label>
