@@ -25,6 +25,7 @@ module.exports = {
     extend: {
       screens: {
         sxl: '1180px',
+        slg: '936px',
       },
       colors: {
         gray: {

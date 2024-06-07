@@ -162,12 +162,12 @@ const ProcedureCard = ({
           </p>
         </div>
         <div className="flex w-full items-center justify-between">
-          <div className="flex items-center gap-x-1">
+          <div className="mt-2 flex flex-col items-start gap-x-1 sxl:mt-0 sxl:flex-row sxl:items-center">
             <span className="mr-2 font-lexend text-base font-light text-neutral-2">
               {hospitalName}
             </span>
-            <div className="h-[1.35px] w-[32px] bg-neutral-2" />
-            <span className="ml-2 font-lexend text-base font-light text-neutral-2">
+            <div className="my-1 h-[1.35px] w-[32px] bg-neutral-2 sxl:my-0" />
+            <span className="ml-0 font-lexend text-base font-light text-neutral-2 sxl:ml-2">
               {city},
             </span>
             <span className="font-lexend text-base font-light text-neutral-2">
@@ -179,7 +179,7 @@ const ProcedureCard = ({
           </span>
         </div>
       </div>
-      <div className="mt-[45px] flex w-full items-center justify-between">
+      <div className="mt-6 flex w-full items-center justify-between sxl:mt-[45px]">
         <div className="flex flex-col items-start">
           <div className="flex items-center gap-3">
             <ApplicationStatusRenderer status={applicationStatus} />

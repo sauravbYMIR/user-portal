@@ -1,13 +1,16 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
+import { useScreenWidth } from '@/hooks/useScreenWidth';
+
 const TaskListSkeleton = (props: any) => {
+  const { matches } = useScreenWidth(936);
   return (
     <ContentLoader
       speed={2}
-      width={1000}
+      width={matches ? 280 : 1000}
       height={160}
-      viewBox="0 0 1000 160"
+      viewBox={`0 0 ${matches ? 280 : 1000} 160`}
       backgroundColor="#d9d9d9"
       foregroundColor="#ededed"
       {...props}

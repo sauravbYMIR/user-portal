@@ -89,7 +89,7 @@ const landingMobIconList = [
 function LandingPage() {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { matches } = useScreenWidth(500);
+  const { matches } = useScreenWidth(824);
   const { setStepNumber } = useAppStore();
 
   const howItWorksRef = useRef(null);

@@ -16,7 +16,7 @@ interface LandingPageImageProp {
 
 function LandingPageImage({ src, alt, index, inView }: LandingPageImageProp) {
   const [isVisible, setIsVisible] = useState(false);
-  const { matches } = useScreenWidth(500);
+  const { matches } = useScreenWidth(824);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {

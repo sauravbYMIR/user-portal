@@ -17,7 +17,7 @@ const LandingPageContentCard = ({
   desc,
 }: LandingPageCardProp) => {
   const [isVisible, setIsVisible] = useState(false);
-  const { matches } = useScreenWidth(500);
+  const { matches } = useScreenWidth(824);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {

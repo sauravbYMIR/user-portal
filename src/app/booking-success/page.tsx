@@ -15,8 +15,8 @@ const BookingSuccess = () => {
   const router = useRouter();
   const { t } = useTranslation();
   return (
-    <div className="flex h-screen w-screen flex-col items-start bg-primary-5">
-      <nav className="w-full items-start px-20 py-6">
+    <div className="flex w-screen flex-col items-start bg-primary-5">
+      <nav className="w-full items-start px-10 py-6 slg:px-20">
         <Image
           src={brandLogo}
           alt="branch icon"
@@ -24,15 +24,15 @@ const BookingSuccess = () => {
           height={!matches ? 64 : 32}
         />
       </nav>
-      <div className="flex w-full items-center justify-center">
-        <div className="mt-40 flex w-2/3 flex-col items-center text-center">
-          <h1 className="font-poppins text-6xl font-medium text-primary-1">
+      <div className="flex h-screen w-full items-start justify-center">
+        <div className="mt-10 flex w-2/3 flex-col items-center text-center slg:mt-40">
+          <h1 className="font-poppins text-3xl font-medium text-primary-1 slg:text-6xl">
             {t('We-are-fast-tracking-your-process')}
           </h1>
-          <p className="mb-[60px] mt-8 font-lexend text-2xl font-normal">
+          <p className="mb-5 mt-8 font-lexend text-xl font-normal slg:mb-[60px] slg:text-2xl">
             {t('You-will-hear')}
             {hospitalName && (
-              <span className="font-lexend text-2xl font-bold">
+              <span className="font-lexend text-xl font-bold slg:text-2xl">
                 {' '}
                 {hospitalName}{' '}
               </span>

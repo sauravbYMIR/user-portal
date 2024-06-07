@@ -177,12 +177,12 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          <div className="flex w-full items-center justify-between">
+          <div className="mb-5 flex w-full flex-col items-start justify-between slg:mb-0 slg:flex-row slg:items-center">
             <div className="flex w-1/2 flex-col items-start">
               <h3 className={style.subTitle}>{t('About-the-procedure')}</h3>
               {hospitalProcedureId.isSuccess &&
                 hospitalProcedureId.data.data && (
-                  <p className={style.hospitalDesc}>
+                  <p className="my-4 font-lexend text-base font-light text-neutral-3">
                     {
                       hospitalProcedureId.data.data.description[
                         selectedLanguage
@@ -191,7 +191,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   </p>
                 )}
             </div>
-            <div className="flex w-[400px] flex-col items-start rounded-lg bg-neutral-7 px-4 py-11">
+            <div className="flex w-full flex-col items-start rounded-lg bg-neutral-7 px-4 py-11 slg:w-[400px]">
               <h3 className="font-poppins text-2xl font-medium text-gray77">
                 {t('When-do-you-want-to-get-your-treatment-done')}
               </h3>
@@ -205,7 +205,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                 {t('Date-range')}
               </label>
               <div className="flex flex-col items-start">
-                <div className="flex items-center justify-between gap-[9.46px]">
+                <div className="flex w-full flex-col items-start justify-between gap-[9.46px] slg:flex-row slg:items-center">
                   <DatePicker
                     selected={startDate}
                     onChange={(date) => date && setStartDate(date)}
@@ -213,7 +213,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                     placeholderText="From"
                     startDate={startDate}
                     endDate={endDate}
-                    className="w-[160.77px] rounded-[10px] border border-gray169 px-3 py-4"
+                    className="w-full rounded-[10px] border border-gray169 px-3 py-4 slg:w-[160.77px]"
                   />
                   <DatePicker
                     selected={endDate}
@@ -223,7 +223,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                     startDate={startDate}
                     endDate={endDate}
                     minDate={startDate}
-                    className="w-[160.77px] rounded-[10px] border border-gray169 px-3 py-4"
+                    className="w-full rounded-[10px] border border-gray169 px-3 py-4 slg:w-[160.77px]"
                   />
                 </div>
                 {error && (
@@ -236,7 +236,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           </div>
 
           {hospitalProcedureId.isSuccess && hospitalProcedureId.data.data && (
-            <div className="grid w-[520px] grid-cols-2 gap-10">
+            <div className="grid w-full grid-cols-1 gap-10 slg:w-[520px] slg:grid-cols-2">
               <div className="flex flex-col items-start justify-start">
                 <p className="font-lexend text-xl font-normal text-neutral-2">
                   {t('Cost-of-procedure')}
@@ -422,7 +422,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               )}
             </div>
           </div>
-          <div className="sticky inset-x-1/2 bottom-0 mb-[47px] mt-[62px] flex w-full translate-x-0 items-center justify-between rounded-[6.4px] bg-darkslategray px-9 py-[34px]">
+          <div className="sticky inset-x-1/2 bottom-0 mb-[47px] mt-[62px] flex w-full translate-x-0 flex-col items-center justify-between rounded-[6.4px] bg-darkslategray px-[22px] py-[15.75px] slg:flex-row slg:px-9 slg:py-[34px]">
             <div className="flex flex-col items-start">
               <span className="font-poppins text-3xl font-medium text-neutral-7">
                 {
@@ -431,7 +431,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   ]
                 }
               </span>
-              <span className="font-poppins text-xl font-normal text-neutral-6">
+              <span className="my-4 font-poppins text-lg font-normal text-neutral-6 slg:my-0 slg:text-xl">
                 {startDate &&
                   `${new Date(startDate).getDate()} /
                     ${getMonth(startDate)} /
@@ -445,7 +445,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             </div>
             <button
               type="button"
-              className={`${error.length > 0 ? 'cursor-not-allowed bg-primary-5/90' : 'cursor-pointer'} h-[64px] w-[348px] rounded-[6.4px] bg-primary-5`}
+              className={`${error.length > 0 ? 'cursor-not-allowed bg-primary-5/90' : 'cursor-pointer'} w-full rounded-[6.4px] bg-primary-5 px-2 py-4 slg:w-[348px]`}
               disabled={error.length > 0}
               onClick={handleCreateBooking}
             >
@@ -453,12 +453,12 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                 <ClipLoader
                   loading={createBooking.isPending}
                   color="#333"
-                  size={30}
+                  size={20}
                   aria-label="Loading Spinner"
                   data-testid="loader"
                 />
               ) : (
-                <span className="font-poppins text-2xl font-normal text-darkslategray">
+                <span className="font-poppins text-lg font-normal text-darkslategray slg:text-2xl">
                   {t('Request-an-appointment')}
                 </span>
               )}
