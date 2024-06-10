@@ -2,6 +2,9 @@ import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
 import irelandFlag from '@/public/assets/icons/ireland.svg';
 import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
 import swedenFlag from '@/public/assets/icons/swedenFlag.svg';
+import swedenBankId from '@/public/assets/images/bankIdImg.svg';
+import norwayBankId from '@/public/assets/images/bankIdNor.svg';
+import denmarkBankId from '@/public/assets/images/denBankId.svg';
 import type { LanguagesType } from '@/types/component';
 
 export type CountryCodeType = 'ie' | 'no' | 'dk' | 'se';
@@ -13,6 +16,8 @@ type CountryData = {
   currency: string;
   countryCode: string;
   flagIcon: string;
+  bankIdIcon: string;
+  workflowId: string;
 };
 
 interface IntialLanguagesDataType {
@@ -30,6 +35,8 @@ const countryData: CountryData[] = [
     currency: 'EUR',
     countryCode: 'ie',
     flagIcon: irelandFlag,
+    bankIdIcon: norwayBankId,
+    workflowId: 'bits:workflow::e248a2a3-4453-4c01-913a-70f656461fbc',
   },
   {
     name: 'Norway',
@@ -38,6 +45,8 @@ const countryData: CountryData[] = [
     currency: 'NOK',
     countryCode: 'no',
     flagIcon: norwayFlag,
+    bankIdIcon: norwayBankId,
+    workflowId: 'bits:workflow::e248a2a3-4453-4c01-913a-70f656461fbc',
   },
   {
     name: 'Denmark',
@@ -46,6 +55,8 @@ const countryData: CountryData[] = [
     currency: 'DKK',
     countryCode: 'dk',
     flagIcon: denmarkFlag,
+    bankIdIcon: denmarkBankId,
+    workflowId: 'bits:workflow::e248a2a3-4453-4c01-913a-70f656461fbc',
   },
   {
     name: 'Sweden',
@@ -54,6 +65,8 @@ const countryData: CountryData[] = [
     currency: 'SEK',
     countryCode: 'se',
     flagIcon: swedenFlag,
+    bankIdIcon: swedenBankId,
+    workflowId: 'bits:workflow::e248a2a3-4453-4c01-913a-70f656461fbc',
   },
 ];
 

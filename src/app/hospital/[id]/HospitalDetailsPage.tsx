@@ -13,6 +13,7 @@ import DatePicker from 'react-datepicker';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
+import BankIdModal from '@/components/Auth/BankIdModal';
 import { CreateAccount } from '@/components/Auth/CreateAccount';
 import { VerifyOtp } from '@/components/Auth/VerifyOtp';
 import { BackArrowIcon, SearchIcon } from '@/components/Icons/Icons';
@@ -42,15 +43,16 @@ function HospitalDetailsPage({
   const { t } = useTranslation();
   const { selectedHospitalName, setStepNumber } = useAppStore();
   const router = useRouter();
-  const { setIsLoginModalActive, isLoginModalActive, isOtpVerifyModalActive } =
-    useAppStore();
+  const {
+    setIsLoginModalActive,
+    isLoginModalActive,
+    isOtpVerifyModalActive,
+    isBankIdModalActive,
+  } = useAppStore();
   const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   const createBooking = useCreateBooking();
   const [searchMemberQuery, setSearchMemberQuery] = React.useState<string>('');
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
-  // const hospitalProcedureId = useGetHospitalProcedureById({
-  //   id: params.id,
-  // });
   const [startDate, setStartDate] = React.useState<null | Date>(null);
   const [endDate, setEndDate] = React.useState<null | Date>(null);
   const [error, setError] = React.useState<string>('');
@@ -436,6 +438,7 @@ function HospitalDetailsPage({
       </div>
       {isLoginModalActive && <CreateAccount />}
       {isOtpVerifyModalActive && <VerifyOtp />}
+      {isBankIdModalActive && <BankIdModal />}
     </div>
   );
 }

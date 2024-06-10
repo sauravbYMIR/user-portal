@@ -54,8 +54,12 @@ function Timer({
 const VerifyOtp = () => {
   const router = useRouter();
   const { t } = useTranslation();
-  const { setIsOtpVerifyModalActive, selectedHospital, selectedPhoneNumber } =
-    useAppStore();
+  const {
+    setIsOtpVerifyModalActive,
+    selectedHospital,
+    selectedPhoneNumber,
+    setIsBankIdModalActive,
+  } = useAppStore();
   const [isShowTimer, setIsShowTimer] = React.useState<boolean>(false);
   const [otp, setOtp] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -100,6 +104,7 @@ const VerifyOtp = () => {
       if (response.success) {
         setIsLoading(false);
         setIsOtpVerifyModalActive(false);
+        setIsBankIdModalActive(true);
         handleSetLocalStorage({
           tokenKey: 'access_token',
           tokenValue: response.data.accessToken,
@@ -178,7 +183,7 @@ const VerifyOtp = () => {
           type="submit"
           variant="solid"
           disabled={isLoading}
-          className="!w-full !rounded-[6.4px] p-4 sxl:!p-6"
+          className="!w-full !rounded-[6.4px] px-4 py-5 sxl:!px-6 sxl:!py-7"
           onClick={handleVerifyOtp}
         >
           {isLoading ? (

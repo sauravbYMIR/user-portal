@@ -16,6 +16,7 @@ import {
   handleSetLocalStorage,
 } from '@/utils/global';
 
+import BankIdModal from '../Auth/BankIdModal';
 import { CreateAccount } from '../Auth/CreateAccount';
 import { VerifyOtp } from '../Auth/VerifyOtp';
 import {
@@ -57,8 +58,12 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
   const [isHeaderMenuOpen, setIsHeaderMenuOpen] = useState<boolean>(false);
   const [activeLink, setActiveLink] = useState<string>('');
   const { matches } = useScreenWidth(640);
-  const { isLoginModalActive, setIsLoginModalActive, isOtpVerifyModalActive } =
-    useAppStore();
+  const {
+    isLoginModalActive,
+    setIsLoginModalActive,
+    isOtpVerifyModalActive,
+    isBankIdModalActive,
+  } = useAppStore();
 
   const scrollToSection = (ref: any) => {
     ref.current.scrollIntoView({ behavior: 'smooth' });
@@ -272,6 +277,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
       </FbtHeader>
       {isLoginModalActive && <CreateAccount />}
       {isOtpVerifyModalActive && <VerifyOtp />}
+      {isBankIdModalActive && <BankIdModal />}
     </>
   );
 }
