@@ -1,19 +1,105 @@
 import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'sonner';
 
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
-import { countryData } from '@/utils/global';
+import {
+  countryData,
+  handleGetLocalStorage,
+  handleRemoveFromLocalStorage,
+  handleSetLocalStorage,
+} from '@/utils/global';
 
 import { CloseIcon } from '../Icons/Icons';
 import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
 import { FbtButton } from '../ui';
 
 const BankIdModal = () => {
+  const router = useRouter();
   const { t } = useTranslation();
-  const { setIsBankIdModalActive, selectedPhoneNumber } = useAppStore();
+  const { setIsBankIdModalActive } = useAppStore();
+  const generateBitsToken = async () => {
+    const clientId = process.env.BANK_CLIENT_ID;
+    const clientSecret = process.env.BANK_CLIENT_SECRET;
+    try {
+      handleRemoveFromLocalStorage({ tokenKey: 'bits_access_token' });
+      const r = await axios.post(
+        `https://api.bits.bi/v1/oauth2/token`,
+        {
+          grant_type: 'client_credentials',
+        },
+        {
+          headers: {
+            Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        },
+      );
+      if (r.data.access_token) {
+        handleSetLocalStorage({
+          tokenKey: 'bits_access_token',
+          tokenValue: r.data.access_token,
+        });
+      }
+    } catch (e) {
+      toast.error('BankId service error');
+    }
+  };
+  React.useEffect(() => {
+    const bitsAccessToken = handleGetLocalStorage({
+      tokenKey: 'bits_access_token',
+    });
+    if (!bitsAccessToken) {
+      generateBitsToken();
+    }
+  }, []);
+
+  const handleCreateBitsApplication = async ({
+    workflowId,
+    countryCode,
+  }: {
+    workflowId: string;
+    countryCode: string;
+  }) => {
+    const bitsAccessToken = handleGetLocalStorage({
+      tokenKey: 'bits_access_token',
+    });
+    try {
+      const r = await axios.post(
+        `https://api.bits.bi/v1/applications.create`,
+        {
+          workflowId,
+          countryCode: countryCode.toLocaleUpperCase(),
+          redirectUrl: 'http://localhost:3001/',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${bitsAccessToken}`,
+          },
+        },
+      );
+      if (r.data.sessionToken) {
+        handleSetLocalStorage({
+          tokenKey: 'bits_session_token',
+          tokenValue: r.data.sessionToken,
+        });
+        handleSetLocalStorage({
+          tokenKey: 'bits_session_id',
+          tokenValue: r.data.id,
+        });
+        router.push(`https://nocode.bits.bi?token=${r.data.sessionToken}`);
+      }
+    } catch (e) {
+      const err = e as unknown as {
+        response: { status: number; data: { message: string } };
+      };
+      toast.error(`${err.response.data.message || 'Bits application error'}`);
+    }
+  };
+
   const handleCallBankId = async ({
     workflowId,
     countryCode,
@@ -22,20 +108,22 @@ const BankIdModal = () => {
     countryCode: string;
   }) => {
     try {
-      await axios.post(
-        `https://api.bits.bi/applications`,
-        {
-          workflowId,
-          countryCode: countryCode.toLocaleUpperCase(),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.BANK_CLIENT_SECRET}`,
-          },
-        },
-      );
+      handleCreateBitsApplication({
+        workflowId,
+        countryCode,
+      });
     } catch (e) {
-      toast.error('BankId service error');
+      const err = e as unknown as {
+        response: { status: number; data: { message: string } };
+      };
+      if (err.response.status === 403 || err.response.status === 401) {
+        handleRemoveFromLocalStorage({ tokenKey: 'bits_access_token' });
+        handleCreateBitsApplication({
+          workflowId,
+          countryCode,
+        });
+      }
+      toast.error(`${err.response.data.message || 'Bits error'}`);
     }
   };
   return (
@@ -53,9 +141,6 @@ const BankIdModal = () => {
       <h1 className="font-poppins text-3xl font-medium text-primary-1 sxl:text-5xl">
         {t('Select-an-electronic-ID')}
       </h1>
-      <p className="text-center font-lexend text-lg font-light text-neutral-2 sxl:text-xl">
-        {t('A-6-digit-code-has-been-sent-to')} {selectedPhoneNumber}
-      </p>
       <div className="mt-12 w-4/5 rounded-lg border border-neutral-6 bg-neutral-7 px-4 py-5">
         <div className="flex flex-col items-start gap-y-5">
           {countryData.map((countryInfo) => (
