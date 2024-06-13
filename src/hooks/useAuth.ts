@@ -188,3 +188,85 @@ export const useGetUserDetails = () => {
     refetchOnWindowFocus: false,
   });
 };
+export const getBankIdStatus = async () => {
+  try {
+    const response = await axiosInstance.get(
+      `${process.env.BASE_URL}/user/bank-id-status`,
+    );
+    return {
+      success: true,
+      bankIdStatus: response.data.bankIdStatus,
+    };
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const serverError = err as AxiosError<ServerError>;
+
+      if (
+        serverError &&
+        serverError.response &&
+        serverError.response.data.error.message
+      ) {
+        throw new Error(serverError.response.data.error.message);
+      }
+    }
+    throw new Error('invalid-api-call');
+  }
+};
+export const initBankId = async ({ countryCode }: { countryCode: string }) => {
+  try {
+    const response = await axiosInstance.post(
+      `${process.env.BASE_URL}/user/init-bankid`,
+      {
+        countryCode,
+      },
+    );
+    return {
+      success: true,
+      bankIdUrl: response.data.bankIdUrl,
+    };
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const serverError = err as AxiosError<ServerError>;
+
+      if (
+        serverError &&
+        serverError.response &&
+        serverError.response.data.error.message
+      ) {
+        throw new Error(serverError.response.data.error.message);
+      }
+    }
+    throw new Error('invalid-api-call');
+  }
+};
+export const verifyBankId = async () => {
+  try {
+    const r = await axiosInstance.patch<{
+      isBankIdVerify: boolean;
+      success: boolean;
+    }>(`${process.env.BASE_URL}/user/verify-bankid`);
+    return {
+      ...r.data,
+    };
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      const serverError = err as AxiosError<ServerError>;
+
+      if (
+        serverError &&
+        serverError.response &&
+        serverError.response.data.error.message
+      ) {
+        throw new Error(serverError.response.data.error.message);
+      }
+    }
+    throw new Error('invalid-api-call');
+  }
+};
+export const useVerifyBankId = () => {
+  return useQuery({
+    queryKey: [`verify-id`],
+    queryFn: () => verifyBankId(),
+    refetchOnWindowFocus: false,
+  });
+};

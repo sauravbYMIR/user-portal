@@ -3,7 +3,7 @@ import React from 'react';
 
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
-import { countryData } from '@/utils/global';
+import { countryData, handleSetLocalStorage } from '@/utils/global';
 
 import { FbtButton } from '../ui';
 
@@ -27,7 +27,13 @@ const CountrySelector = () => {
               key={country.name}
               variant="outline"
               className={`${selectedCountry === country.locale ? '!border-2 !border-primary-2 !bg-primary-6' : ''} flex !h-16 w-[320px] cursor-pointer items-start !justify-start !rounded-lg !border-2 !border-neutral-5 hover:!border-primary-2  hover:!bg-primary-2 hover:!text-white active:!border-2 active:!border-primary-2 sm:my-0 sm:w-[262px] md:my-4`}
-              onClick={() => setSelectedCountry(country.locale)}
+              onClick={() => {
+                setSelectedCountry(country.locale);
+                handleSetLocalStorage({
+                  tokenKey: 'selected_country',
+                  tokenValue: country.locale,
+                });
+              }}
             >
               <Image
                 alt="flag"

@@ -70,5 +70,9 @@
   "Hospital-name": "Hospital name",
   "Application-status": "Application status",
   "Reimbursement-offered": "Reimbursement offered",
-  "Select-an-electronic-ID": "Select an electronic ID"
+  "Select-an-electronic-ID": "Select an electronic ID",
+  "Retry": "Retry",
+  "Authentication-Failed": "Authentication Failed. Please check your Bank ID details and try again",
+  "Please-wait-while-we-redirect-you-to-booking-page": "Please wait while we redirect you to booking page",
+  "Go-to-home": "Go to home"
 }

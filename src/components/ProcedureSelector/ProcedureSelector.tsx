@@ -5,7 +5,7 @@ import { useGetAllDepartmentWithProcedure } from '@/hooks/useDepartment';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import type { LocaleType } from '@/types/component';
-import { handleGetLocalStorage } from '@/utils/global';
+import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
 
 import CustomAccordion from '../CustomAccordion/CustomAccordion';
 import proceduresStyle from './Procedure.module.scss';
@@ -71,10 +71,15 @@ const ProcedureSelector = () => {
                                 id={procedure.id}
                                 value={procedure.id}
                                 checked={selectedProcedure === procedure.id}
-                                onChange={(e) =>
-                                  setSelectedProcedure &&
-                                  setSelectedProcedure(e.target.value)
-                                }
+                                onChange={(e) => {
+                                  if (setSelectedProcedure) {
+                                    setSelectedProcedure(e.target.value);
+                                    handleSetLocalStorage({
+                                      tokenKey: 'selected_procedure',
+                                      tokenValue: e.target.value,
+                                    });
+                                  }
+                                }}
                               />
 
                               <label
@@ -120,12 +125,18 @@ const ProcedureSelector = () => {
                                             checked={
                                               selectedProcedure === procedure.id
                                             }
-                                            onChange={(e) =>
-                                              setSelectedProcedure &&
-                                              setSelectedProcedure(
-                                                e.target.value,
-                                              )
-                                            }
+                                            onChange={(e) => {
+                                              if (setSelectedProcedure) {
+                                                setSelectedProcedure(
+                                                  e.target.value,
+                                                );
+                                                handleSetLocalStorage({
+                                                  tokenKey:
+                                                    'selected_procedure',
+                                                  tokenValue: e.target.value,
+                                                });
+                                              }
+                                            }}
                                           />
 
                                           <label

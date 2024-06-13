@@ -27,5 +27,6 @@ module.exports = {
     APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     BANK_CLIENT_SECRET: process.env.NEXT_PUBLIC_BANK_CLIENT_SECRET,
     BANK_CLIENT_ID: process.env.NEXT_PUBLIC_BANK_CLIENT_ID,
+    BITS_URL: process.env.NEXT_PUBLIC_BITS_URL,
   },
 };

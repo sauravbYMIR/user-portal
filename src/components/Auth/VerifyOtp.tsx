@@ -3,7 +3,7 @@ import React from 'react';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
-import { resendOtp, verifyOtp } from '@/hooks/useAuth';
+import { getBankIdStatus, resendOtp, verifyOtp } from '@/hooks/useAuth';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
@@ -104,7 +104,6 @@ const VerifyOtp = () => {
       if (response.success) {
         setIsLoading(false);
         setIsOtpVerifyModalActive(false);
-        setIsBankIdModalActive(true);
         handleSetLocalStorage({
           tokenKey: 'access_token',
           tokenValue: response.data.accessToken,
@@ -113,6 +112,11 @@ const VerifyOtp = () => {
           tokenKey: 'refresh_token',
           tokenValue: response.data.refreshToken,
         });
+        const r = await getBankIdStatus();
+        if (r.success && !r.bankIdStatus) {
+          setIsBankIdModalActive(true);
+          return;
+        }
         if (selectedHospital) {
           router.push(`/hospital/${selectedHospital}`);
         }

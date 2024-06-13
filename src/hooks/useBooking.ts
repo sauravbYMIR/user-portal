@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { axiosInstance } from '@/utils/axiosInstance';
+import { handleRemoveFromLocalStorage } from '@/utils/global';
 
 import type { NameJSONType, ReimbursementJSONType } from './useDepartment';
 
@@ -84,6 +85,14 @@ export const useCreateBooking = () => {
       queryClient.invalidateQueries({
         queryKey: [`bookings`],
       });
+      [
+        'selected_gender',
+        'selected_country',
+        'selected_procedure',
+        'selected_hospital',
+        'start_date',
+        'end_date',
+      ].map((key) => handleRemoveFromLocalStorage({ tokenKey: key }));
     },
     onError: (error) => {
       const err = error as unknown as {

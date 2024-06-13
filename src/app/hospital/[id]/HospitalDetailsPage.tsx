@@ -18,6 +18,7 @@ import { CreateAccount } from '@/components/Auth/CreateAccount';
 import { VerifyOtp } from '@/components/Auth/VerifyOtp';
 import { BackArrowIcon, SearchIcon } from '@/components/Icons/Icons';
 import { TeamMemberCard } from '@/components/TeamMemberCard/TeamMemberCard';
+import { getBankIdStatus } from '@/hooks/useAuth';
 import { useCreateBooking } from '@/hooks/useBooking';
 import type { HospitalProcedureByIdType } from '@/hooks/useHospital';
 import useTranslation from '@/hooks/useTranslation';
@@ -28,6 +29,7 @@ import {
   convertToValidCurrency,
   getMonth,
   handleGetLocalStorage,
+  handleSetLocalStorage,
 } from '@/utils/global';
 
 import style from './style.module.scss';
@@ -48,6 +50,7 @@ function HospitalDetailsPage({
     isLoginModalActive,
     isOtpVerifyModalActive,
     isBankIdModalActive,
+    setIsBankIdModalActive,
   } = useAppStore();
   const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   const createBooking = useCreateBooking();
@@ -86,6 +89,51 @@ function HospitalDetailsPage({
   }, [endDate, startDate]);
   const { selectedHospital, selectedGender, selectedCountry } = useAppStore();
   React.useEffect(() => {
+    const selectedGenderLocalstorage = handleGetLocalStorage({
+      tokenKey: 'selected_gender',
+    });
+    const selectedCountryLocalstorage = handleGetLocalStorage({
+      tokenKey: 'selected_country',
+    });
+    const selectedProcedureLocalstorage = handleGetLocalStorage({
+      tokenKey: 'selected_procedure',
+    });
+    const selectedHospitalLocalstorage = handleGetLocalStorage({
+      tokenKey: 'selected_hospital',
+    });
+    const selectedStartDateLocalstorage = handleGetLocalStorage({
+      tokenKey: 'start_date',
+    });
+    const selectedEndDateLocalstorage = handleGetLocalStorage({
+      tokenKey: 'end_date',
+    });
+    if (
+      selectedGenderLocalstorage &&
+      selectedCountryLocalstorage &&
+      selectedProcedureLocalstorage &&
+      selectedHospitalLocalstorage &&
+      selectedStartDateLocalstorage &&
+      selectedEndDateLocalstorage
+    ) {
+      // eslint-disable-next-line func-names
+      (async function () {
+        const r = await getBankIdStatus();
+        if (r.success && !r.bankIdStatus) {
+          setIsBankIdModalActive(true);
+          return;
+        }
+        createBooking.mutate({
+          hospitalProcedureId: selectedProcedureLocalstorage,
+          gender: selectedGenderLocalstorage,
+          patientPreferredStartDate: JSON.parse(selectedStartDateLocalstorage),
+          patientPreferredEndDate: JSON.parse(selectedEndDateLocalstorage),
+          claimCountry: selectedCountryLocalstorage,
+        });
+      })();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  React.useEffect(() => {
     setIsMounted(true);
   }, []);
   if (!isMounted) {
@@ -94,6 +142,7 @@ function HospitalDetailsPage({
   const selectedLanguageFromUserDropdown = handleGetLocalStorage({
     tokenKey: 'selected_language',
   });
+
   const handleCreateBooking = () => {
     if (!startDate || !endDate) {
       toast.error('Please select treatment date to continue');
@@ -110,6 +159,18 @@ function HospitalDetailsPage({
       patientPreferredStartDate: startDate,
       patientPreferredEndDate: endDate,
     });
+  };
+  const handleRequestAppointment = async () => {
+    if (!startDate || !endDate) {
+      toast.error('Please select treatment date to continue');
+      return;
+    }
+    const r = await getBankIdStatus();
+    if (r.success && !r.bankIdStatus) {
+      setIsBankIdModalActive(true);
+      return;
+    }
+    handleCreateBooking();
   };
 
   return (
@@ -197,7 +258,15 @@ function HospitalDetailsPage({
             <div className="flex w-full flex-col items-start justify-between gap-[9.46px] slg:flex-row slg:items-center">
               <DatePicker
                 selected={startDate}
-                onChange={(date) => date && setStartDate(date)}
+                onChange={(date) => {
+                  if (date) {
+                    setStartDate(date);
+                    handleSetLocalStorage({
+                      tokenKey: 'start_date',
+                      tokenValue: JSON.stringify(date),
+                    });
+                  }
+                }}
                 selectsStart
                 placeholderText="From"
                 startDate={startDate}
@@ -206,7 +275,15 @@ function HospitalDetailsPage({
               />
               <DatePicker
                 selected={endDate}
-                onChange={(date) => date && setEndDate(date)}
+                onChange={(date) => {
+                  if (date) {
+                    setEndDate(date);
+                    handleSetLocalStorage({
+                      tokenKey: 'end_date',
+                      tokenValue: JSON.stringify(date),
+                    });
+                  }
+                }}
                 selectsEnd
                 placeholderText="To"
                 startDate={startDate}
@@ -419,7 +496,7 @@ function HospitalDetailsPage({
           type="button"
           className={`${error.length > 0 ? 'cursor-not-allowed bg-primary-5/90' : 'cursor-pointer'} w-full rounded-[6.4px] bg-primary-5 px-2 py-4 slg:w-[348px]`}
           disabled={error.length > 0}
-          onClick={handleCreateBooking}
+          onClick={handleRequestAppointment}
         >
           {createBooking.isPending ? (
             <ClipLoader

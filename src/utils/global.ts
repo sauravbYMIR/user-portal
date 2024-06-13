@@ -27,6 +27,13 @@ interface IntialLanguagesDataType {
   Swedish: string;
 }
 
+export const bankIdModalMsg = {
+  ie: 'Use Veriff',
+  no: 'Use bankID',
+  dk: 'use MitID',
+  se: 'Use bankID',
+};
+
 const countryData: CountryData[] = [
   {
     name: 'Ireland',
@@ -104,10 +111,18 @@ const handleRemoveFromLocalStorage = ({ tokenKey }: { tokenKey: string }) => {
 };
 
 const handleLogOut = () => {
-  handleRemoveFromLocalStorage({ tokenKey: 'access_token' });
-  handleRemoveFromLocalStorage({ tokenKey: 'refresh_token' });
-  handleRemoveFromLocalStorage({ tokenKey: 'user_id' });
-  handleRemoveFromLocalStorage({ tokenKey: 'otp_verify_token' });
+  [
+    'access_token',
+    'refresh_token',
+    'user_id',
+    'otp_verify_token',
+    'selected_gender',
+    'selected_country',
+    'selected_procedure',
+    'selected_hospital',
+    'start_date',
+    'end_date',
+  ].map((key) => handleRemoveFromLocalStorage({ tokenKey: key }));
 };
 
 const getMonth = (date: string | Date) => {

@@ -2,6 +2,7 @@ import React from 'react';
 
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
+import { handleSetLocalStorage } from '@/utils/global';
 
 import { FbtButton } from '../ui';
 
@@ -33,7 +34,13 @@ const GenderSelector = () => {
               key={gender.value}
               variant="outline"
               className={`${selectedGender === gender.value ? '!border-2 !border-primary-2 !bg-primary-6' : ''} flex !h-16 w-[320px] cursor-pointer !items-center !justify-center !rounded-lg !border-2 !border-neutral-5 !text-neutral-2 hover:!border-primary-2 hover:!bg-primary-6 hover:!text-primary-2 active:!border-2 active:!border-primary-2 active:!bg-primary-6 active:!text-primary-2 sm:my-4 sm:w-[262px]`}
-              onClick={() => setSelectedGender(gender.value)}
+              onClick={() => {
+                setSelectedGender(gender.value);
+                handleSetLocalStorage({
+                  tokenKey: 'selected_gender',
+                  tokenValue: gender.value,
+                });
+              }}
             >
               <span className="!py-5 font-poppins text-2xl font-normal">
                 {t(gender.label)}

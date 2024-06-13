@@ -10,6 +10,7 @@ import {
   convertToValidCurrency,
   countryData,
   handleGetLocalStorage,
+  handleSetLocalStorage,
 } from '@/utils/global';
 
 import { HospitalIcon } from '../Icons/Icons';
@@ -99,6 +100,10 @@ const HospitalCard = ({
         onClick={() => {
           setSelectedHospital(id);
           setSelectedHospitalName(hospitalName);
+          handleSetLocalStorage({
+            tokenKey: 'selected_hospital',
+            tokenValue: id,
+          });
           router.push(`/hospital/${id}`);
         }}
       >
