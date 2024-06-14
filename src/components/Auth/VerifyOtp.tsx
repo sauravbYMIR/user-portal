@@ -6,7 +6,11 @@ import { toast } from 'sonner';
 import { getBankIdStatus, resendOtp, verifyOtp } from '@/hooks/useAuth';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
-import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
+import {
+  handleGetLocalStorage,
+  handleSetLocalStorage,
+  LOGIN,
+} from '@/utils/global';
 
 import { CloseIcon } from '../Icons/Icons';
 import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
@@ -59,6 +63,8 @@ const VerifyOtp = () => {
     selectedHospital,
     selectedPhoneNumber,
     setIsBankIdModalActive,
+    authType,
+    setAuthType,
   } = useAppStore();
   const [isShowTimer, setIsShowTimer] = React.useState<boolean>(false);
   const [otp, setOtp] = React.useState<string>('');
@@ -112,11 +118,15 @@ const VerifyOtp = () => {
           tokenKey: 'refresh_token',
           tokenValue: response.data.refreshToken,
         });
-        const r = await getBankIdStatus();
-        if (r.success && !r.bankIdStatus) {
-          setIsBankIdModalActive(true);
-          return;
+        if (authType !== LOGIN) {
+          const r = await getBankIdStatus();
+          setAuthType('');
+          if (r.success && !r.bankIdStatus) {
+            setIsBankIdModalActive(true);
+            return;
+          }
         }
+        setAuthType('');
         if (selectedHospital) {
           router.push(`/hospital/${selectedHospital}`);
         }
@@ -145,7 +155,7 @@ const VerifyOtp = () => {
       <p className="text-center font-lexend text-lg font-light text-neutral-2 sxl:text-xl">
         {t('A-6-digit-code-has-been-sent-to')} {selectedPhoneNumber}
       </p>
-      <div className="mt-6 flex flex-col items-start sxl:mt-12">
+      <form className="mt-6 flex flex-col items-start sxl:mt-12">
         <p className="mb-2 font-lexend text-xl font-light">OTP</p>
         <OTPInputWrapper otp={otp} setOtp={setOtp} />
         <div className="my-6 flex w-full items-center justify-center sxl:mt-12">
@@ -204,7 +214,7 @@ const VerifyOtp = () => {
             </p>
           )}
         </FbtButton>
-      </div>
+      </form>
     </ModalWrapper>
   );
 };

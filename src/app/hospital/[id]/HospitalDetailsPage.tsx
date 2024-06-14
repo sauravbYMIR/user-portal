@@ -148,10 +148,6 @@ function HospitalDetailsPage({
       toast.error('Please select treatment date to continue');
       return;
     }
-    if (!accessToken) {
-      setIsLoginModalActive(true);
-      return;
-    }
     createBooking.mutate({
       hospitalProcedureId: selectedHospital,
       gender: selectedGender,
@@ -163,6 +159,10 @@ function HospitalDetailsPage({
   const handleRequestAppointment = async () => {
     if (!startDate || !endDate) {
       toast.error('Please select treatment date to continue');
+      return;
+    }
+    if (!accessToken) {
+      setIsLoginModalActive(true);
       return;
     }
     const r = await getBankIdStatus();

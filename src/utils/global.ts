@@ -153,6 +153,8 @@ const convertToValidCurrency = ({
   price: number;
   currency: string;
 }) => price.toLocaleString(locale, { style: 'currency', currency });
+const LOGIN = 'LOGIN';
+const SIGNUP = 'SIGNUP';
 
 export {
   convertToValidCurrency,
@@ -163,4 +165,6 @@ export {
   handleRemoveFromLocalStorage,
   handleSetLocalStorage,
   intialLanguagesData,
+  LOGIN,
+  SIGNUP,
 };

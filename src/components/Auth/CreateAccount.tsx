@@ -18,7 +18,12 @@ import { z } from 'zod';
 import { createUser, userlogin } from '@/hooks/useAuth';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
-import { countryData, handleSetLocalStorage } from '@/utils/global';
+import {
+  countryData,
+  handleSetLocalStorage,
+  LOGIN,
+  SIGNUP,
+} from '@/utils/global';
 
 import { CloseIcon } from '../Icons/Icons';
 import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
@@ -58,6 +63,7 @@ const CreateAccount = () => {
     setIsLoginModalActive,
     setIsOtpVerifyModalActive,
     setSelectedPhoneNumber,
+    setAuthType,
   } = useAppStore();
   const languageList: Array<PreferredLanguageType> = countryData.map(
     (data) => ({
@@ -89,6 +95,7 @@ const CreateAccount = () => {
           tokenKey: 'otp_verify_token',
           tokenValue: response.data.token,
         });
+        setAuthType(SIGNUP);
         setIsOtpVerifyModalActive(true);
         setIsLoginModalActive(false);
         setSelectedPhoneNumber(createUserRHF.getValues('phoneNumber'));
@@ -109,6 +116,7 @@ const CreateAccount = () => {
           tokenKey: 'otp_verify_token',
           tokenValue: response.data.token,
         });
+        setAuthType(LOGIN);
         setIsOtpVerifyModalActive(true);
         setIsLoginModalActive(false);
         setSelectedPhoneNumber(loginUserRHF.getValues('phoneNumber'));

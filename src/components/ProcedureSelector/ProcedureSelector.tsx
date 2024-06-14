@@ -30,6 +30,8 @@ const ProcedureSelector = () => {
 
       <div className=" mt-[40px] flex w-full flex-col gap-[16px] sm:mt-16 sm:w-full md:w-11/12 xl:w-9/12">
         {departmentProcedureList.isSuccess &&
+        departmentProcedureList.data &&
+        departmentProcedureList.data?.data?.allCategoryWithProcedure &&
         Array.isArray(
           departmentProcedureList.data.data.allCategoryWithProcedure,
         ) &&

@@ -23,7 +23,7 @@ const BankIdVerification = () => {
       const selectedHospital = handleGetLocalStorage({
         tokenKey: 'selected_hospital',
       });
-      if (selectedHospital) {
+      if (!selectedHospital) {
         toast.info(
           'Booking data not found, please wait while we are restarting the process',
         );
@@ -63,7 +63,7 @@ const BankIdVerification = () => {
               className="!w-full !rounded-[6.4px] !border-2 !border-primary-2 !px-6 !py-4"
               onClick={() => router.push('/')}
             >
-              <p className="font-poppins text-md font-normal text-primary-2 sxl:text-2xl">
+              <p className="font-poppins text-lg font-normal text-primary-2 sxl:text-2xl">
                 {t('Go-to-home')}
               </p>
             </FbtButton>

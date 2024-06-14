@@ -20,6 +20,21 @@ import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import brandTitle from '@/public/assets/icons/brandTitle.svg';
 
+const BookingFlow = ({ stepNumber }: { stepNumber: number }) => {
+  switch (stepNumber) {
+    case 1:
+      return <CountrySelector />;
+    case 2:
+      return <GenderSelector />;
+    case 3:
+      return <ProcedureSelector />;
+    case 4:
+      return <HospitalSelector />;
+    default:
+      return <div />;
+  }
+};
+
 const BookProcedure = () => {
   const { t } = useTranslation();
   const {
@@ -119,44 +134,42 @@ const BookProcedure = () => {
           {stepNumber}/4
         </span>
       </div>
-      <div className="relative flex w-full items-center justify-between py-[27px] ">
-        {/* min-[420]:w-2/5   min-[560px]:w-1/3  min-[560]:w-3/12 */}
-        <button
-          className={` ${pageStyle.previousBtn} ${pageStyle.btn}`}
-          type="button"
-          onClick={() => {
-            if (stepNumber > 1) {
-              setStepNumber(stepNumber - 1);
-              return;
-            }
-            router.back();
-          }}
-        >
-          <ArrowBackIcon stroke="rgba(9, 111, 144, 1)" width="2.5" />
-          {t('Previous')}
-        </button>
-        <button
-          className={`${handleClassNameCountueBtnDisableStatus() ? 'cursor-not-allowed' : 'cursor-pointer'} ${pageStyle.nextBtn} ${pageStyle.btn}`}
-          type="button"
-          onClick={() => {
-            if (handleCountueBtnDisableStatus()) {
-              return;
-            }
-            if (stepNumber < 4) {
-              setStepNumber(stepNumber + 1);
-            }
-          }}
-        >
-          {t('Next')}
-          <ArrowNextIcon stroke="rgba(246, 248, 249, 1)" width="2.5" />
-        </button>
-      </div>
+      {stepNumber < 4 && (
+        <div className="relative flex w-full items-center justify-between py-[27px] ">
+          {/* min-[420]:w-2/5   min-[560px]:w-1/3  min-[560]:w-3/12 */}
+          <button
+            className={` ${pageStyle.previousBtn} ${pageStyle.btn}`}
+            type="button"
+            onClick={() => {
+              if (stepNumber > 1) {
+                setStepNumber(stepNumber - 1);
+                return;
+              }
+              router.back();
+            }}
+          >
+            <ArrowBackIcon stroke="rgba(9, 111, 144, 1)" width="2.5" />
+            {t('Previous')}
+          </button>
+          <button
+            className={`${handleClassNameCountueBtnDisableStatus() ? 'cursor-not-allowed' : 'cursor-pointer'} ${pageStyle.nextBtn} ${pageStyle.btn}`}
+            type="button"
+            onClick={() => {
+              if (handleCountueBtnDisableStatus()) {
+                return;
+              }
+              if (stepNumber < 4) {
+                setStepNumber(stepNumber + 1);
+              }
+            }}
+          >
+            {t('Next')}
+            <ArrowNextIcon stroke="rgba(246, 248, 249, 1)" width="2.5" />
+          </button>
+        </div>
+      )}
       <div className="m-5 w-full">
-        {stepNumber === 1 && <CountrySelector />}
-        {stepNumber === 2 && <GenderSelector />}
-
-        {stepNumber === 3 && <ProcedureSelector />}
-        {stepNumber === 4 && <HospitalSelector />}
+        <BookingFlow stepNumber={stepNumber} />
       </div>
     </div>
   );
