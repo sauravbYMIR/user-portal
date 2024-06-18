@@ -239,12 +239,14 @@ export const initBankId = async ({ countryCode }: { countryCode: string }) => {
     throw new Error('invalid-api-call');
   }
 };
-export const verifyBankId = async () => {
+export const verifyBankId = async (applicationId: string | null) => {
   try {
     const r = await axiosInstance.patch<{
       isBankIdVerify: boolean;
       success: boolean;
-    }>(`${process.env.BASE_URL}/user/verify-bankid`);
+    }>(`${process.env.BASE_URL}/user/verify-bankid`, {
+      applicationId,
+    });
     return {
       ...r.data,
     };
@@ -263,10 +265,14 @@ export const verifyBankId = async () => {
     throw new Error('invalid-api-call');
   }
 };
-export const useVerifyBankId = () => {
+export const useVerifyBankId = ({
+  applicationId,
+}: {
+  applicationId: string | null;
+}) => {
   return useQuery({
     queryKey: [`verify-id`],
-    queryFn: () => verifyBankId(),
+    queryFn: () => verifyBankId(applicationId),
     refetchOnWindowFocus: false,
   });
 };

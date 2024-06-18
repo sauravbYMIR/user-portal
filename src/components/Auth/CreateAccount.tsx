@@ -63,7 +63,6 @@ const CreateAccount = () => {
     setIsLoginModalActive,
     setIsOtpVerifyModalActive,
     setSelectedPhoneNumber,
-    setAuthType,
   } = useAppStore();
   const languageList: Array<PreferredLanguageType> = countryData.map(
     (data) => ({
@@ -95,7 +94,7 @@ const CreateAccount = () => {
           tokenKey: 'otp_verify_token',
           tokenValue: response.data.token,
         });
-        setAuthType(SIGNUP);
+        handleSetLocalStorage({ tokenKey: 'flow_type', tokenValue: SIGNUP });
         setIsOtpVerifyModalActive(true);
         setIsLoginModalActive(false);
         setSelectedPhoneNumber(createUserRHF.getValues('phoneNumber'));
@@ -116,7 +115,7 @@ const CreateAccount = () => {
           tokenKey: 'otp_verify_token',
           tokenValue: response.data.token,
         });
-        setAuthType(LOGIN);
+        handleSetLocalStorage({ tokenKey: 'flow_type', tokenValue: LOGIN });
         setIsOtpVerifyModalActive(true);
         setIsLoginModalActive(false);
         setSelectedPhoneNumber(loginUserRHF.getValues('phoneNumber'));

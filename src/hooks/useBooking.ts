@@ -1,8 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { axiosInstance } from '@/utils/axiosInstance';
-import { handleRemoveFromLocalStorage } from '@/utils/global';
+import {
+  handleGetLocalStorage,
+  handleRemoveFromLocalStorage,
+} from '@/utils/global';
 
 import type { NameJSONType, ReimbursementJSONType } from './useDepartment';
 
@@ -48,13 +52,13 @@ export type BookingDetailType = {
   cityStay: string;
 };
 export const createBooking = async ({
-  hospitalProcedureId,
+  procedureId,
   gender,
   claimCountry,
   patientPreferredStartDate,
   patientPreferredEndDate,
 }: {
-  hospitalProcedureId: string;
+  procedureId: string;
   gender: string;
   claimCountry: string;
   patientPreferredStartDate: Date;
@@ -65,7 +69,7 @@ export const createBooking = async ({
     status: number;
     data: string;
   }>(`${process.env.BASE_URL}/bookings`, {
-    hospitalProcedureId,
+    procedureId,
     gender,
     claimCountry,
     patientPreferredStartDate,
@@ -77,7 +81,15 @@ export const createBooking = async ({
     data: { id: response.data.data },
   };
 };
-export const useCreateBooking = () => {
+export const useCreateBooking = ({
+  selectedHospitalName,
+}: {
+  selectedHospitalName: string;
+}) => {
+  const selectedHospitalNameFromLocalStorage = handleGetLocalStorage({
+    tokenKey: 'selected_hospital_name',
+  });
+  const router = useRouter();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createBooking,
@@ -92,7 +104,14 @@ export const useCreateBooking = () => {
         'selected_hospital',
         'start_date',
         'end_date',
+        'flow_type',
+        'selected_hospital_name',
       ].map((key) => handleRemoveFromLocalStorage({ tokenKey: key }));
+      if (selectedHospitalName || selectedHospitalNameFromLocalStorage) {
+        router.push(
+          `/booking-success/?name=${selectedHospitalName || selectedHospitalNameFromLocalStorage}`,
+        );
+      }
     },
     onError: (error) => {
       const err = error as unknown as {

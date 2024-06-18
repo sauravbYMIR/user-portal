@@ -26,6 +26,7 @@ import { useAppStore } from '@/libs/store';
 import hospitalLogo from '@/public/assets/icons/sampleLogo.svg';
 import type { LocaleType } from '@/types/component';
 import {
+  BOOKING,
   convertToValidCurrency,
   getMonth,
   handleGetLocalStorage,
@@ -43,7 +44,7 @@ function HospitalDetailsPage({
     tokenKey: 'selected_language',
   }) ?? 'en') as LocaleType;
   const { t } = useTranslation();
-  const { selectedHospitalName, setStepNumber } = useAppStore();
+  const { setStepNumber } = useAppStore();
   const router = useRouter();
   const {
     setIsLoginModalActive,
@@ -51,21 +52,15 @@ function HospitalDetailsPage({
     isOtpVerifyModalActive,
     isBankIdModalActive,
     setIsBankIdModalActive,
+    selectedHospitalName,
   } = useAppStore();
   const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
-  const createBooking = useCreateBooking();
+  const createBooking = useCreateBooking({ selectedHospitalName });
   const [searchMemberQuery, setSearchMemberQuery] = React.useState<string>('');
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
   const [startDate, setStartDate] = React.useState<null | Date>(null);
   const [endDate, setEndDate] = React.useState<null | Date>(null);
   const [error, setError] = React.useState<string>('');
-  React.useEffect(() => {
-    if (createBooking.isSuccess) {
-      router.push(
-        `${window.location.origin}/booking-success/?name=${selectedHospitalName}`,
-      );
-    }
-  }, [createBooking.isSuccess, router, selectedHospitalName]);
 
   React.useEffect(() => {
     if (startDate && !endDate) {
@@ -87,52 +82,7 @@ function HospitalDetailsPage({
     }
     setError('');
   }, [endDate, startDate]);
-  const { selectedHospital, selectedGender, selectedCountry } = useAppStore();
-  React.useEffect(() => {
-    const selectedGenderLocalstorage = handleGetLocalStorage({
-      tokenKey: 'selected_gender',
-    });
-    const selectedCountryLocalstorage = handleGetLocalStorage({
-      tokenKey: 'selected_country',
-    });
-    const selectedProcedureLocalstorage = handleGetLocalStorage({
-      tokenKey: 'selected_procedure',
-    });
-    const selectedHospitalLocalstorage = handleGetLocalStorage({
-      tokenKey: 'selected_hospital',
-    });
-    const selectedStartDateLocalstorage = handleGetLocalStorage({
-      tokenKey: 'start_date',
-    });
-    const selectedEndDateLocalstorage = handleGetLocalStorage({
-      tokenKey: 'end_date',
-    });
-    if (
-      selectedGenderLocalstorage &&
-      selectedCountryLocalstorage &&
-      selectedProcedureLocalstorage &&
-      selectedHospitalLocalstorage &&
-      selectedStartDateLocalstorage &&
-      selectedEndDateLocalstorage
-    ) {
-      // eslint-disable-next-line func-names
-      (async function () {
-        const r = await getBankIdStatus();
-        if (r.success && !r.bankIdStatus) {
-          setIsBankIdModalActive(true);
-          return;
-        }
-        createBooking.mutate({
-          hospitalProcedureId: selectedProcedureLocalstorage,
-          gender: selectedGenderLocalstorage,
-          patientPreferredStartDate: JSON.parse(selectedStartDateLocalstorage),
-          patientPreferredEndDate: JSON.parse(selectedEndDateLocalstorage),
-          claimCountry: selectedCountryLocalstorage,
-        });
-      })();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { selectedProcedure, selectedGender, selectedCountry } = useAppStore();
   React.useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -149,7 +99,7 @@ function HospitalDetailsPage({
       return;
     }
     createBooking.mutate({
-      hospitalProcedureId: selectedHospital,
+      procedureId: selectedProcedure,
       gender: selectedGender,
       claimCountry: selectedCountry,
       patientPreferredStartDate: startDate,
@@ -157,6 +107,7 @@ function HospitalDetailsPage({
     });
   };
   const handleRequestAppointment = async () => {
+    handleSetLocalStorage({ tokenKey: 'flow_type', tokenValue: BOOKING });
     if (!startDate || !endDate) {
       toast.error('Please select treatment date to continue');
       return;

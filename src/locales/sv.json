@@ -74,5 +74,7 @@
   "Retry": "Retry",
   "Authentication-Failed.-Please-check-your-Bank-ID-details-and-try-again": "Authentication Failed. Please check your Bank ID details and try again",
   "Please-wait-while-we-redirect-you-to-booking-page": "Please wait while we redirect you to booking page",
-  "Go-to-home": "Go to home"
+  "Go-to-home": "Go to home",
+  "redirecting-to-booking-page": "Redirecting to booking page",
+  "Booking-successfully-created": "Booking successfully created, please wait while we are redirecting to booking success page"
 }

@@ -122,6 +122,8 @@ const handleLogOut = () => {
     'selected_hospital',
     'start_date',
     'end_date',
+    'flow_type',
+    'selected_hospital_name',
   ].map((key) => handleRemoveFromLocalStorage({ tokenKey: key }));
 };
 
@@ -155,8 +157,10 @@ const convertToValidCurrency = ({
 }) => price.toLocaleString(locale, { style: 'currency', currency });
 const LOGIN = 'LOGIN';
 const SIGNUP = 'SIGNUP';
+const BOOKING = 'BOOKING';
 
 export {
+  BOOKING,
   convertToValidCurrency,
   countryData,
   getMonth,

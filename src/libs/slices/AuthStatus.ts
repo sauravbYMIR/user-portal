@@ -7,8 +7,6 @@ export type AuthStatusType = {
   setIsOtpVerifyModalActive: (otpStatus: boolean) => void;
   isBankIdModalActive: boolean;
   setIsBankIdModalActive: (otpStatus: boolean) => void;
-  authType: string;
-  setAuthType: (authType: string) => void;
 };
 
 export const AuthStatusSlice: StateCreator<AuthStatusType> = (set) => ({
@@ -21,7 +19,4 @@ export const AuthStatusSlice: StateCreator<AuthStatusType> = (set) => ({
   isBankIdModalActive: false,
   setIsBankIdModalActive: (bankIdModalStatus: boolean) =>
     set(() => ({ isBankIdModalActive: bankIdModalStatus })),
-  authType: '',
-  setAuthType: (authTypeValue: string) =>
-    set(() => ({ authType: authTypeValue })),
 });

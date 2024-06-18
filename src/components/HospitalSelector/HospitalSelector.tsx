@@ -104,6 +104,10 @@ const HospitalCard = ({
             tokenKey: 'selected_hospital',
             tokenValue: id,
           });
+          handleSetLocalStorage({
+            tokenKey: 'selected_hospital_name',
+            tokenValue: hospitalName,
+          });
           router.push(`/hospital/${id}`);
         }}
       >

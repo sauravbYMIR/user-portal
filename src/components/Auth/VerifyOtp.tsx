@@ -8,6 +8,7 @@ import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import {
   handleGetLocalStorage,
+  handleRemoveFromLocalStorage,
   handleSetLocalStorage,
   LOGIN,
 } from '@/utils/global';
@@ -63,8 +64,6 @@ const VerifyOtp = () => {
     selectedHospital,
     selectedPhoneNumber,
     setIsBankIdModalActive,
-    authType,
-    setAuthType,
   } = useAppStore();
   const [isShowTimer, setIsShowTimer] = React.useState<boolean>(false);
   const [otp, setOtp] = React.useState<string>('');
@@ -118,15 +117,16 @@ const VerifyOtp = () => {
           tokenKey: 'refresh_token',
           tokenValue: response.data.refreshToken,
         });
-        if (authType !== LOGIN) {
+        const flowType = handleGetLocalStorage({ tokenKey: 'flow_type' });
+        if (flowType && flowType !== LOGIN) {
           const r = await getBankIdStatus();
-          setAuthType('');
+          handleRemoveFromLocalStorage({ tokenKey: 'flow_type' });
           if (r.success && !r.bankIdStatus) {
             setIsBankIdModalActive(true);
             return;
           }
         }
-        setAuthType('');
+        handleRemoveFromLocalStorage({ tokenKey: 'flow_type' });
         if (selectedHospital) {
           router.push(`/hospital/${selectedHospital}`);
         }
