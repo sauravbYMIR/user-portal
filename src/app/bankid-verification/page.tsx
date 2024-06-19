@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BarLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
@@ -147,4 +147,12 @@ const BankIdVerification = () => {
   );
 };
 
-export default BankIdVerification;
+const BankIdVerificationSuspense = () => {
+  return (
+    <Suspense>
+      <BankIdVerification />
+    </Suspense>
+  );
+};
+
+export default BankIdVerificationSuspense;
