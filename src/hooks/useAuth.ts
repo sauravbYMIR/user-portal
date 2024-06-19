@@ -77,6 +77,7 @@ export const verifyOtp = async ({
         accessToken: response.data.accessToken,
         refreshToken: response.data.refreshToken,
         userId: response.data.userId,
+        email: response.data.email,
       },
     };
   } catch (err) {

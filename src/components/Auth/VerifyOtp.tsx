@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import posthog from 'posthog-js';
 import React from 'react';
 import { ClipLoader } from 'react-spinners';
 import { toast } from 'sonner';
@@ -108,6 +109,10 @@ const VerifyOtp = () => {
         token,
       });
       if (response.success) {
+        posthog.identify(
+          response.data.userId,
+          { email: response.data.email }, // optional: set additional person properties
+        );
         setIsLoading(false);
         setIsOtpVerifyModalActive(false);
         handleSetLocalStorage({

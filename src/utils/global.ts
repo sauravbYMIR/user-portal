@@ -1,3 +1,5 @@
+import posthog from 'posthog-js';
+
 import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
 import irelandFlag from '@/public/assets/icons/ireland.svg';
 import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
@@ -125,6 +127,7 @@ const handleLogOut = () => {
     'flow_type',
     'selected_hospital_name',
   ].map((key) => handleRemoveFromLocalStorage({ tokenKey: key }));
+  posthog.reset();
 };
 
 const getMonth = (date: string | Date) => {
