@@ -160,7 +160,6 @@ function LandingPage() {
           />
         </div>
       </div>
-
       <div ref={howItWorksRef} className={pageStyle.secondSectionMainContainer}>
         <h1 className={pageStyle.secondSecTitle}>Getting started is easy</h1>
         <div ref={ref} className={pageStyle.secondSectionContainer}>
@@ -221,7 +220,6 @@ function LandingPage() {
           </FbtButton>
         )}
       </div>
-
       <div ref={ourHospitalRef} className={pageStyle.thirdSectionContainer}>
         <div className={pageStyle.hospitalInfoContainer}>
           <div
@@ -291,7 +289,6 @@ function LandingPage() {
           </div>
         </div>
       </div>
-
       <div ref={faqsRef} className={pageStyle.faqSectionContainer}>
         <h1 className={pageStyle.faqSectionTitle}>FAQs</h1>
 
@@ -318,7 +315,6 @@ function LandingPage() {
           </FbtAccordion>
         </div>
       </div>
-
       <Footer />
     </div>
   );

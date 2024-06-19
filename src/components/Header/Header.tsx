@@ -50,7 +50,6 @@ interface HeaderPropType {
 
 function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
   const { t } = useTranslation();
-  // TODO: create me endpoint to check
   const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   const selectedLanguage = handleGetLocalStorage({
     tokenKey: 'selected_language',
