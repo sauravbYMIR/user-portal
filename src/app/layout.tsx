@@ -1,10 +1,16 @@
 import '@/styles/global.css';
 
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { Toaster } from 'sonner';
 
+import { PHProvider } from '@/utils/PHProvider';
 import Providers from '@/utils/providers';
+
+const PostHogPageView = dynamic(() => import('./PostHogPageView'), {
+  ssr: false,
+});
 
 export const metadata: Metadata = {
   title: 'Drfasttrack',
@@ -26,10 +32,13 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         data-use-service-core
         defer
       />
-      <body>
-        <Toaster position="top-center" richColors closeButton />
-        <Providers>{props.children}</Providers>
-      </body>
+      <PHProvider>
+        <body>
+          <PostHogPageView />
+          <Toaster position="top-center" richColors closeButton />
+          <Providers>{props.children}</Providers>
+        </body>
+      </PHProvider>
     </html>
   );
 }

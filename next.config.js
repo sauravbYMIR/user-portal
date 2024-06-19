@@ -28,5 +28,7 @@ module.exports = {
     BANK_CLIENT_SECRET: process.env.NEXT_PUBLIC_BANK_CLIENT_SECRET,
     BANK_CLIENT_ID: process.env.NEXT_PUBLIC_BANK_CLIENT_ID,
     BITS_URL: process.env.NEXT_PUBLIC_BITS_URL,
+    POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
+    POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
   },
 };

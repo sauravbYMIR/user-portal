@@ -11,6 +11,7 @@ import {
   handleRemoveFromLocalStorage,
   handleSetLocalStorage,
   LOGIN,
+  SIGNUP,
 } from '@/utils/global';
 
 import { CloseIcon } from '../Icons/Icons';
@@ -126,10 +127,10 @@ const VerifyOtp = () => {
             return;
           }
         }
-        handleRemoveFromLocalStorage({ tokenKey: 'flow_type' });
-        if (selectedHospital) {
+        if (selectedHospital && flowType === SIGNUP) {
           router.push(`/hospital/${selectedHospital}`);
         }
+        handleRemoveFromLocalStorage({ tokenKey: 'flow_type' });
       }
     } catch (e) {
       setIsLoading(false);
