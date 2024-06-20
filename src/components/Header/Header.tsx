@@ -100,7 +100,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
     <>
       <FbtHeader
         isFixed
-        className="flex items-center justify-around !bg-primary-5"
+        className="flex items-center justify-between !bg-primary-5 sm:!px-16"
       >
         <FbtHeaderBrand>
           <Image
@@ -130,37 +130,41 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
         </FbtHeaderContent>
         {matches && (
           <div className="flex items-center gap-x-5">
-            <FbtSelect defaultValue={selectedLanguage ?? 'en'}>
-              <FbtSelectTrigger
-                selectIconClassName={headerStyle.headerSelectTriggerIcon}
-                // className={headerStyle.headerSelectTrigger}
-                className="!h-[50px] !w-[135px] !rounded-lg !border-2 !border-neutral-4 !py-[18.5px]"
-              >
-                <FbtSelectValue placeholder="Select" />
-              </FbtSelectTrigger>
+            {!isHeaderMenuOpen && (
+              <FbtSelect defaultValue={selectedLanguage ?? 'en'}>
+                <FbtSelectTrigger
+                  selectIconClassName={headerStyle.headerSelectTriggerIcon}
+                  // className={headerStyle.headerSelectTrigger}
+                  className="!h-[50px] !w-[135px] !rounded-lg !border-2 !border-neutral-4 !py-[18.5px]"
+                >
+                  <FbtSelectValue placeholder="Select" />
+                </FbtSelectTrigger>
 
-              <FbtSelectContent className={headerStyle.headerSelectContent}>
-                <FbtSelectGroup>
-                  {countryData.map((countryInfo) => (
-                    <FbtSelectItem
-                      key={countryInfo.countryCode}
-                      checkIconClassName={headerStyle.headerSelectTickIcon}
-                      className={headerStyle.headerSelectItem}
-                      value={countryInfo.locale}
-                    >
-                      <span className="font-poppins text-sm font-medium text-neutral-2">
-                        {countryInfo.language}
-                      </span>
-                    </FbtSelectItem>
-                  ))}
-                </FbtSelectGroup>
-              </FbtSelectContent>
-            </FbtSelect>
+                <FbtSelectContent className={headerStyle.headerSelectContent}>
+                  <FbtSelectGroup>
+                    {countryData.map((countryInfo) => (
+                      <FbtSelectItem
+                        key={countryInfo.countryCode}
+                        checkIconClassName={headerStyle.headerSelectTickIcon}
+                        className={headerStyle.headerSelectItem}
+                        value={countryInfo.locale}
+                      >
+                        <span className="font-poppins text-sm font-medium text-neutral-2">
+                          {countryInfo.language}
+                        </span>
+                      </FbtSelectItem>
+                    ))}
+                  </FbtSelectGroup>
+                </FbtSelectContent>
+              </FbtSelect>
+            )}
 
-            <FbtHeaderMenuToggle
-              clickHandler={() => setIsHeaderMenuOpen(!isHeaderMenuOpen)}
-              isMenuOpen={isHeaderMenuOpen}
-            />
+            {!isHeaderMenuOpen && (
+              <FbtHeaderMenuToggle
+                clickHandler={() => setIsHeaderMenuOpen(!isHeaderMenuOpen)}
+                isMenuOpen={isHeaderMenuOpen}
+              />
+            )}
           </div>
         )}
         {!matches && (
