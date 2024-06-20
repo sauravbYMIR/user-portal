@@ -7,6 +7,7 @@ import { useInView } from 'react-intersection-observer';
 
 import pageStyle from '@/app/page.module.scss';
 import { CustomAccordionItem } from '@/components/AccordionItem/AccordionItem';
+import CookieModal from '@/components/CookieModal/CookieModal';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import LandingPageContentCard from '@/components/LandingPageContentCard/LandingPageContentCard';
@@ -121,7 +122,7 @@ function LandingPage() {
         ourHospitalRef={ourHospitalRef}
         faqsRef={faqsRef}
       />
-
+      <CookieModal />
       <div className={pageStyle.firstSectionContainer}>
         <div className={pageStyle.firstSecLeftContainer}>
           <div className={pageStyle.firstSecLeftWrapper}>
