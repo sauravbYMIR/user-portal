@@ -32,6 +32,7 @@ module.exports = {
     BITS_URL: process.env.NEXT_PUBLIC_BITS_URL,
     POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV,
   },
 };
 
