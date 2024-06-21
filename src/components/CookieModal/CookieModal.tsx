@@ -12,10 +12,13 @@ import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
 import { FbtButton } from '../ui';
 
 export function cookieConsentGiven(): string {
-  if (!localStorage.getItem('cookie_consent')) {
-    return 'undecided';
+  if (typeof window !== 'undefined') {
+    if (!localStorage.getItem('cookie_consent')) {
+      return 'undecided';
+    }
+    return localStorage.getItem('cookie_consent') ?? '';
   }
-  return localStorage.getItem('cookie_consent') ?? '';
+  return '';
 }
 
 const CookieModal = () => {
