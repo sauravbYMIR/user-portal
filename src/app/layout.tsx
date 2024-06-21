@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { Toaster } from 'sonner';
 
+import CookieModal from '@/components/CookieModal/CookieModal';
 import { PHProvider } from '@/utils/PHProvider';
 import Providers from '@/utils/providers';
 
@@ -35,6 +36,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       <PHProvider>
         <body>
           <PostHogPageView />
+          <CookieModal />
           <Toaster position="top-center" richColors closeButton />
           <Providers>{props.children}</Providers>
         </body>

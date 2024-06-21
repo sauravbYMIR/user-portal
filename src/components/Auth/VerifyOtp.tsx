@@ -15,6 +15,7 @@ import {
   SIGNUP,
 } from '@/utils/global';
 
+import { cookieConsentGiven } from '../CookieModal/CookieModal';
 import { CloseIcon } from '../Icons/Icons';
 import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
 import { FbtButton } from '../ui';
@@ -109,10 +110,11 @@ const VerifyOtp = () => {
         token,
       });
       if (response.success) {
-        posthog.identify(
-          response.data.userId,
-          { email: response.data.email }, // optional: set additional person properties
-        );
+        if (cookieConsentGiven() === 'yes') {
+          posthog.identify(response.data.userId, {
+            email: response.data.email,
+          });
+        }
         setIsLoading(false);
         setIsOtpVerifyModalActive(false);
         handleSetLocalStorage({

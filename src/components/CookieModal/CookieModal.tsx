@@ -1,9 +1,8 @@
 'use client';
 
-import Cookies from 'js-cookie';
 import Image from 'next/image';
 import Link from 'next/link';
-import posthog from 'posthog-js';
+import { usePostHog } from 'posthog-js/react';
 import React from 'react';
 
 import useTranslation from '@/hooks/useTranslation';
@@ -12,35 +11,46 @@ import cookieImg from '@/public/assets/images/cookie.svg';
 import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
 import { FbtButton } from '../ui';
 
+export function cookieConsentGiven(): string {
+  if (!localStorage.getItem('cookie_consent')) {
+    return 'undecided';
+  }
+  return localStorage.getItem('cookie_consent') ?? '';
+}
+
 const CookieModal = () => {
-  const cookieConsent = Cookies.get('CookieConsent');
-  const [isOpenModal, setIsOpenModal] = React.useState(false);
-  const [delayed, setDelayed] = React.useState(true);
+  const [consentGiven, setConsentGiven] = React.useState('');
+  const posthog = usePostHog();
 
   React.useEffect(() => {
-    if (typeof cookieConsent === 'undefined') {
-      window.scrollTo(0, 0);
-      document.body.style.overflow = 'hidden';
-      setIsOpenModal(true);
-    } else {
-      setIsOpenModal(false);
-    }
-  }, [cookieConsent]);
-
-  React.useEffect(() => {
-    const timeout = setTimeout(() => setDelayed(false), 1000);
-    return () => clearTimeout(timeout);
+    window.scrollTo(0, 0);
+    document.body.style.overflow = 'hidden';
+    setConsentGiven(cookieConsentGiven());
   }, []);
-  const expiryDate24hr = new Date();
-  expiryDate24hr.setTime(expiryDate24hr.getTime() + 24 * 60 * 60 * 1000);
 
-  const expiryDate1y = new Date();
-  expiryDate1y.setFullYear(expiryDate1y.getFullYear() + 1);
+  React.useEffect(() => {
+    if (consentGiven !== '') {
+      posthog.set_config({
+        persistence: consentGiven === 'yes' ? 'localStorage+cookie' : 'memory',
+      });
+    }
+  }, [consentGiven, posthog]);
+
+  const handleAcceptCookies = () => {
+    localStorage.setItem('cookie_consent', 'yes');
+    setConsentGiven('yes');
+  };
+
+  const handleDeclineCookies = () => {
+    localStorage.setItem('cookie_consent', 'no');
+    setConsentGiven('no');
+  };
+
   const { t } = useTranslation();
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {isOpenModal && !delayed && (
+      {consentGiven === 'undecided' && (
         <ModalWrapper
           parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
           childrenStyle="overflow-scroll max-w-[700px] w-full relative z-[9999] flex flex-col items-center justify-center rounded-[20px] bg-white px-12 py-[42px] shadow-colorPickerShadow"
@@ -71,18 +81,7 @@ const CookieModal = () => {
                 size="sm"
                 variant="outline"
                 className="!rounded-lg !px-[23px] !py-[25px]"
-                onClick={() => {
-                  Cookies.set('CookieConsent', 'true', {
-                    path: '/',
-                    expires: expiryDate1y,
-                  });
-                  Cookies.set('CookieConsentNonEssential', 'false', {
-                    path: '/',
-                    expires: expiryDate1y,
-                  });
-                  posthog.opt_out_capturing();
-                  setIsOpenModal(false);
-                }}
+                onClick={handleDeclineCookies}
               >
                 <span className="font-poppins text-sm font-semibold text-neutral-2">
                   {t('Refuse-non-essential')}
@@ -92,17 +91,7 @@ const CookieModal = () => {
                 size="sm"
                 variant="solid"
                 className="!rounded-lg !px-[25px] !py-[27px]"
-                onClick={() => {
-                  Cookies.set('CookieConsent', 'true', {
-                    path: '/',
-                    expires: expiryDate1y,
-                  });
-                  Cookies.set('CookieConsentNonEssential', 'true', {
-                    path: '/',
-                    expires: expiryDate1y,
-                  });
-                  setIsOpenModal(false);
-                }}
+                onClick={handleAcceptCookies}
               >
                 <span className="font-poppins text-sm font-semibold text-white">
                   {t('Accept-cookies')}
