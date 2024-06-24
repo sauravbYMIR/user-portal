@@ -116,7 +116,7 @@ const BankIdVerification = () => {
                     className="!w-full !rounded-[6.4px] !px-6 !py-4"
                     onClick={() => setIsBankIdModalActive(true)}
                   >
-                    <p className="font-poppins text-md font-normal text-neutral-7 sxl:text-2xl">
+                    <p className="font-poppins text-lg font-normal text-neutral-7 sxl:text-2xl">
                       {t('Retry')}
                     </p>
                   </FbtButton>
