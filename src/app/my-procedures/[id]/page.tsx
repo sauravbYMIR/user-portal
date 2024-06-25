@@ -108,6 +108,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             bookingId: params.id,
             status: true,
           });
+          // TODO: HOBSPOT API CALL TO CREATE NEW TICKET
         });
       }
     }, 0);

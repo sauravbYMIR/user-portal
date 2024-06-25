@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import { SyncLoader } from 'react-spinners';
 import { toast } from 'sonner';
 
 import { initBankId } from '@/hooks/useAuth';
@@ -36,19 +37,25 @@ const BankIdModal = () => {
       setIsBankIdInitLoading(false);
     }
   };
-  React.useEffect(() => {
-    if (isBankIdInitLoading) {
-      toast.info('Please wait while we redirect you to bankid verification', {
-        duration: 30 * 1000,
-      });
-    }
-  }, [isBankIdInitLoading]);
 
   return (
     <ModalWrapper
       parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
       childrenStyle="overflow-scroll relative z-[9999] flex flex-col items-center justify-center rounded-lg bg-white px-12 py-[42px] shadow-colorPickerShadow"
     >
+      {isBankIdInitLoading && (
+        <div className="pointer-events-none absolute left-0 top-0 flex size-full flex-col items-center justify-center bg-black/70">
+          <SyncLoader
+            loading={isBankIdInitLoading}
+            color="#fff"
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+          <span className="mt-5 w-3/4 text-center font-lexend text-base font-normal text-white">
+            {t('Please-wait-while-we-redirect-you-to-bankid-verification')}
+          </span>
+        </div>
+      )}
       <FbtButton
         variant="link"
         className="!absolute !right-4 !top-2 !p-0"
