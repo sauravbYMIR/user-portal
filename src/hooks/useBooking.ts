@@ -50,6 +50,12 @@ export type BookingDetailType = {
   reimbursementCost: ReimbursementJSONType;
   elfSightFormSubmitStatus: boolean;
   cityStay: string;
+  hubspotCompanyId: string;
+  user: {
+    firstName: string;
+    lastName: string;
+    hubspotUserId: string;
+  };
 };
 export const createBooking = async ({
   procedureId,

@@ -5,6 +5,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { toast } from 'sonner';
 
 import { BackArrowIcon } from '@/components/Icons/Icons';
 import { FacebookStyleLoader } from '@/components/Loader/FacebookStyleLoader';
@@ -12,6 +13,7 @@ import type { ApplicationBookingStatusType } from '@/hooks/useBooking';
 import { updateElfsightStatus, useGetBookingDetails } from '@/hooks/useBooking';
 import useTranslation from '@/hooks/useTranslation';
 import type { LocaleType } from '@/types/component';
+import { axiosInstance } from '@/utils/axiosInstance';
 import {
   convertToValidCurrency,
   countryData,
@@ -29,8 +31,8 @@ const BookingStatus = ({
     case 'accepted':
       return (
         <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
-          Your application has been approved by PSH Hospitall, please complete
-          the information capture form to continue with the booking process
+          Your application has been approved by Hospital, please complete the
+          information capture form to continue with the booking process
         </span>
       );
     case 'rejected':
@@ -98,20 +100,80 @@ const BookingStatusText = {
 
 function HospitalDetailsPage({ params }: { params: { id: string } }) {
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
+  const [elfsightData, setElfsightData] = React.useState<
+    | {
+        fieldId: any;
+        value: any;
+      }[]
+    | null
+  >(null);
   const bookingDetails = useGetBookingDetails(params.id);
   const router = useRouter();
+
+  const createNewHubspotTicket = async (tickerDetails: {
+    subject: string;
+    hs_pipeline_stage: string;
+    hs_ticket_priority: string;
+    elfsightDetails: string;
+    hubspotCompanyId: string;
+    hubspotUserId: string;
+    country: string;
+    gender: string;
+    selectedProcedure: string;
+    selectedHospital: string;
+  }) => {
+    try {
+      await axiosInstance.post(`bookings/hubspot-ticker`, {
+        ...tickerDetails,
+      });
+      setElfsightData(null);
+    } catch (e) {
+      const err = e as unknown as {
+        response: { status: number; data: { message: string } };
+      };
+      toast.error(
+        `${err.response.data.message || 'Error while creating hubspot ticket'}`,
+      );
+    }
+  };
+
+  React.useEffect(() => {
+    if (elfsightData) {
+      if (bookingDetails.data?.data) {
+        createNewHubspotTicket({
+          subject: `${bookingDetails.data?.data.procedureName.en}-${bookingDetails.data.data.hospitalName}-${bookingDetails.data.data.user.firstName}${bookingDetails.data.data.user.lastName}`,
+          hs_pipeline_stage: '1',
+          hs_ticket_priority: 'HIGH',
+          elfsightDetails: elfsightData ? JSON.stringify(elfsightData) : '',
+          hubspotCompanyId: bookingDetails.data.data.hubspotCompanyId,
+          hubspotUserId: bookingDetails.data.data.user.hubspotUserId,
+          country: bookingDetails.data.data.claimCountry,
+          gender: bookingDetails.data.data.gender,
+          selectedProcedure: bookingDetails.data.data.procedureName.en,
+          selectedHospital: bookingDetails.data.data.hospitalName,
+        });
+      }
+    }
+  }, [elfsightData, bookingDetails.data?.data]);
+
   React.useEffect(() => {
     setTimeout(() => {
       if (typeof window !== undefined) {
-        window.document.addEventListener('elfsight-on-submit', () => {
+        window.document.addEventListener('elfsight-on-submit', (e) => {
+          const event = e as unknown as { detail: { elfsightDetails: any } };
+          const data = Object.keys(event.detail.elfsightDetails).map((d) => ({
+            fieldId: event.detail.elfsightDetails[d].fieldID,
+            value: event.detail.elfsightDetails[d].value,
+          }));
           updateElfsightStatus({
             bookingId: params.id,
             status: true,
           });
-          // TODO: HOBSPOT API CALL TO CREATE NEW TICKET
+          setElfsightData(data);
         });
       }
     }, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
   const { t } = useTranslation();
   const selectedLanguage = (handleGetLocalStorage({
@@ -128,7 +190,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   });
   const countryInfo = countryData.find((c) => c.locale === selectedLanguage);
   return (
-    <div className="sxl:py-15 mt-3 px-5 sxl:px-[75px]">
+    <div className="sxl:py-15 mt-3 h-[650px] overflow-y-scroll px-5 sxl:px-[75px]">
       {!bookingDetails.isLoading &&
         bookingDetails.data &&
         bookingDetails.data.data && (
@@ -187,18 +249,18 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               </div>
             </div>
           </div>
-          {bookingDetails.data &&
-            bookingDetails.data.data &&
-            !bookingDetails.data.data.elfSightFormSubmitStatus && (
-              <div className="mb-[47px] mt-[62px] w-full items-center justify-between rounded-[6.4px] border border-primary-3 bg-neutral-7 px-[32px] py-[45px] text-neutral-1 sm:flex">
-                <BookingStatus
-                  status={bookingDetails.data.data.applicationStatus}
-                />
+          {bookingDetails.data && bookingDetails.data.data && (
+            <div className="mb-[47px] mt-[62px] w-full items-center justify-between rounded-[6.4px] border border-primary-3 bg-neutral-7 px-[32px] py-[45px] text-neutral-1 sm:flex">
+              <BookingStatus
+                status={bookingDetails.data.data.applicationStatus}
+              />
+              {!bookingDetails.data.data.elfSightFormSubmitStatus && (
                 <BookingStatusButton
                   status={bookingDetails.data.data.applicationStatus}
                 />
-              </div>
-            )}
+              )}
+            </div>
+          )}
           {bookingDetails.isSuccess && bookingDetails.data.data && (
             <div className="flex flex-col items-start gap-x-6 gap-y-12 md:grid md:grid-cols-2">
               <div className="flex flex-col items-start justify-start">

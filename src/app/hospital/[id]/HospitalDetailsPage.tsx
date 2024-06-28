@@ -58,6 +58,8 @@ function HospitalDetailsPage({
   const createBooking = useCreateBooking({ selectedHospitalName });
   const [searchMemberQuery, setSearchMemberQuery] = React.useState<string>('');
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
+  const [isBankidVerificationLoading, setIsBankidVerificationLoading] =
+    React.useState<boolean>(false);
   const [startDate, setStartDate] = React.useState<null | Date>(null);
   const [endDate, setEndDate] = React.useState<null | Date>(null);
   const [error, setError] = React.useState<string>('');
@@ -116,10 +118,23 @@ function HospitalDetailsPage({
       setIsLoginModalActive(true);
       return;
     }
-    const r = await getBankIdStatus();
-    if (r.success && !r.bankIdStatus) {
-      setIsBankIdModalActive(true);
-      return;
+    setIsBankidVerificationLoading(true);
+    try {
+      const r = await getBankIdStatus();
+      setIsBankidVerificationLoading(false);
+      if (r.success && !r.bankIdStatus) {
+        setIsBankIdModalActive(true);
+        return;
+      }
+    } catch (e) {
+      const err = e as unknown as {
+        response: { status: number; data: { message: string } };
+      };
+      toast.error(
+        `${err.response.data.message || 'Error-while-bankid-verfication'}`,
+      );
+    } finally {
+      setIsBankidVerificationLoading(false);
     }
     handleCreateBooking();
   };
@@ -449,9 +464,9 @@ function HospitalDetailsPage({
           disabled={error.length > 0}
           onClick={handleRequestAppointment}
         >
-          {createBooking.isPending ? (
+          {createBooking.isPending || isBankidVerificationLoading ? (
             <ClipLoader
-              loading={createBooking.isPending}
+              loading={createBooking.isPending || isBankidVerificationLoading}
               color="#333"
               size={20}
               aria-label="Loading Spinner"

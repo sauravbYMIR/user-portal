@@ -64,7 +64,7 @@ const BankIdModal = () => {
           setIsBankIdModalActive(false);
         }}
       >
-        <CloseIcon className="size-10" stroke="#333" />
+        <CloseIcon className="size-8" stroke="#333" />
       </FbtButton>
       <h1 className="font-poppins text-3xl font-medium text-primary-1 sxl:text-5xl">
         {t('Select-an-electronic-ID')}

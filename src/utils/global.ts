@@ -2,10 +2,11 @@ import posthog from 'posthog-js';
 
 import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
 import irelandFlag from '@/public/assets/icons/ireland.svg';
+import norwayBankId from '@/public/assets/icons/norBankid.svg';
 import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
 import swedenFlag from '@/public/assets/icons/swedenFlag.svg';
 import swedenBankId from '@/public/assets/images/bankIdImg.svg';
-import norwayBankId from '@/public/assets/images/bankIdNor.svg';
+import ireBankId from '@/public/assets/images/bankIdNor.svg';
 import denmarkBankId from '@/public/assets/images/denBankId.svg';
 import type { LanguagesType } from '@/types/component';
 
@@ -44,7 +45,7 @@ const countryData: CountryData[] = [
     currency: 'EUR',
     countryCode: 'ie',
     flagIcon: irelandFlag,
-    bankIdIcon: norwayBankId,
+    bankIdIcon: ireBankId,
     workflowId: 'bits:workflow::e248a2a3-4453-4c01-913a-70f656461fbc',
   },
   {
