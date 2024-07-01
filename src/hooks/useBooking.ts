@@ -52,8 +52,7 @@ export type BookingDetailType = {
   cityStay: string;
   hubspotCompanyId: string;
   user: {
-    firstName: string;
-    lastName: string;
+    email: string;
     hubspotUserId: string;
   };
 };

@@ -141,7 +141,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
     if (elfsightData) {
       if (bookingDetails.data?.data) {
         createNewHubspotTicket({
-          subject: `${bookingDetails.data?.data.procedureName.en}-${bookingDetails.data.data.hospitalName}-${bookingDetails.data.data.user.firstName}${bookingDetails.data.data.user.lastName}`,
+          subject: `${bookingDetails.data?.data.procedureName.en}-${bookingDetails.data.data.hospitalName}-${bookingDetails.data.data.user.email}}`,
           hs_pipeline_stage: '1',
           hs_ticket_priority: 'HIGH',
           elfsightDetails: elfsightData ? JSON.stringify(elfsightData) : '',
