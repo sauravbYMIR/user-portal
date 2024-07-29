@@ -140,11 +140,12 @@ const getMonth = (date: string | Date) => {
     '4': 'Apr',
     '5': 'May',
     '6': 'Jun',
-    '7': 'Aug',
-    '8': 'Sept',
-    '9': 'Oct',
-    '10': 'Nov',
-    '11': 'Dec',
+    '7': 'Jul',
+    '8': 'Aug',
+    '9': 'Sept',
+    '10': 'Oct',
+    '11': 'Nov',
+    '12': 'Dec',
   };
 
   return month[monthNum.toString() as keyof typeof month];
@@ -158,7 +159,8 @@ const convertToValidCurrency = ({
   locale: string;
   price: number;
   currency: string;
-}) => price.toLocaleString(locale, { style: 'currency', currency });
+}) =>
+  price ? price.toLocaleString(locale, { style: 'currency', currency }) : '';
 const LOGIN = 'LOGIN';
 const SIGNUP = 'SIGNUP';
 const BOOKING = 'BOOKING';

@@ -23,6 +23,25 @@ module.exports = {
       '6xl': '4rem',
     },
     extend: {
+      animation: {
+        slideup: 'slideup 10s ease-in-out',
+      },
+      keyframes: {
+        slideup: {
+          '0%': {
+            transform: 'translateY(50%)',
+            'animation-timing-function': 'cubic - bezier(0.8, 0, 1, 1)',
+          },
+          '100%': {
+            transform: 'translateY(50%)',
+            'animation-timing-function': 'cubic - bezier(0.8, 0, 1, 1)',
+          },
+          '50%': {
+            transform: 'translateY(0%)',
+            'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)',
+          },
+        },
+      },
       screens: {
         sxl: '1180px',
         slg: '936px',
@@ -72,6 +91,17 @@ module.exports = {
         black18: 'rgba(18, 15, 28, 1)',
         gray77: 'rgba(77, 77, 77, 0.8)',
         gray169: 'rgba(169, 169, 169, 1)',
+        'info-green': 'rgba(102, 167, 137, 1)',
+        'primary-green': 'rgba(188, 208, 199, 1)',
+        'secondary-green': 'rgba(65, 135, 121, 1)',
+        'dark-primary-green': 'rgba(154, 185, 171, 1)',
+        'dark-green': 'rgba(0, 70, 70, 1)',
+        'base-light': 'rgba(243, 243, 233, 1)',
+        'accent-purple': 'rgba(42, 52, 88, 1)',
+        'light-purple': 'rgba(191, 205, 255, 1)',
+        'black-52': 'rgba(52, 52, 50, 1)',
+        'dark-grey-1': 'rgba(213, 213, 205, 1)',
+        'bold-red': 'rgba(215, 64, 65, 1)',
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],

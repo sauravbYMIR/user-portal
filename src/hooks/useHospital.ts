@@ -3,6 +3,17 @@ import axios from 'axios';
 
 import type { NameJSONType, ReimbursementJSONType } from './useDepartment';
 
+export type HospitalImageType = {
+  imageUrl: string;
+  id: string;
+  hospital: Hospital;
+  fileName: string;
+  originalFileName: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+};
+
 export type HospitalMember = {
   id: string;
   position: NameJSONType;
@@ -29,6 +40,7 @@ export type Hospital = {
   };
   reimBursementCost: ReimbursementJSONType;
   hospitalLogo: string | false;
+  hospitalImages: Array<HospitalImageType>;
 };
 
 export type HospitalProcedureByIdType = {
@@ -50,9 +62,12 @@ export type HospitalProcedureByIdType = {
     };
     id: string;
     name: NameJSONType;
+    reimbursement: ReimbursementJSONType;
   };
   hospital: {
     logo: false | string;
+    name: string;
+    externalLink?: string;
   };
   procedureId: string;
   stayInCity: string;

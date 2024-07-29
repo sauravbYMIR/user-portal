@@ -230,6 +230,136 @@ function BackArrowIcon({
     </svg>
   );
 }
+function BackShortArrowIcon({
+  className,
+  strokeWidth,
+  stroke,
+}: {
+  className?: string;
+  strokeWidth?: string;
+  stroke?: string;
+}) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={strokeWidth ?? 1.5}
+      stroke={stroke ?? 'currentColor'}
+      className={className ?? 'size-6'}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+      />
+    </svg>
+  );
+}
+function CheckIcon({
+  className,
+  strokeWidth,
+  stroke,
+}: {
+  className?: string;
+  strokeWidth?: string;
+  stroke?: string;
+}) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={strokeWidth ?? 1.5}
+      stroke={stroke ?? 'currentColor'}
+      className={className ?? 'size-6'}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="m4.5 12.75 6 6 9-13.5"
+      />
+    </svg>
+  );
+}
+function QuestionIcon({
+  className,
+  strokeWidth,
+  stroke,
+}: {
+  className?: string;
+  strokeWidth?: string;
+  stroke?: string;
+}) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={strokeWidth ?? 1.5}
+      stroke={stroke ?? 'currentColor'}
+      className={className ?? 'size-6'}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
+      />
+    </svg>
+  );
+}
+function ExternalLinkIcon({
+  className,
+  strokeWidth,
+  stroke,
+}: {
+  className?: string;
+  strokeWidth?: string;
+  stroke?: string;
+}) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={strokeWidth ?? 1.5}
+      stroke={stroke ?? 'currentColor'}
+      className={className ?? 'size-6'}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+      />
+    </svg>
+  );
+}
+function CalendarIcon({
+  className,
+  strokeWidth,
+  stroke,
+}: {
+  className?: string;
+  strokeWidth?: string;
+  stroke?: string;
+}) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth={strokeWidth ?? 1.5}
+      stroke={stroke ?? 'currentColor'}
+      className={className ?? 'size-6'}
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"
+      />
+    </svg>
+  );
+}
 
 export {
   ArrowBackIcon,
@@ -237,8 +367,13 @@ export {
   ArrowIcon,
   ArrowNextIcon,
   BackArrowIcon,
+  BackShortArrowIcon,
+  CalendarIcon,
+  CheckIcon,
   CloseIcon,
+  ExternalLinkIcon,
   HospitalIcon,
   ProfileIcon,
+  QuestionIcon,
   SearchIcon,
 };

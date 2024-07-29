@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
+import type { HospitalImageType } from '@/hooks/useHospital';
 import { useGetHospitalByProcedureId } from '@/hooks/useHospital';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
@@ -27,6 +28,7 @@ const HospitalCard = ({
   costOfProcedure,
   reimBursementCost,
   hospitalLogo,
+  hospitalImages,
 }: {
   selectedHospital: string;
   id: string;
@@ -38,81 +40,105 @@ const HospitalCard = ({
   costOfProcedure: string;
   reimBursementCost: string;
   hospitalLogo: false | string;
+  hospitalImages: Array<HospitalImageType>;
 }) => {
   const { t } = useTranslation();
   const { setSelectedHospital, setSelectedHospitalName } = useAppStore();
   const router = useRouter();
   return (
     <div
-      className={`${selectedHospital === id ? 'border-primary-2' : 'border-neutral-5'} flex flex-col items-start rounded-xl border px-6  py-4 lg:w-[48%] xl:w-[31.8%]`}
+      className={`bg-base-light ${selectedHospital === id ? 'border-primary-2' : 'border-neutral-5'} flex h-[444px] flex-1 flex-col items-start rounded-xl border px-3 py-4`}
       style={{
         boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
       }}
     >
-      <div className="flex items-center justify-center rounded-lg bg-info-2 px-3 py-2 font-lexend text-sm font-normal text-info-1">
-        {waitTime} days
-      </div>
-      <div className="mt-[21px] flex items-center justify-between">
-        {hospitalLogo && typeof hospitalLogo === 'string' ? (
+      <div className="relative h-[209px] w-full rounded-xl">
+        {hospitalImages.length > 0 && hospitalImages[0] && (
           <Image
-            src={hospitalLogo}
-            className="size-12 rounded-full border-2 border-neutral-5"
-            alt="hospital-logo"
-            height={48}
-            width={48}
+            src={hospitalImages[0].imageUrl}
+            alt={hospitalImages[0].fileName}
+            fill
+            className="rounded-xl"
+            objectFit="cover"
           />
-        ) : (
-          <HospitalIcon className="size-12 rounded-full border-2 border-neutral-5" />
         )}
-        <div className="ml-3 flex flex-col items-start">
-          <h3 className="font-poppins text-xl font-medium text-neutral-1">
-            {hospitalName}
-          </h3>
-          <p className="font-lexend text-base font-light text-neutral-2">
-            {city}, {country}
+        <FbtButton
+          variant="outline"
+          className="absolute right-2 top-2 !h-[40px] !w-[92px] !rounded-[42.81px] !border-none bg-secondary-green text-white hover:!bg-secondary-green hover:!text-white"
+          onClick={() => {
+            setSelectedHospital(id);
+            setSelectedHospitalName(hospitalName);
+            handleSetLocalStorage({
+              tokenKey: 'selected_hospital',
+              tokenValue: id,
+            });
+            handleSetLocalStorage({
+              tokenKey: 'selected_hospital_name',
+              tokenValue: hospitalName,
+            });
+            router.push(`/hospital/${id}`);
+          }}
+        >
+          <span className="text-base font-medium text-white">
+            {t('Select')}
+          </span>
+        </FbtButton>
+      </div>
+
+      <div className="my-[14.89px] flex w-full items-start justify-between gap-x-3">
+        <div className="flex items-center justify-between">
+          {hospitalLogo && typeof hospitalLogo === 'string' ? (
+            <Image
+              src={hospitalLogo}
+              className="size-12 rounded-full border-2 border-neutral-5"
+              alt="hospital-logo"
+              height={48}
+              width={48}
+            />
+          ) : (
+            <HospitalIcon className="size-12 rounded-full border-2 border-neutral-5" />
+          )}
+          <div className="ml-3 flex flex-col items-start">
+            <h3 className="font-poppins text-base font-bold text-dark-green">
+              {hospitalName}
+            </h3>
+            <p className="font-lexend text-base font-normal text-dark-green">
+              {city}, {country}
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col items-start justify-center rounded-lg bg-light-purple px-3 py-2 font-lexend text-sm font-normal text-info-1">
+          <p className="text-base font-normal text-accent-purple">
+            {t('Wait-time')}
+          </p>
+          <p className="text-base font-medium text-accent-purple">
+            {waitTime} days
           </p>
         </div>
       </div>
-      <p className="mb-6 mt-4 font-lexend text-sm font-light text-neutral-2">
-        {hospitalDesc}
-      </p>
-      <div className="mb-8 flex w-full items-start justify-between">
+      <div className="mb-1 flex w-full items-start justify-between">
         <div className="flex w-2/5 flex-col items-start">
-          <span className="mb-2 font-lexend text-sm font-normal text-neutral-2">
-            Cost of procedure
+          <span className="mb-1 font-lexend text-sm font-normal text-dark-green">
+            {t('Cost-of-procedure')}
           </span>
-          <span className="font-lexend text-sm font-light text-neutral-2">
+          <span className="font-lexend text-sm font-bold text-dark-green">
             {costOfProcedure}
           </span>
         </div>
         <div className="flex w-2/5 flex-col items-start">
-          <span className="mb-2 font-lexend text-sm font-normal text-neutral-2">
-            Reimbursement offered
+          <span className="mb-1 font-lexend text-sm font-normal text-dark-green">
+            {t('Reimbursement-offered')}
           </span>
-          <span className="font-lexend text-sm font-light text-neutral-2">
+          <span className="font-lexend text-sm font-bold text-dark-green">
             {reimBursementCost}
           </span>
         </div>
       </div>
-      <FbtButton
-        variant="outline"
-        className="!h-[64px] !w-full !rounded-[6.4px] !border-2 !border-primary-2 !text-primary-2 hover:!bg-primary-2 hover:!text-white active:!bg-primary-2 active:!text-white"
-        onClick={() => {
-          setSelectedHospital(id);
-          setSelectedHospitalName(hospitalName);
-          handleSetLocalStorage({
-            tokenKey: 'selected_hospital',
-            tokenValue: id,
-          });
-          handleSetLocalStorage({
-            tokenKey: 'selected_hospital_name',
-            tokenValue: hospitalName,
-          });
-          router.push(`/hospital/${id}`);
-        }}
-      >
-        {t('Select-Hospital')}
-      </FbtButton>
+      <p className="mb-6 font-lexend text-base font-normal text-dark-green">
+        {hospitalDesc.length > 50
+          ? `${hospitalDesc.slice(0, 50)}...`
+          : hospitalDesc}
+      </p>
     </div>
   );
 };
@@ -135,17 +161,17 @@ const HospitalSelector = () => {
     tokenKey: 'selected_language',
   });
   const selectedCountryInfo = countryData.find(
-    (countryInfo) => countryInfo.locale === selectedReimbursementCountry,
+    (countryInfo) => countryInfo.countryCode === selectedReimbursementCountry,
   );
   return (
-    <div className="flex flex-col items-center justify-center gap-2 ">
+    <div className="flex flex-col items-center justify-center gap-2">
       <div className="w-8/12">
         <h3 className="text-center font-poppins text-[24px] font-medium text-primary-1 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
           {t('Select-a-hospital-for-your-procedure')}
         </h3>
       </div>
-      <div className="w-full">
-        <div className="mt-[40px] flex flex-wrap justify-center gap-[24px] sm:mt-[60px]">
+      <div className="w-full pb-20">
+        <div className="mt-[40px] grid grid-cols-3 content-center justify-items-center gap-[24px] sm:mt-[60px]">
           {allHospitals.data &&
           Array.isArray(allHospitals.data.data) &&
           allHospitals.data.data.length > 0 ? (
@@ -173,19 +199,24 @@ const HospitalSelector = () => {
                   reimBursementCost={`${
                     selectedCountryInfo?.countryCode
                       ? convertToValidCurrency({
-                          price: hospital.reimBursementCost.ie,
+                          price:
+                            hospital.reimBursementCost[
+                              (selectedCountry as keyof typeof hospital.reimBursementCost) ??
+                                'ie'
+                            ],
                           currency: selectedCountryInfo.currency,
                           locale: selectedCountryInfo.locale,
                         })
                       : ''
                   }`}
                   hospitalLogo={hospital.hospitalLogo}
+                  hospitalImages={hospital.hospitalImages}
                 />
               );
             })
           ) : (
             <div className="flex w-full flex-col items-center justify-center">
-              <div className=" flex w-8/12 flex-col items-center ">
+              <div className="flex w-8/12 flex-col items-center">
                 <Image
                   src={noHospital}
                   className="mb-[8px] size-64"

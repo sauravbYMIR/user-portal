@@ -1,5 +1,4 @@
 import React from 'react';
-import ContentLoader from 'react-content-loader';
 
 import { useGetAllDepartmentWithProcedure } from '@/hooks/useDepartment';
 import useTranslation from '@/hooks/useTranslation';
@@ -7,8 +6,8 @@ import { useAppStore } from '@/libs/store';
 import type { LocaleType } from '@/types/component';
 import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
 
-import CustomAccordion from '../CustomAccordion/CustomAccordion';
-import proceduresStyle from './Procedure.module.scss';
+import DashboardLoader from '../Skeleton/DashboardSkeleton';
+import { FbtButton } from '../ui';
 
 const ProcedureSelector = () => {
   const { t } = useTranslation();
@@ -17,18 +16,30 @@ const ProcedureSelector = () => {
   const selectedLanguage = (handleGetLocalStorage({
     tokenKey: 'selected_language',
   }) ?? 'en') as LocaleType;
+  const divRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+  const addToRefs = React.useCallback((el: HTMLDivElement | null) => {
+    if (el && !divRefs.current.includes(el)) {
+      divRefs.current.push(el);
+    }
+  }, []);
+  const scrollToDiv = (index: number) => {
+    const div = divRefs.current[index];
+    if (div) {
+      div.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-2 ">
-      <div className="flex w-10/12 flex-col items-center justify-center gap-2 ">
-        <h3 className="text-center font-poppins text-[24px] font-medium text-primary-1 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
+    <div className="flex w-full flex-col items-center justify-center gap-2 pb-60">
+      <div className="flex w-10/12 flex-col items-center justify-center gap-2">
+        <h3 className="text-center font-poppins text-[24px] font-medium text-dark-green sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
           {t('Select-your-procedure')}
         </h3>
-        <p className="mt-2 text-center font-lexend text-sm font-light text-gray77 sm:text-2xl">
+        <p className="mt-6 text-center font-lexend text-base font-normal leading-7 text-dark-green sm:text-xl">
           {t('To-begin-we-are-piloting-with-a-limited-number-of-non')}
         </p>
       </div>
 
-      <div className=" mt-[40px] flex w-full flex-col gap-[16px] sm:mt-16 sm:w-full md:w-11/12 xl:w-9/12">
+      <div className="mb-32 mt-[40px] flex flex-col items-start gap-x-6 sm:mt-[60px] sm:grid sm:grid-cols-2 sm:gap-4">
         {departmentProcedureList.isSuccess &&
         departmentProcedureList.data &&
         departmentProcedureList.data?.data?.allCategoryWithProcedure &&
@@ -38,143 +49,133 @@ const ProcedureSelector = () => {
         departmentProcedureList.data.data.allCategoryWithProcedure.length >
           0 ? (
           departmentProcedureList.data.data.allCategoryWithProcedure.map(
-            (procedureData) => {
+            (procedureData, index) => {
               return (
-                <div key={procedureData.id}>
-                  <CustomAccordion
-                    type="DEPARTMENT"
-                    title={procedureData.name[selectedLanguage]}
-                    className={proceduresStyle.boxShadow}
-                    isAccordianOpen={
-                      procedureData.procedures.some(
-                        (ele) => ele.id === selectedProcedure,
-                      ) ||
-                      procedureData.subCategoryWithProcedures.some((subCat) => {
-                        return subCat.procedures.some(
-                          (subProcedureId) =>
-                            subProcedureId.id === selectedProcedure,
-                        );
-                      })
-                    }
-                  >
-                    {procedureData.procedures.length > 0 && (
-                      <div
-                        className={`${proceduresStyle.proceduresAccordionContainer} flex flex-col gap-[24px]`}
-                      >
-                        {procedureData.procedures.map((procedure) => {
-                          return (
-                            <div
-                              key={procedure.id}
-                              className=" flex w-full items-center"
-                            >
-                              <input
-                                className="mr-[16px] size-[20px] sm:mr-[24px] sm:size-[24px]"
-                                type="radio"
-                                id={procedure.id}
-                                value={procedure.id}
-                                checked={selectedProcedure === procedure.id}
-                                onChange={(e) => {
-                                  if (setSelectedProcedure) {
-                                    setSelectedProcedure(e.target.value);
-                                    handleSetLocalStorage({
-                                      tokenKey: 'selected_procedure',
-                                      tokenValue: e.target.value,
-                                    });
-                                  }
-                                }}
-                              />
-
-                              <label
-                                htmlFor={procedure.id}
-                                className="sm: cursor-pointer font-poppins text-base text-neutral-2 sm:text-2xl"
-                              >
-                                {procedure.name[selectedLanguage]}
-                              </label>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                    {procedureData.subCategoryWithProcedures.length > 0 &&
-                      procedureData.subCategoryWithProcedures.map(
-                        (subCategoryData) => {
-                          return (
-                            <CustomAccordion
-                              key={subCategoryData.name[selectedLanguage]}
-                              type="SUB-CATEGORY-WITH-PROCEDURE"
-                              title={subCategoryData.name[selectedLanguage]}
-                              className="font-medium"
-                              isAccordianOpen={subCategoryData.procedures.some(
-                                (ele) => ele.id === selectedProcedure,
-                              )}
-                            >
-                              {subCategoryData.procedures.length > 0 && (
-                                <div
-                                  className={`${proceduresStyle.proceduresAccordionContainer} mb-[10px] flex flex-col gap-[24px]`}
-                                >
-                                  {subCategoryData.procedures.map(
-                                    (procedure) => {
-                                      return (
-                                        <div
-                                          key={procedure.id}
-                                          className="mt-[10px] flex w-full items-center"
-                                        >
-                                          <input
-                                            className="mr-[16px] size-[20px] sm:mr-[24px] sm:size-[24px]"
-                                            type="radio"
-                                            id={procedure.id}
-                                            value={procedure.id}
-                                            checked={
-                                              selectedProcedure === procedure.id
-                                            }
-                                            onChange={(e) => {
-                                              if (setSelectedProcedure) {
-                                                setSelectedProcedure(
-                                                  e.target.value,
-                                                );
-                                                handleSetLocalStorage({
-                                                  tokenKey:
-                                                    'selected_procedure',
-                                                  tokenValue: e.target.value,
-                                                });
-                                              }
-                                            }}
-                                          />
-
-                                          <label
-                                            htmlFor={procedure.id}
-                                            className="sm: cursor-pointer font-poppins text-base text-neutral-2 sm:text-2xl"
-                                          >
-                                            {procedure.name[selectedLanguage]}
-                                          </label>
-                                        </div>
-                                      );
-                                    },
-                                  )}
-                                </div>
-                              )}
-                            </CustomAccordion>
-                          );
-                        },
-                      )}
-                  </CustomAccordion>
-                </div>
+                <FbtButton
+                  key={procedureData.id}
+                  variant="outline"
+                  className="flex !h-[139.51px] !w-[136px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none bg-base-light text-dark-green hover:!bg-white hover:!text-dark-green sm:my-0 sm:!h-[179.5px] sm:!w-[294px] md:my-4"
+                  onClick={() => scrollToDiv(index)}
+                >
+                  <span className="font-poppins text-2xl font-medium">
+                    {procedureData.name[selectedLanguage]}
+                  </span>
+                </FbtButton>
               );
             },
           )
         ) : (
-          <ContentLoader
-            speed={2}
-            height={500}
-            backgroundColor="#f3f3f3"
-            foregroundColor="#ecebeb"
-          >
-            <rect x="25" y="15" rx="5" ry="5" width="100%" height="64" />
-            <rect x="25" y="89" rx="5" ry="5" width="100%" height="64" />
-            <rect x="25" y="163" rx="5" ry="5" width="100%" height="64" />
-            <rect x="25" y="237" rx="5" ry="5" width="100%" height="64" />
-          </ContentLoader>
+          <DashboardLoader />
         )}
+      </div>
+      <div className="flex flex-col items-center justify-start gap-y-24">
+        {departmentProcedureList.isSuccess &&
+          departmentProcedureList.data &&
+          departmentProcedureList.data?.data?.allCategoryWithProcedure &&
+          Array.isArray(
+            departmentProcedureList.data.data.allCategoryWithProcedure,
+          ) &&
+          departmentProcedureList.data.data.allCategoryWithProcedure.length >
+            0 &&
+          departmentProcedureList.data.data.allCategoryWithProcedure.map(
+            (data) => {
+              return (
+                <div
+                  className="flex w-full flex-col items-start rounded-2xl bg-base-light p-6 sm:w-[660px]"
+                  key={data.id}
+                  ref={addToRefs}
+                >
+                  <h3 className="text-4xl font-medium text-dark-green">
+                    {data.name[selectedLanguage]}
+                  </h3>
+                  <div className="my-6 h-px w-full bg-info-green" />
+                  {data.procedures &&
+                    data.procedures.length > 0 &&
+                    data.procedures.map((procedure) => {
+                      return (
+                        <div
+                          key={procedure.id}
+                          className="relative my-4 flex w-full items-center gap-y-4"
+                        >
+                          <input
+                            className="!mr-[16px] !size-[20px] sm:!mr-[24px] sm:!size-[24px]"
+                            type="radio"
+                            id={procedure.id}
+                            value={procedure.id}
+                            checked={selectedProcedure === procedure.id}
+                            onChange={(e) => {
+                              if (setSelectedProcedure) {
+                                setSelectedProcedure(e.target.value);
+                                handleSetLocalStorage({
+                                  tokenKey: 'selected_procedure',
+                                  tokenValue: e.target.value,
+                                });
+                              }
+                            }}
+                          />
+
+                          <label
+                            htmlFor={procedure.id}
+                            className="font-poppins text-base font-normal text-dark-green sm:cursor-pointer sm:text-2xl"
+                          >
+                            {procedure.name[selectedLanguage]}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  {data.subCategoryWithProcedures &&
+                    data.subCategoryWithProcedures.length > 0 &&
+                    data.subCategoryWithProcedures.map((subCategoryData) => {
+                      return (
+                        <div
+                          className="my-4 flex flex-col items-start gap-y-4"
+                          key={subCategoryData.id}
+                        >
+                          <h3 className="text-2xl font-medium text-dark-green">
+                            {data.name[selectedLanguage]} |{' '}
+                            {subCategoryData.name[selectedLanguage]}
+                          </h3>
+                          {subCategoryData.procedures &&
+                            subCategoryData.procedures.length > 0 &&
+                            subCategoryData.procedures.map((pData) => {
+                              return (
+                                <div
+                                  key={pData.id}
+                                  className="relative flex w-full items-center"
+                                >
+                                  <input
+                                    className="!mr-[16px] !size-[20px] sm:!mr-[24px] sm:!size-[24px]"
+                                    type="radio"
+                                    id={pData.id}
+                                    value={pData.id}
+                                    checked={selectedProcedure === pData.id}
+                                    onChange={(e) => {
+                                      if (setSelectedProcedure) {
+                                        setSelectedProcedure(e.target.value);
+                                        handleSetLocalStorage({
+                                          tokenKey: 'selected_procedure',
+                                          tokenValue: e.target.value,
+                                        });
+                                      }
+                                    }}
+                                  />
+
+                                  <label
+                                    htmlFor={pData.id}
+                                    className="font-poppins text-base font-normal text-dark-green sm:cursor-pointer sm:text-2xl"
+                                  >
+                                    {pData.name[selectedLanguage]}
+                                  </label>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      );
+                    })}
+                </div>
+              );
+            },
+          )}
       </div>
     </div>
   );

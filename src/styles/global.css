@@ -115,3 +115,30 @@ body{
   background-color: rgba(9, 111, 144, 1) !important;
   color: #fff !important;
 }
+
+input[type="radio"]{
+  appearance: none;
+  border: 1px solid rgba(0, 70, 70, 1);
+  content: none;
+  outline: none;
+  margin: 0;
+  border-radius: 4px;
+}
+
+input[type="radio"]:checked {
+ appearance: none;
+ outline: none;
+ padding: 0;
+ content: none;
+ border: none;
+}
+
+input[type="radio"]:checked::before{
+ position: absolute;
+ color: rgba(0, 70, 70, 1) !important;
+ content: "\00A0\2713\00A0" !important;
+ border: 1px solid rgba(0, 70, 70, 1) !important;
+ font-weight: bolder;
+ border-radius: 4px;
+ height: 24px;
+}

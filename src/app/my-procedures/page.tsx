@@ -47,7 +47,7 @@ const Procedure = () => {
               })
             ) : (
               <div className="flex w-full flex-col items-center justify-center">
-                <div className=" flex w-8/12 flex-col items-center ">
+                <div className="flex w-8/12 flex-col items-center">
                   <Image
                     src={noHospital}
                     className="mb-[8px] size-64"

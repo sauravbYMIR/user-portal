@@ -79,7 +79,7 @@ const ElfSightStatusRenderer = ({
       return (
         <div
           style={{
-            backgroundColor: 'rgba(220, 104, 3, 1)',
+            backgroundColor: 'rgba(230, 237, 255, 1)',
           }}
           className="rounded-lg px-3 py-2"
         >

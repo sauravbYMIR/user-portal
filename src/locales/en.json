@@ -16,6 +16,8 @@
   "To-begin-we-are-piloting-with-a-limited-number-of-non": "To begin we are piloting with a limited number of non elective procedures, more procedures will be added in the near future.",
   "Select-a-hospital-for-your-procedure": "Select a hospital for your procedure",
   "Select-Hospital": "Select Hospital",
+  "Select": "Select",
+  "Your-procedure": "Your procedure",
   "About-the-procedure": "About the procedure",
   "When-do-you-want-to-get-your-treatment-done": "When do you want to get your treatment done?",
   "Select-a-range-of-minimum-14-days": "Select a range of minimum 14 days",
@@ -23,7 +25,9 @@
   "Cost-of-procedure": "Cost of procedure",
   "Wait-of-procedure": "Wait of procedure",
   "Duration-of-city-stay": "Duration of city stay",
+  "Duration-of-stay": "Duration of stay",
   "Duration-of-hospital-stay": "Duration of hospital stay",
+  "hospital-stay": "Hospital stay",
   "Hospital-procedure-image": "Hospital procedure image",
   "Procedure-team": "Procedure team",
   "About-the-hospital": "About the hospital",
@@ -84,5 +88,12 @@
   "Accept-cookies": "Accept cookies",
   "Learn-more-from-our": "Learn more from our",
   "cookie-policy": "cookie policy",
-  "Please-wait-while-we-redirect-you-to-bankid-verification": "Please wait while we redirect you to bankid verification"
+  "Please-wait-while-we-redirect-you-to-bankid-verification": "Please wait while we redirect you to bankid verification",
+  "back": "Back",
+  "Next-step": "Next step",
+  "Go-to-the-hospitals-website": "Go to the hospital's website",
+  "Please-select-desired-date-for-procedure": "Please select desired date for procedure",
+  "Book-procedure": "Book procedure",
+  "From": "From",
+  "To": "To"
 }

@@ -31,21 +31,22 @@ const BookingStatus = ({
     case 'accepted':
       return (
         <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
-          Your application has been approved by Hospital, please complete the
-          information capture form to continue with the booking process
+          Your application has been sent to Hospital, after the hospital accepts
+          your request, you will be notified of your status and must fill up
+          your declaration form
         </span>
       );
     case 'rejected':
       return (
         <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
-          Your application has been declined by PSH Hospital, please apply to
+          Your application has been declined by the Hospital, please apply to
           different hospital that offers the same procedure
         </span>
       );
     case 'requested':
       return (
         <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
-          Your application has been sent to PSH Hospital, after the hospital
+          Your application has been sent to the Hospital, after the hospital
           accepts your request, you will be notified of your status and must
           fill up your declaration form
         </span>
@@ -58,8 +59,10 @@ const BookingStatus = ({
 
 const BookingStatusButton = ({
   status,
+  elfSightScript,
 }: {
   status: ApplicationBookingStatusType;
+  elfSightScript: string;
 }) => {
   const { t } = useTranslation();
   const router = useRouter();
@@ -69,7 +72,7 @@ const BookingStatusButton = ({
         <button
           type="button"
           className="mt-8 w-full rounded-[6.4px] bg-primary-2 py-4 font-poppins text-base font-normal text-white sm:mt-0 sm:w-[348px] md:mt-2 md:text-2xl"
-          data-elfsight-show-form="00e19ab8-b869-460e-ac3c-0aa9cbf597fb"
+          data-elfsight-show-form={elfSightScript}
         >
           {t('Add-case-details')}
         </button>
@@ -100,13 +103,7 @@ const BookingStatusText = {
 
 function HospitalDetailsPage({ params }: { params: { id: string } }) {
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
-  const [elfsightData, setElfsightData] = React.useState<
-    | {
-        fieldId: any;
-        value: any;
-      }[]
-    | null
-  >(null);
+  const [elfsightSuccess, setElfsightSuccess] = React.useState<boolean>(false);
   const bookingDetails = useGetBookingDetails(params.id);
   const router = useRouter();
 
@@ -114,19 +111,22 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
     subject: string;
     hs_pipeline_stage: string;
     hs_ticket_priority: string;
-    elfsightDetails: string;
     hubspotCompanyId: string;
     hubspotUserId: string;
     country: string;
     gender: string;
     selectedProcedure: string;
     selectedHospital: string;
+    periodOfOperation: string;
+    email: string;
+    phoneNumber: string;
+    name: string;
   }) => {
     try {
       await axiosInstance.post(`bookings/hubspot-ticker`, {
         ...tickerDetails,
       });
-      setElfsightData(null);
+      setElfsightSuccess(false);
     } catch (e) {
       const err = e as unknown as {
         response: { status: number; data: { message: string } };
@@ -138,38 +138,36 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   };
 
   React.useEffect(() => {
-    if (elfsightData) {
+    if (elfsightSuccess) {
       if (bookingDetails.data?.data) {
         createNewHubspotTicket({
-          subject: `${bookingDetails.data?.data.procedureName.en}-${bookingDetails.data.data.hospitalName}-${bookingDetails.data.data.user.email}}`,
+          subject: `${bookingDetails.data?.data.procedureName.en}-${bookingDetails.data.data.hospitalName}-${bookingDetails.data.data.user.email}`,
           hs_pipeline_stage: '1',
           hs_ticket_priority: 'HIGH',
-          elfsightDetails: elfsightData ? JSON.stringify(elfsightData) : '',
           hubspotCompanyId: bookingDetails.data.data.hubspotCompanyId,
           hubspotUserId: bookingDetails.data.data.user.hubspotUserId,
           country: bookingDetails.data.data.claimCountry,
           gender: bookingDetails.data.data.gender,
           selectedProcedure: bookingDetails.data.data.procedureName.en,
           selectedHospital: bookingDetails.data.data.hospitalName,
+          periodOfOperation: bookingDetails.data.data.applicationDate,
+          email: bookingDetails.data.data.user.email,
+          phoneNumber: bookingDetails.data.data.user.phoneNumber,
+          name: `${bookingDetails.data.data.user.firstName} ${bookingDetails.data.data.user.lastName}`,
         });
       }
     }
-  }, [elfsightData, bookingDetails.data?.data]);
+  }, [elfsightSuccess, bookingDetails.data?.data]);
 
   React.useEffect(() => {
     setTimeout(() => {
       if (typeof window !== undefined) {
-        window.document.addEventListener('elfsight-on-submit', (e) => {
-          const event = e as unknown as { detail: { elfsightDetails: any } };
-          const data = Object.keys(event.detail.elfsightDetails).map((d) => ({
-            fieldId: event.detail.elfsightDetails[d].fieldID,
-            value: event.detail.elfsightDetails[d].value,
-          }));
+        window.document.addEventListener('elfsight-on-submit', () => {
+          setElfsightSuccess(true);
           updateElfsightStatus({
             bookingId: params.id,
             status: true,
           });
-          setElfsightData(data);
         });
       }
     }, 0);
@@ -257,6 +255,16 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               {!bookingDetails.data.data.elfSightFormSubmitStatus && (
                 <BookingStatusButton
                   status={bookingDetails.data.data.applicationStatus}
+                  elfSightScript={
+                    bookingDetails &&
+                    bookingDetails.data &&
+                    bookingDetails.data.data &&
+                    bookingDetails.data.data.elfSightScript
+                      ? bookingDetails.data.data.elfSightScript[
+                          selectedLanguage
+                        ]
+                      : ''
+                  }
                 />
               )}
             </div>

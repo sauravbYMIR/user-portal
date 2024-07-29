@@ -54,6 +54,9 @@ export type BookingDetailType = {
   user: {
     email: string;
     hubspotUserId: string;
+    phoneNumber: string;
+    firstName: string;
+    lastName: string;
   };
 };
 export const createBooking = async ({
