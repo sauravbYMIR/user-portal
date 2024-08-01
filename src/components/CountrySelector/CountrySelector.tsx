@@ -48,7 +48,7 @@ const CountrySelector = () => {
       </div>
       <div className="mb-11 mt-[40px] grid grid-cols-1 items-start gap-6 sm:mb-44 sm:mt-[60px] sm:grid-cols-2 sm:gap-4">
         {countryData
-          .toSorted((a, b) => {
+          .sort((a, b) => {
             if (a.locale === selectedLangFromLocalStorage) return -1;
             if (b.locale === selectedLangFromLocalStorage) return 1;
             return 0;

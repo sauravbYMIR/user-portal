@@ -157,7 +157,7 @@ const CreateAccount = () => {
         >
           <div className="mb-4 flex w-full flex-col items-start sxl:mb-8">
             <label
-              className="font-inter text-lg font-normal text-black sxl:text-xl"
+              className="font-onsite text-lg font-normal text-black sxl:text-xl"
               htmlFor="email"
             >
               {t('Email')}
@@ -178,7 +178,7 @@ const CreateAccount = () => {
           <div className="mb-4 w-full flex-col items-start sxl:mb-8">
             <label
               htmlFor="phoneNumber"
-              className="font-inter text-lg font-normal text-black sxl:text-xl"
+              className="font-onsite text-lg font-normal text-black sxl:text-xl"
             >
               {t('Phone-Number')}
             </label>
@@ -208,7 +208,7 @@ const CreateAccount = () => {
           </div>
           <div className="mb-4 flex w-full flex-col items-start sxl:mb-8">
             <label
-              className="font-inter text-lg font-normal text-black sxl:text-xl"
+              className="font-onsite text-lg font-normal text-black sxl:text-xl"
               htmlFor="preferredLanguage"
             >
               {t('Preferred-language-of-communication')}
@@ -283,7 +283,7 @@ const CreateAccount = () => {
           <div className="mb-8 w-full flex-col items-start">
             <label
               htmlFor="phoneNumber"
-              className="font-inter text-lg font-normal text-black sxl:text-xl"
+              className="font-onsite text-lg font-normal text-black sxl:text-xl"
             >
               {t('Phone-Number')}
             </label>
