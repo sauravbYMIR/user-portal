@@ -39,7 +39,7 @@ function CustomAccordion({
 
   useEffect(() => {
     setAccordianState(isAccordianOpen);
-  }, []);
+  }, [isAccordianOpen]);
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
