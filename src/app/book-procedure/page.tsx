@@ -147,7 +147,6 @@ const Stepper = ({
           className={`${isDisable() ? 'cursor-not-allowed' : 'cursor-pointer'} flex w-[128px] items-center justify-center rounded-[40px] bg-dark-green py-4 text-white sm:w-[251px]`}
           disabled={isDisable()}
           onClick={() => {
-            console.log({ stepNum });
             if (handleCountueBtnDisableStatus()) {
               return;
             }
