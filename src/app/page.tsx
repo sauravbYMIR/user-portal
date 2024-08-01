@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import pageStyle from '@/app/page.module.scss';
@@ -325,4 +325,12 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+function LandingPageSuspense() {
+  return (
+    <Suspense>
+      <LandingPage />
+    </Suspense>
+  );
+}
+
+export default LandingPageSuspense;
