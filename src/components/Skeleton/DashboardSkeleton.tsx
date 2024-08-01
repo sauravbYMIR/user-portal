@@ -6,11 +6,9 @@ const DashboardLoader = (
   props: React.JSX.IntrinsicAttributes & IContentLoaderProps,
 ) => (
   <ContentLoader
-    width={1200}
-    height={900}
     viewBox="0 0 1200 900"
-    backgroundColor="#eaeced"
-    foregroundColor="#ffffff"
+    backgroundColor="rgba(243, 243, 233, 1)"
+    foregroundColor="rgba(102, 167, 137, 1)"
     {...props}
   >
     <rect x="68" y="37" rx="3" ry="3" width="298" height="129" />

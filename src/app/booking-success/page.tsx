@@ -26,13 +26,13 @@ const BookingSuccess = () => {
       </nav>
       <div className="flex h-screen w-full items-start justify-center">
         <div className="mt-10 flex w-2/3 flex-col items-center text-center slg:mt-40">
-          <h1 className="font-poppins text-3xl font-medium text-primary-1 slg:text-6xl">
+          <h1 className="font-onsite text-3xl font-medium text-primary-1 slg:text-6xl">
             {t('We-are-fast-tracking-your-process')}
           </h1>
-          <p className="mb-5 mt-8 font-lexend text-xl font-normal slg:mb-[60px] slg:text-2xl">
+          <p className="mb-5 mt-8 font-onsite text-xl font-normal slg:mb-[60px] slg:text-2xl">
             {t('You-will-hear')}
             {hospitalName && (
-              <span className="font-lexend text-xl font-bold slg:text-2xl">
+              <span className="font-onsite text-xl font-bold slg:text-2xl">
                 {' '}
                 {hospitalName}{' '}
               </span>

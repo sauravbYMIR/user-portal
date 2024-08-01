@@ -30,7 +30,7 @@ const BookingStatus = ({
   switch (status) {
     case 'accepted':
       return (
-        <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
+        <span className="w-4/5 font-onsite text-xl font-normal text-neutral-1">
           Your application has been sent to Hospital, after the hospital accepts
           your request, you will be notified of your status and must fill up
           your declaration form
@@ -38,14 +38,14 @@ const BookingStatus = ({
       );
     case 'rejected':
       return (
-        <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
+        <span className="w-4/5 font-onsite text-xl font-normal text-neutral-1">
           Your application has been declined by the Hospital, please apply to
           different hospital that offers the same procedure
         </span>
       );
     case 'requested':
       return (
-        <span className="w-4/5 font-poppins text-xl font-normal text-neutral-1">
+        <span className="w-4/5 font-onsite text-xl font-normal text-neutral-1">
           Your application has been sent to the Hospital, after the hospital
           accepts your request, you will be notified of your status and must
           fill up your declaration form
@@ -71,7 +71,7 @@ const BookingStatusButton = ({
       return (
         <button
           type="button"
-          className="mt-8 w-full rounded-[6.4px] bg-primary-2 py-4 font-poppins text-base font-normal text-white sm:mt-0 sm:w-[348px] md:mt-2 md:text-2xl"
+          className="mt-8 w-full rounded-[6.4px] bg-primary-2 py-4 font-onsite text-base font-normal text-white sm:mt-0 sm:w-[348px] md:mt-2 md:text-2xl"
           data-elfsight-show-form={elfSightScript}
         >
           {t('Add-case-details')}
@@ -81,7 +81,7 @@ const BookingStatusButton = ({
       return (
         <button
           type="button"
-          className="mt-8 w-full rounded-[6.4px] bg-primary-2 py-4 font-poppins text-base font-normal text-white sm:mt-0 sm:w-[348px] md:mt-2 md:text-2xl"
+          className="mt-8 w-full rounded-[6.4px] bg-primary-2 py-4 font-onsite text-base font-normal text-white sm:mt-0 sm:w-[348px] md:mt-2 md:text-2xl"
           onClick={() => router.push('/book-procedure')}
         >
           {t('Apply-for-another-procedure')}
@@ -222,7 +222,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
             <div className={style.titleContainer}>
               <div className={style.titleBreadCrumbContainer}>
                 {bookingDetails.isSuccess && bookingDetails.data.data && (
-                  <h3 className="font-poppins text-xl font-medium text-neutral-1 sxl:text-5xl">
+                  <h3 className="font-onsite text-xl font-medium text-neutral-1 sxl:text-5xl">
                     {bookingDetails.data.data.procedureName[selectedLanguage]}
                   </h3>
                 )}
@@ -231,14 +231,14 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                   <div className="mt-[14.5px] flex items-center gap-x-2">
                     <Link
                       href="/my-procedures"
-                      className="font-lexend text-base font-normal text-neutral-3"
+                      className="font-onsite text-base font-normal text-neutral-3"
                     >
                       My procedures
                     </Link>
                     <span>/</span>
                     <Link
                       href={`/my-procedures/${params.id}`}
-                      className="font-lexend text-base font-normal text-primary-2"
+                      className="font-onsite text-base font-normal text-primary-2"
                     >
                       Procedure details
                     </Link>
@@ -272,18 +272,18 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
           {bookingDetails.isSuccess && bookingDetails.data.data && (
             <div className="flex flex-col items-start gap-x-6 gap-y-12 md:grid md:grid-cols-2">
               <div className="flex flex-col items-start justify-start">
-                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                <p className="mb-3 font-onsite text-xl font-light text-neutral-2">
                   {t('Hospital-name')}
                 </p>
-                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                <p className="font-onsite text-2xl font-normal text-neutral-1">
                   {bookingDetails.data.data.hospitalName}
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
-                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                <p className="mb-3 font-onsite text-xl font-light text-neutral-2">
                   {t('Application-status')}
                 </p>
-                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                <p className="font-onsite text-2xl font-normal text-neutral-1">
                   {
                     BookingStatusText[
                       bookingDetails.data.data.applicationStatus
@@ -292,26 +292,26 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
-                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                <p className="mb-3 font-onsite text-xl font-light text-neutral-2">
                   {t('Hospital-stay')}
                 </p>
-                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                <p className="font-onsite text-2xl font-normal text-neutral-1">
                   {bookingDetails.data.data.hospitalStay} Days
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
-                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                <p className="mb-3 font-onsite text-xl font-light text-neutral-2">
                   {t('Wait-time')}
                 </p>
-                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                <p className="font-onsite text-2xl font-normal text-neutral-1">
                   {bookingDetails.data.data.waitTime} Days
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
-                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                <p className="mb-3 font-onsite text-xl font-light text-neutral-2">
                   {t('Cost-of-procedure')}
                 </p>
-                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                <p className="font-onsite text-2xl font-normal text-neutral-1">
                   {convertToValidCurrency({
                     price: bookingDetails.data.data.costOfProcedure.price,
                     locale: selectedLanguageFromUserDropdown ?? 'en',
@@ -320,10 +320,10 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                 </p>
               </div>
               <div className="flex flex-col items-start justify-start">
-                <p className="mb-3 font-lexend text-xl font-light text-neutral-2">
+                <p className="mb-3 font-onsite text-xl font-light text-neutral-2">
                   {t('Reimbursement-offered')}
                 </p>
-                <p className="font-lexend text-2xl font-normal text-neutral-1">
+                <p className="font-onsite text-2xl font-normal text-neutral-1">
                   {countryInfo ? (
                     <span>
                       {convertToValidCurrency({

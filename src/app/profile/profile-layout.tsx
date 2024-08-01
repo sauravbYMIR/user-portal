@@ -16,7 +16,7 @@ const ProfileLayout = ({ children, heading }: LayoutProps): JSX.Element => {
       <ProfileWrapper>
         <SidebarWrapper />
         <div className="flex w-full flex-col items-start justify-center">
-          <h2 className="mb-10 text-start font-poppins text-xl font-normal text-neutral-1 sxl:text-5xl sxl:font-medium">
+          <h2 className="mb-10 text-start font-onsite text-xl font-normal text-neutral-1 sxl:text-5xl sxl:font-medium">
             {heading}
           </h2>
           {children}

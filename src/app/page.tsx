@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -34,6 +34,7 @@ import hosiptalImg2Tag from '@/public/assets/images/hospitalImg2Tag.svg';
 import hosiptalImg3 from '@/public/assets/images/hospitalImg3.png';
 import hosiptalImg3Tag from '@/public/assets/images/hospitalImg3Tag.svg';
 import landingPageBannerImg from '@/public/assets/images/landingPageBannerImg.png';
+import { handleSetLocalStorage } from '@/utils/global';
 
 const landingCardsInfo = [
   {
@@ -87,6 +88,11 @@ const landingMobIconList = [
 ];
 
 function LandingPage() {
+  const searchParams = useSearchParams();
+  const lang = searchParams.get('lang');
+  if (lang) {
+    handleSetLocalStorage({ tokenKey: 'selected_language', tokenValue: lang });
+  }
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const { matches } = useScreenWidth(824);

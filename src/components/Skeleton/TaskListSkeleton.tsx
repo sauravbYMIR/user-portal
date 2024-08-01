@@ -11,8 +11,8 @@ const TaskListSkeleton = (props: any) => {
       width={matches ? 280 : 1000}
       height={160}
       viewBox={`0 0 ${matches ? 280 : 1000} 160`}
-      backgroundColor="#d9d9d9"
-      foregroundColor="#ededed"
+      backgroundColor="rgba(243, 243, 233, 1)"
+      foregroundColor="rgba(102, 167, 137, 1)"
       {...props}
     >
       <rect x="50" y="6" rx="4" ry="4" width="1000" height="38" />

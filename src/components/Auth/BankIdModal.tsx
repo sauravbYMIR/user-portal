@@ -51,7 +51,7 @@ const BankIdModal = () => {
             aria-label="Loading Spinner"
             data-testid="loader"
           />
-          <span className="mt-5 w-3/4 text-center font-lexend text-base font-normal text-white">
+          <span className="mt-5 w-3/4 text-center font-onsite text-base font-normal text-white">
             {t('Please-wait-while-we-redirect-you-to-bankid-verification')}
           </span>
         </div>
@@ -66,7 +66,7 @@ const BankIdModal = () => {
       >
         <CloseIcon className="size-8" stroke="#333" />
       </FbtButton>
-      <h1 className="font-poppins text-3xl font-medium text-primary-1 sxl:text-5xl">
+      <h1 className="font-onsite text-3xl font-medium text-primary-1 sxl:text-5xl">
         {t('Select-an-electronic-ID')}
       </h1>
       <div className="mt-12 w-[90%] rounded-lg border border-neutral-6 bg-neutral-7 px-4 py-5">
@@ -74,7 +74,7 @@ const BankIdModal = () => {
           {countryData.map((countryInfo) => (
             <button
               type="button"
-              className={`flex ${isBankIdInitLoading ? 'cursor-not-allowed' : 'cursor-pointer'}   items-center gap-x-6`}
+              className={`flex ${isBankIdInitLoading ? 'cursor-not-allowed' : 'cursor-pointer'} items-center gap-x-6`}
               key={countryInfo.countryCode}
               onClick={() =>
                 handleCallBankId({
@@ -91,10 +91,10 @@ const BankIdModal = () => {
                 className="rounded-lg border border-neutral-7"
               />
               <div className="flex flex-col items-start gap-y-2">
-                <p className="font-poppins text-xl font-medium text-neutral-1">
+                <p className="font-onsite text-xl font-medium text-neutral-1">
                   {countryInfo.name}
                 </p>
-                <p className="font-lexend text-base font-normal text-neutral-2">
+                <p className="font-onsite text-base font-normal text-neutral-2">
                   {
                     bankIdModalMsg[
                       countryInfo.countryCode as keyof typeof bankIdModalMsg

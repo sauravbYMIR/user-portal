@@ -17,7 +17,7 @@ const ApplicationStatusRenderer = ({ status }: { status: string }) => {
           className="rounded-lg px-3 py-2"
         >
           <p
-            className="font-lexend text-sm font-normal"
+            className="font-onsite text-sm font-normal"
             style={{
               color: 'rgba(0, 59, 212, 1)',
             }}
@@ -35,7 +35,7 @@ const ApplicationStatusRenderer = ({ status }: { status: string }) => {
           className="rounded-lg px-3 py-2"
         >
           <p
-            className="font-lexend text-sm font-normal"
+            className="font-onsite text-sm font-normal"
             style={{
               color: 'rgba(203, 0, 25, 1)',
             }}
@@ -53,7 +53,7 @@ const ApplicationStatusRenderer = ({ status }: { status: string }) => {
           className="rounded-lg px-3 py-2"
         >
           <p
-            className="font-lexend text-sm font-normal"
+            className="font-onsite text-sm font-normal"
             style={{
               color: 'rgba(220, 104, 3, 1)',
             }}
@@ -84,7 +84,7 @@ const ElfSightStatusRenderer = ({
           className="rounded-lg px-3 py-2"
         >
           <p
-            className="font-lexend text-sm font-normal"
+            className="font-onsite text-sm font-normal"
             style={{
               color: 'rgba(0, 59, 212, 1)',
             }}
@@ -105,7 +105,7 @@ const ElfSightStatusRenderer = ({
           className="rounded-lg px-3 py-2"
         >
           <p
-            className="font-lexend text-sm font-normal"
+            className="font-onsite text-sm font-normal"
             style={{
               color: 'rgba(144, 0, 18, 1)',
             }}
@@ -154,27 +154,27 @@ const ProcedureCard = ({
     >
       <div className="flex w-full flex-col items-start">
         <div className="flex w-full items-center justify-between">
-          <h3 className="text-start font-poppins text-lg font-medium text-neutral-1 sxl:text-2xl">
+          <h3 className="text-start font-onsite text-lg font-medium text-neutral-1 sxl:text-2xl">
             {procedureName}
           </h3>
-          <p className="hidden font-lexend text-base font-normal text-neutral-2 sxl:block">
+          <p className="hidden font-onsite text-base font-normal text-neutral-2 sxl:block">
             {t('Hospital-stay')}
           </p>
         </div>
         <div className="flex w-full items-center justify-between">
           <div className="mt-2 flex flex-col items-start gap-x-1 sxl:mt-0 sxl:flex-row sxl:items-center">
-            <span className="mr-2 font-lexend text-base font-light text-neutral-2">
+            <span className="mr-2 font-onsite text-base font-light text-neutral-2">
               {hospitalName}
             </span>
             <div className="my-1 h-[1.35px] w-[32px] bg-neutral-2 sxl:my-0" />
-            <span className="ml-0 font-lexend text-base font-light text-neutral-2 sxl:ml-2">
+            <span className="ml-0 font-onsite text-base font-light text-neutral-2 sxl:ml-2">
               {city},
             </span>
-            <span className="font-lexend text-base font-light text-neutral-2">
+            <span className="font-onsite text-base font-light text-neutral-2">
               {country}
             </span>
           </div>
-          <span className="hidden font-lexend text-base font-light text-neutral-2 sxl:block">
+          <span className="hidden font-onsite text-base font-light text-neutral-2 sxl:block">
             {hospitalStay} {t('days')}
           </span>
         </div>
@@ -190,28 +190,28 @@ const ProcedureCard = ({
           </div>
           <div className="mt-7 flex items-center gap-x-14 sxl:hidden">
             <div className="flex flex-col items-start gap-y-2">
-              <h3 className="font-lexend text-sm font-normal text-neutral-2">
+              <h3 className="font-onsite text-sm font-normal text-neutral-2">
                 {t('Hospital-stay')}
               </h3>
-              <p className="font-lexend text-sm font-light text-neutral-2">
+              <p className="font-onsite text-sm font-light text-neutral-2">
                 {hospitalStay} {t('days')}
               </p>
             </div>
             <div className="flex flex-col items-start gap-y-2">
-              <h3 className="font-lexend text-sm font-normal text-neutral-2">
+              <h3 className="font-onsite text-sm font-normal text-neutral-2">
                 {t('Wait-time')}
               </h3>
-              <p className="font-lexend text-sm font-light text-neutral-2">
+              <p className="font-onsite text-sm font-light text-neutral-2">
                 {waitTime} {t('days')}
               </p>
             </div>
           </div>
         </div>
         <div className="hidden flex-col items-end sxl:flex">
-          <span className="font-lexend text-base font-normal text-neutral-2">
+          <span className="font-onsite text-base font-normal text-neutral-2">
             {t('Wait-time')}
           </span>
-          <span className="font-lexend text-base font-light text-neutral-2">
+          <span className="font-onsite text-base font-light text-neutral-2">
             {waitTime} {t('days')}
           </span>
         </div>

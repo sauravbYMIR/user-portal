@@ -98,7 +98,7 @@ const BankIdVerification = () => {
               aria-label="Loading Spinner"
               data-testid="loader"
             />
-            <p className="font-poppins text-2xl font-medium">
+            <p className="font-onsite text-2xl font-medium">
               {t('Please-wait-while-we-redirect-you-to-booking-page')}
             </p>
           </div>
@@ -106,7 +106,7 @@ const BankIdVerification = () => {
           <div>
             {!verifyBankIdStatus.data?.isBankIdVerify ? (
               <div className="flex w-full flex-col items-center gap-y-8 sxl:w-[500px]">
-                <p className="font-poppins text-2xl font-medium">
+                <p className="font-onsite text-2xl font-medium">
                   {t('Authentication-Failed')}
                 </p>
                 <div className="flex items-center gap-x-8">
@@ -116,7 +116,7 @@ const BankIdVerification = () => {
                     className="!w-full !rounded-[6.4px] !px-6 !py-4"
                     onClick={() => setIsBankIdModalActive(true)}
                   >
-                    <p className="font-poppins text-lg font-normal text-neutral-7 sxl:text-2xl">
+                    <p className="font-onsite text-lg font-normal text-neutral-7 sxl:text-2xl">
                       {t('Retry')}
                     </p>
                   </FbtButton>
@@ -126,7 +126,7 @@ const BankIdVerification = () => {
                     className="!w-full !rounded-[6.4px] !border-2 !border-primary-2 !px-6 !py-4"
                     onClick={() => router.push('/')}
                   >
-                    <p className="font-poppins text-lg font-normal text-primary-2 sxl:text-2xl">
+                    <p className="font-onsite text-lg font-normal text-primary-2 sxl:text-2xl">
                       {t('Go-to-home')}
                     </p>
                   </FbtButton>
@@ -134,7 +134,7 @@ const BankIdVerification = () => {
               </div>
             ) : (
               <div className="flex w-full items-center gap-x-8 sxl:w-[500px]">
-                <p className="font-poppins text-2xl font-medium">
+                <p className="font-onsite text-2xl font-medium">
                   {t('redirecting-to-booking-page')}
                 </p>
               </div>

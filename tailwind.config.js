@@ -104,9 +104,7 @@ module.exports = {
         'bold-red': 'rgba(215, 64, 65, 1)',
       },
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
-        lexend: ['Lexend', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
+        onsite: ['Onsite', 'sans-serif'],
       },
       lineHeight: {
         15: '3.75rem',

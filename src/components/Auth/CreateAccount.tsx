@@ -139,7 +139,7 @@ const CreateAccount = () => {
         <CloseIcon className="size-8" stroke="#333" />
       </FbtButton>
       <div className="flex w-[547px] items-center justify-center bg-white px-5">
-        <h1 className="font-poppins text-2xl font-medium text-primary-1 sxl:text-[40px]">
+        <h1 className="font-onsite text-2xl font-medium text-primary-1 sxl:text-[40px]">
           {!isLogin ? (
             <span>{t('Create-an-account')}</span>
           ) : (
@@ -147,7 +147,7 @@ const CreateAccount = () => {
           )}
         </h1>
       </div>
-      <p className="text-center font-lexend text-base font-light text-neutral-2 sxl:text-lg">
+      <p className="text-center font-onsite text-base font-light text-neutral-2 sxl:text-lg">
         {t('Empowering-EU-&-EEC')}
       </p>
       {!isLogin ? (
@@ -170,7 +170,7 @@ const CreateAccount = () => {
               {...createUserRHF.register('email')}
             />
             {createUserRHF.formState.errors.email && (
-              <div className="mt-2 text-center font-lexend text-base font-normal text-error">
+              <div className="mt-2 text-center font-onsite text-base font-normal text-error">
                 {createUserRHF.formState.errors.email.message}
               </div>
             )}
@@ -201,7 +201,7 @@ const CreateAccount = () => {
               )}
             />
             {createUserRHF.formState.errors.phoneNumber && (
-              <p className="mt-2 font-lexend text-base font-normal text-error">
+              <p className="mt-2 font-onsite text-base font-normal text-error">
                 {createUserRHF.formState.errors.phoneNumber.message}
               </p>
             )}
@@ -235,13 +235,13 @@ const CreateAccount = () => {
               )}
             />
             {createUserRHF.formState.errors.preferredLanguage && (
-              <div className="mt-1 text-start font-lexend text-base font-normal text-error">
+              <div className="mt-1 text-start font-onsite text-base font-normal text-error">
                 {createUserRHF.formState.errors.preferredLanguage.message}
               </div>
             )}
           </div>
           <div className="mb-4 flex items-center">
-            <span className="font-lexend text-lg font-normal text-primary-2 sxl:text-xl">
+            <span className="font-onsite text-lg font-normal text-primary-2 sxl:text-xl">
               {t('Already-have-an-account')}
             </span>
             <button
@@ -249,7 +249,7 @@ const CreateAccount = () => {
               className="ml-1 underline decoration-primary-2 underline-offset-4"
               onClick={() => setIsLogin(true)}
             >
-              <span className="font-lexend text-lg font-medium text-primary-2 sxl:text-xl">
+              <span className="font-onsite text-lg font-medium text-primary-2 sxl:text-xl">
                 {t('Login')}
               </span>
             </button>
@@ -269,7 +269,7 @@ const CreateAccount = () => {
                 data-testid="loader"
               />
             ) : (
-              <p className="font-poppins text-lg font-normal text-neutral-7 sxl:text-2xl">
+              <p className="font-onsite text-lg font-normal text-neutral-7 sxl:text-2xl">
                 {t('Get-code-via-sms')}
               </p>
             )}
@@ -306,13 +306,13 @@ const CreateAccount = () => {
               )}
             />
             {loginUserRHF.formState.errors.phoneNumber && (
-              <p className="mt-2 font-lexend text-base font-normal text-error">
+              <p className="mt-2 font-onsite text-base font-normal text-error">
                 {loginUserRHF.formState.errors.phoneNumber.message}
               </p>
             )}
           </div>
           <div className="mb-4 flex items-center justify-center">
-            <span className="font-lexend text-base font-normal text-primary-2">
+            <span className="font-onsite text-base font-normal text-primary-2">
               {t('Dont-have-an-account')}
             </span>
             <button
@@ -320,7 +320,7 @@ const CreateAccount = () => {
               className="ml-1 underline decoration-primary-2 underline-offset-4"
               onClick={() => router.push('/book-procedure')}
             >
-              <span className="font-lexend text-base font-medium text-primary-2">
+              <span className="font-onsite text-base font-medium text-primary-2">
                 {t('Book-a-procedure-first')}
               </span>
             </button>
@@ -340,7 +340,7 @@ const CreateAccount = () => {
                 data-testid="loader"
               />
             ) : (
-              <p className="font-poppins text-lg font-normal text-neutral-7 sxl:text-2xl">
+              <p className="font-onsite text-lg font-normal text-neutral-7 sxl:text-2xl">
                 {t('Get-code-via-sms')}
               </p>
             )}

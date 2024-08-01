@@ -22,7 +22,7 @@ const ProfileHeader = ({
   const router = useRouter();
   return (
     <nav
-      className={`${className}  flex items-center justify-between px-5 py-6 sxl:px-20`}
+      className={`${className} flex items-center justify-between px-5 py-6 sxl:px-20`}
     >
       {showLogo && (
         <button type="button" onClick={() => router.push('/')}>
@@ -53,7 +53,7 @@ const ProfileHeader = ({
           >
             <div className="px-[20px]">
               <div className="my-[20px] flex items-center justify-start gap-[20px]">
-                <span className="font-poppins text-[20px] text-neutral-2">
+                <span className="font-onsite text-[20px] text-neutral-2">
                   <Link
                     href="/book-procedure"
                     className="font-[16px] leading-6"
@@ -69,7 +69,7 @@ const ProfileHeader = ({
                 className="my-[20px] flex items-center justify-start gap-[20px]"
                 onClick={handleLogOut}
               >
-                <span className="font-poppins text-[20px] text-neutral-2">
+                <span className="font-onsite text-[20px] text-neutral-2">
                   <span className="font-[16px] leading-6">Logout</span>
                 </span>
               </button>

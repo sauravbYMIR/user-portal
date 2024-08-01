@@ -1,10 +1,17 @@
 import posthog from 'posthog-js';
 
 import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
+import earnosethroatIcon from '@/public/assets/icons/earnosethroatIcon.svg';
+import eyeIcon from '@/public/assets/icons/eyeIcon.svg';
+import generalsurgeryIcon from '@/public/assets/icons/generalsurgeryIcon.svg';
 import irelandFlag from '@/public/assets/icons/ireland.svg';
 import norwayBankId from '@/public/assets/icons/norBankid.svg';
 import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
+import orthopeadicIcon from '@/public/assets/icons/orthopeadicIcon.svg';
+import plasticsurgeryIcon from '@/public/assets/icons/plasticsurgeryIcon.svg';
 import swedenFlag from '@/public/assets/icons/swedenFlag.svg';
+import urologyIcon from '@/public/assets/icons/urologyIcon.svg';
+import womenhealthIcon from '@/public/assets/icons/womenhealthIcon.svg';
 import swedenBankId from '@/public/assets/images/bankIdImg.svg';
 import ireBankId from '@/public/assets/images/bankIdNor.svg';
 import denmarkBankId from '@/public/assets/images/denBankId.svg';
@@ -35,6 +42,30 @@ export const bankIdModalMsg = {
   no: 'Use bankID',
   dk: 'use MitID',
   se: 'Use bankID',
+};
+
+export const procedureAndIcon = {
+  Orthopedic: {
+    icon: orthopeadicIcon,
+  },
+  Urology: {
+    icon: urologyIcon,
+  },
+  "Women's Health": {
+    icon: womenhealthIcon,
+  },
+  'General surgery': {
+    icon: generalsurgeryIcon,
+  },
+  'Ear, nose and throat (ENT)': {
+    icon: earnosethroatIcon,
+  },
+  Eye: {
+    icon: eyeIcon,
+  },
+  'Plastic surgery': {
+    icon: plasticsurgeryIcon,
+  },
 };
 
 const countryData: CountryData[] = [

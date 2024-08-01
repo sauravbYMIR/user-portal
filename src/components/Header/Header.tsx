@@ -96,6 +96,12 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
     };
   }, [isHeaderMenuOpen]);
 
+  useEffect(() => {
+    if (selectedLanguage) {
+      setIsLoginModalActive(true);
+    }
+  }, [selectedLanguage, setIsLoginModalActive]);
+
   return (
     <>
       <FbtHeader
@@ -149,7 +155,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
                         className={headerStyle.headerSelectItem}
                         value={countryInfo.locale}
                       >
-                        <span className="font-poppins text-sm font-medium text-neutral-2">
+                        <span className="font-onsite text-sm font-medium text-neutral-2">
                           {countryInfo.language}
                         </span>
                       </FbtSelectItem>
@@ -196,7 +202,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
                         className={headerStyle.headerSelectItem}
                         value={countryInfo.locale}
                       >
-                        <span className="font-poppins text-sm font-medium text-neutral-2">
+                        <span className="font-onsite text-sm font-medium text-neutral-2">
                           {countryInfo.language}
                         </span>
                       </FbtSelectItem>
@@ -213,7 +219,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
                 type="button"
                 onClick={() => setIsLoginModalActive(true)}
               >
-                <span className="font-poppins text-2xl font-medium text-primary-2">
+                <span className="font-onsite text-2xl font-medium text-primary-2">
                   Log in
                 </span>
               </button>

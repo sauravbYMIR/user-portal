@@ -50,7 +50,7 @@ function Timer({
   }, [reqTime, setIsShowTimer]);
 
   return (
-    <p className="my-2 ml-2 font-poppins text-sm font-normal text-darkgray sxl:my-9">
+    <p className="my-2 ml-2 font-onsite text-sm font-normal text-darkgray sxl:my-9">
       {msg}{' '}
       <span className="text-primary-2">
         00 : {reqTime === 0 ? '00' : reqTime}
@@ -157,14 +157,14 @@ const VerifyOtp = () => {
       >
         <CloseIcon className="size-10" stroke="#333" />
       </FbtButton>
-      <h1 className="font-poppins text-3xl font-medium text-primary-1 sxl:text-5xl">
+      <h1 className="font-onsite text-3xl font-medium text-primary-1 sxl:text-5xl">
         {t('Verify-with-OTP')}
       </h1>
-      <p className="text-center font-lexend text-lg font-light text-neutral-2 sxl:text-xl">
+      <p className="text-center font-onsite text-lg font-light text-neutral-2 sxl:text-xl">
         {t('A-6-digit-code-has-been-sent-to')} {selectedPhoneNumber}
       </p>
       <form className="mt-6 flex flex-col items-start sxl:mt-12">
-        <p className="mb-2 font-lexend text-xl font-light">OTP</p>
+        <p className="mb-2 font-onsite text-xl font-light">OTP</p>
         <OTPInputWrapper otp={otp} setOtp={setOtp} />
         <div className="my-6 flex w-full items-center justify-center sxl:mt-12">
           {isShowTimer ? (
@@ -175,7 +175,7 @@ const VerifyOtp = () => {
             />
           ) : (
             <>
-              <span className="font-poppins text-sm font-normal text-primary-2 sxl:text-xl">
+              <span className="font-onsite text-sm font-normal text-primary-2 sxl:text-xl">
                 {t('Didnt-receive-OTP')}
               </span>
               <button
@@ -193,7 +193,7 @@ const VerifyOtp = () => {
                     data-testid="loader"
                   />
                 ) : (
-                  <span className="font-poppins text-base font-medium text-primary-2 sxl:text-xl">
+                  <span className="font-onsite text-base font-medium text-primary-2 sxl:text-xl">
                     {t('Resend')}
                   </span>
                 )}
@@ -217,7 +217,7 @@ const VerifyOtp = () => {
               data-testid="loader"
             />
           ) : (
-            <p className="font-poppins text-lg font-normal text-neutral-7 sxl:text-2xl">
+            <p className="font-onsite text-lg font-normal text-neutral-7 sxl:text-2xl">
               {t('Verify-code')}
             </p>
           )}

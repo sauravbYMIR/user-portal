@@ -18,6 +18,9 @@ const ModalWrapper: React.FC<{
   return (
     <div
       className={`${parentStyle} flex min-h-screen w-screen items-center justify-center`}
+      style={{
+        backdropFilter: 'blur(10px)',
+      }}
     >
       <div className={`${childrenStyle}`}>{children}</div>
     </div>

@@ -95,5 +95,12 @@
   "Please-select-desired-date-for-procedure": "Please select desired date for procedure",
   "Book-procedure": "Book procedure",
   "From": "From",
-  "To": "To"
+  "To": "To",
+  "Your-cost-after-reimbursement": "Your cost after reimbursement",
+  "Please-select-country-to-proceed": "Please select country to proceed",
+  "Please-select-gender-to-proceed": "  Please select gender to proceed",
+  "Please-select-procedure-to-proceed": "Please select procedure to proceed",
+  "Please-select-hospital-to-proceed": "Please select hospital to proceed",
+  "The-selected-procedure-is-not-associated": "The selected procedure is not associated with any hospital. Please choose another procedure",
+  "Selected": "Selected"
 }

@@ -53,7 +53,7 @@ const Procedure = () => {
                     className="mb-[8px] size-64"
                     alt="hospital-logo"
                   />
-                  <p className="text-center font-poppins text-2xl font-normal text-neutral-2">
+                  <p className="text-center font-onsite text-2xl font-normal text-neutral-2">
                     The selected procedure is not associated with any hospital.
                     Please choose another procedure
                   </p>

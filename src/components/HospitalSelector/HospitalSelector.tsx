@@ -1,12 +1,10 @@
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import type { HospitalImageType } from '@/hooks/useHospital';
 import { useGetHospitalByProcedureId } from '@/hooks/useHospital';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
-import noHospital from '@/public/assets/images/noHospital.png';
 import {
   convertToValidCurrency,
   countryData,
@@ -14,7 +12,7 @@ import {
   handleSetLocalStorage,
 } from '@/utils/global';
 
-import { HospitalIcon } from '../Icons/Icons';
+import { CheckIcon, HospitalIcon } from '../Icons/Icons';
 import { FbtButton } from '../ui';
 
 const HospitalCard = ({
@@ -44,7 +42,6 @@ const HospitalCard = ({
 }) => {
   const { t } = useTranslation();
   const { setSelectedHospital, setSelectedHospitalName } = useAppStore();
-  const router = useRouter();
   return (
     <div
       className={`bg-base-light ${selectedHospital === id ? 'border-primary-2' : 'border-neutral-5'} flex h-[444px] flex-1 flex-col items-start rounded-xl border px-3 py-4`}
@@ -64,7 +61,7 @@ const HospitalCard = ({
         )}
         <FbtButton
           variant="outline"
-          className="absolute right-2 top-2 !h-[40px] !w-[92px] !rounded-[42.81px] !border-none bg-secondary-green text-white hover:!bg-secondary-green hover:!text-white"
+          className="absolute right-2 top-2 !h-[40px] gap-x-[6px] !rounded-[42.81px] !border-none bg-secondary-green text-white hover:!bg-secondary-green hover:!text-white"
           onClick={() => {
             setSelectedHospital(id);
             setSelectedHospitalName(hospitalName);
@@ -76,17 +73,25 @@ const HospitalCard = ({
               tokenKey: 'selected_hospital_name',
               tokenValue: hospitalName,
             });
-            router.push(`/hospital/${id}`);
           }}
         >
-          <span className="text-base font-medium text-white">
-            {t('Select')}
-          </span>
+          {selectedHospital === id ? (
+            <>
+              <CheckIcon stroke="#fff" className="size-5" />
+              <span className="text-base font-medium text-white">
+                {t('Selected')}
+              </span>
+            </>
+          ) : (
+            <span className="text-base font-medium text-white">
+              {t('Select')}
+            </span>
+          )}
         </FbtButton>
       </div>
 
       <div className="my-[14.89px] flex w-full items-start justify-between gap-x-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-start justify-between">
           {hospitalLogo && typeof hospitalLogo === 'string' ? (
             <Image
               src={hospitalLogo}
@@ -99,42 +104,42 @@ const HospitalCard = ({
             <HospitalIcon className="size-12 rounded-full border-2 border-neutral-5" />
           )}
           <div className="ml-3 flex flex-col items-start">
-            <h3 className="font-poppins text-base font-bold text-dark-green">
+            <h3 className="font-onsite text-sm font-bold text-dark-green sm:text-base">
               {hospitalName}
             </h3>
-            <p className="font-lexend text-base font-normal text-dark-green">
+            <p className="font-onsite text-sm font-normal text-dark-green sm:text-base">
               {city}, {country}
             </p>
           </div>
         </div>
-        <div className="flex flex-col items-start justify-center rounded-lg bg-light-purple px-3 py-2 font-lexend text-sm font-normal text-info-1">
-          <p className="text-base font-normal text-accent-purple">
+        <div className="flex flex-col items-start justify-center rounded-lg bg-light-purple px-3 py-2 font-onsite text-sm font-normal text-info-1">
+          <p className="text-xs font-normal text-accent-purple sm:text-base">
             {t('Wait-time')}
           </p>
-          <p className="text-base font-medium text-accent-purple">
+          <p className="text-sm font-medium text-accent-purple sm:text-base">
             {waitTime} days
           </p>
         </div>
       </div>
       <div className="mb-1 flex w-full items-start justify-between">
         <div className="flex w-2/5 flex-col items-start">
-          <span className="mb-1 font-lexend text-sm font-normal text-dark-green">
+          <span className="mb-1 font-onsite text-sm font-normal text-dark-green">
             {t('Cost-of-procedure')}
           </span>
-          <span className="font-lexend text-sm font-bold text-dark-green">
+          <span className="font-onsite text-sm font-bold text-dark-green">
             {costOfProcedure}
           </span>
         </div>
         <div className="flex w-2/5 flex-col items-start">
-          <span className="mb-1 font-lexend text-sm font-normal text-dark-green">
+          <span className="mb-1 font-onsite text-sm font-normal text-dark-green">
             {t('Reimbursement-offered')}
           </span>
-          <span className="font-lexend text-sm font-bold text-dark-green">
+          <span className="font-onsite text-sm font-bold text-dark-green">
             {reimBursementCost}
           </span>
         </div>
       </div>
-      <p className="mb-6 font-lexend text-base font-normal text-dark-green">
+      <p className="mb-6 font-onsite text-base font-normal text-dark-green">
         {hospitalDesc.length > 50
           ? `${hospitalDesc.slice(0, 50)}...`
           : hospitalDesc}
@@ -166,15 +171,15 @@ const HospitalSelector = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       <div className="w-8/12">
-        <h3 className="text-center font-poppins text-[24px] font-medium text-primary-1 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
+        <h3 className="mt-20 text-center font-onsite text-[24px] font-medium text-primary-1 sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
           {t('Select-a-hospital-for-your-procedure')}
         </h3>
       </div>
       <div className="w-full pb-20">
-        <div className="mt-[40px] grid grid-cols-3 content-center justify-items-center gap-[24px] sm:mt-[60px]">
+        <div className="mt-[40px] flex flex-col content-center justify-items-center gap-[24px] sm:mt-[60px] sm:grid sm:grid-cols-3">
           {allHospitals.data &&
-          Array.isArray(allHospitals.data.data) &&
-          allHospitals.data.data.length > 0 ? (
+            Array.isArray(allHospitals.data.data) &&
+            allHospitals.data.data.length > 0 &&
             allHospitals.data.data.map((hospital) => {
               return (
                 <HospitalCard
@@ -213,23 +218,21 @@ const HospitalSelector = () => {
                   hospitalImages={hospital.hospitalImages}
                 />
               );
-            })
-          ) : (
-            <div className="flex w-full flex-col items-center justify-center">
-              <div className="flex w-8/12 flex-col items-center">
-                <Image
-                  src={noHospital}
-                  className="mb-[8px] size-64"
-                  alt="hospital-logo"
-                />
-                <p className="text-center font-poppins text-2xl font-normal text-neutral-2">
-                  The selected procedure is not associated with any hospital.
-                  Please choose another procedure
-                </p>
-              </div>
-            </div>
-          )}
+            })}
         </div>
+        {!(
+          allHospitals.data &&
+          Array.isArray(allHospitals.data.data) &&
+          allHospitals.data.data.length > 0
+        ) && (
+          <div className="flex w-full flex-col items-center justify-center">
+            <div className="flex w-8/12 items-center justify-center">
+              <p className="text-center font-onsite text-2xl font-normal text-neutral-2">
+                {t('The-selected-procedure-is-not-associated')}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

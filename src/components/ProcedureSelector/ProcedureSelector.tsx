@@ -1,10 +1,16 @@
+/* eslint-disable react/jsx-no-undef */
+import Image from 'next/image';
 import React from 'react';
 
 import { useGetAllDepartmentWithProcedure } from '@/hooks/useDepartment';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import type { LocaleType } from '@/types/component';
-import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
+import {
+  handleGetLocalStorage,
+  handleSetLocalStorage,
+  procedureAndIcon,
+} from '@/utils/global';
 
 import DashboardLoader from '../Skeleton/DashboardSkeleton';
 import { FbtButton } from '../ui';
@@ -31,15 +37,15 @@ const ProcedureSelector = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-2 pb-60">
       <div className="flex w-10/12 flex-col items-center justify-center gap-2">
-        <h3 className="text-center font-poppins text-[24px] font-medium text-dark-green sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
+        <h3 className="mt-28 text-center font-onsite text-[24px] font-medium text-dark-green sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
           {t('Select-your-procedure')}
         </h3>
-        <p className="mt-6 text-center font-lexend text-base font-normal leading-7 text-dark-green sm:text-xl">
+        <p className="mt-6 hidden text-center font-onsite text-base font-normal leading-7 text-dark-green sm:block sm:text-xl">
           {t('To-begin-we-are-piloting-with-a-limited-number-of-non')}
         </p>
       </div>
 
-      <div className="mb-32 mt-[40px] flex flex-col items-start gap-x-6 sm:mt-[60px] sm:grid sm:grid-cols-2 sm:gap-4">
+      <div className="mb-9 mt-[40px] flex flex-col items-start gap-x-6 gap-y-3 sm:mb-32 sm:mt-[60px] sm:grid sm:grid-cols-2 sm:gap-4">
         {departmentProcedureList.isSuccess &&
         departmentProcedureList.data &&
         departmentProcedureList.data?.data?.allCategoryWithProcedure &&
@@ -54,10 +60,25 @@ const ProcedureSelector = () => {
                 <FbtButton
                   key={procedureData.id}
                   variant="outline"
-                  className="flex !h-[139.51px] !w-[136px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none bg-base-light text-dark-green hover:!bg-white hover:!text-dark-green sm:my-0 sm:!h-[179.5px] sm:!w-[294px] md:my-4"
+                  className="flex !h-[62.95px] !w-[164px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none bg-base-light text-dark-green hover:!bg-white hover:!text-dark-green sm:my-0 sm:!h-[179.5px] sm:!w-[294px] md:my-4"
                   onClick={() => scrollToDiv(index)}
                 >
-                  <span className="font-poppins text-2xl font-medium">
+                  {procedureAndIcon[
+                    procedureData.name.en as keyof typeof procedureAndIcon
+                  ] && (
+                    <Image
+                      src={
+                        procedureAndIcon[
+                          procedureData.name.en as keyof typeof procedureAndIcon
+                        ].icon
+                      }
+                      width={58.5}
+                      height={58.5}
+                      alt={procedureData.name.en}
+                    />
+                  )}
+
+                  <span className="font-onsite text-base font-medium sm:text-2xl">
                     {procedureData.name[selectedLanguage]}
                   </span>
                 </FbtButton>
@@ -65,9 +86,14 @@ const ProcedureSelector = () => {
             },
           )
         ) : (
-          <DashboardLoader />
+          <div className="flex w-[90vw] items-start justify-center">
+            <DashboardLoader />
+          </div>
         )}
       </div>
+      <p className="mb-24 mt-6 block text-center font-onsite text-base font-normal leading-7 text-dark-green sm:hidden sm:text-xl">
+        {t('To-begin-we-are-piloting-with-a-limited-number-of-non')}
+      </p>
       <div className="flex flex-col items-center justify-start gap-y-24">
         {departmentProcedureList.isSuccess &&
           departmentProcedureList.data &&
@@ -116,7 +142,7 @@ const ProcedureSelector = () => {
 
                           <label
                             htmlFor={procedure.id}
-                            className="font-poppins text-base font-normal text-dark-green sm:cursor-pointer sm:text-2xl"
+                            className="font-onsite text-base font-normal text-dark-green sm:cursor-pointer sm:text-2xl"
                           >
                             {procedure.name[selectedLanguage]}
                           </label>
@@ -162,7 +188,7 @@ const ProcedureSelector = () => {
 
                                   <label
                                     htmlFor={pData.id}
-                                    className="font-poppins text-base font-normal text-dark-green sm:cursor-pointer sm:text-2xl"
+                                    className="font-onsite text-base font-normal text-dark-green sm:cursor-pointer sm:text-2xl"
                                   >
                                     {pData.name[selectedLanguage]}
                                   </label>

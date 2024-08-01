@@ -48,7 +48,7 @@ function CustomAccordion({
     <div className={`${accordionStyles.accordionContainer} `}>
       <button
         type="button"
-        className={`${accordionStyles.headerContainer}   ${isOpen && type === 'DEPARTMENT' ? 'bg-primary-5 px-[24px] py-[12px]' : 'bg-neutral-7'} ${type === 'DEPARTMENT' ? ' px-[24px] py-[16px]' : 'p-0'} ${className}`}
+        className={`${accordionStyles.headerContainer} ${isOpen && type === 'DEPARTMENT' ? 'bg-primary-5 px-[24px] py-[12px]' : 'bg-neutral-7'} ${type === 'DEPARTMENT' ? 'px-[24px] py-[16px]' : 'p-0'} ${className}`}
         onClick={toggleAccordion}
       >
         <div className={accordionStyles.headerContentWrapper}>
@@ -75,7 +75,7 @@ function CustomAccordion({
             )}
             <label
               htmlFor={procedureId}
-              className={`cursor-pointer font-poppins text-2xl  ${isOpen && type === 'SUB-CATEGORY-WITH-PROCEDURE' ? 'text-primary-2' : 'text-neutral-2'} ${type === 'DEPARTMENT' ? ' text-2xl sm:text-md' : 'text-base sm:text-2xl'}`}
+              className={`cursor-pointer font-onsite text-2xl ${isOpen && type === 'SUB-CATEGORY-WITH-PROCEDURE' ? 'text-primary-2' : 'text-neutral-2'} ${type === 'DEPARTMENT' ? 'text-2xl sm:text-md' : 'text-base sm:text-2xl'}`}
             >
               {title}
             </label>

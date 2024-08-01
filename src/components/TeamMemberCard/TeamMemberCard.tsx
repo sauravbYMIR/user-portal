@@ -36,10 +36,8 @@ function TeamMemberCard({
         />
       )}
       <div className="ml-3 flex flex-col items-start">
-        <p className="font-poppins text-xl font-medium text-neutral-1">
-          {name}
-        </p>
-        <p className="font-lexend text-base font-light text-neutral-2">
+        <p className="font-onsite text-xl font-medium text-neutral-1">{name}</p>
+        <p className="font-onsite text-base font-light text-neutral-2">
           {role}
         </p>
       </div>
