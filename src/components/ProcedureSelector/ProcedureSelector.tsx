@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import { useGetAllDepartmentWithProcedure } from '@/hooks/useDepartment';
+import { useScreenWidth } from '@/hooks/useScreenWidth';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import type { LocaleType } from '@/types/component';
@@ -34,6 +35,7 @@ const ProcedureSelector = () => {
       div.scrollIntoView({ behavior: 'smooth' });
     }
   };
+  const { matches } = useScreenWidth(640);
   return (
     <div className="flex w-full flex-col items-center justify-center gap-2 pb-60">
       <div className="flex w-10/12 flex-col items-center justify-center gap-2">
@@ -45,7 +47,7 @@ const ProcedureSelector = () => {
         </p>
       </div>
 
-      <div className="mb-9 mt-[40px] flex flex-col items-start gap-x-6 gap-y-3 sm:mb-32 sm:mt-[60px] sm:grid sm:grid-cols-2 sm:gap-4">
+      <div className="mb-9 mt-[40px] flex flex-col items-start gap-x-6 gap-y-3 sm:mb-32 sm:mt-[60px] sm:grid sm:grid-cols-3 sm:gap-4">
         {departmentProcedureList.isSuccess &&
         departmentProcedureList.data &&
         departmentProcedureList.data?.data?.allCategoryWithProcedure &&
@@ -60,7 +62,7 @@ const ProcedureSelector = () => {
                 <FbtButton
                   key={procedureData.id}
                   variant="outline"
-                  className="flex !h-[62.95px] !w-[164px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none bg-base-light text-dark-green hover:!bg-white hover:!text-dark-green sm:my-0 sm:!h-[179.5px] sm:!w-[294px] md:my-4"
+                  className="flex !h-[62.95px] !w-[164px] cursor-pointer flex-row !items-center !justify-between gap-x-2 gap-y-4 !rounded-2xl !border-none bg-base-light text-dark-green hover:!bg-white hover:!text-dark-green sm:my-0 sm:!h-[179.5px] sm:!w-[294px] sm:flex-col sm:!justify-center md:my-4"
                   onClick={() => scrollToDiv(index)}
                 >
                   {procedureAndIcon[
@@ -72,12 +74,11 @@ const ProcedureSelector = () => {
                           procedureData.name.en as keyof typeof procedureAndIcon
                         ].icon
                       }
-                      width={58.5}
-                      height={58.5}
+                      width={matches ? 38.95 : 58.5}
+                      height={matches ? 38.95 : 58.5}
                       alt={procedureData.name.en}
                     />
                   )}
-
                   <span className="font-onsite text-base font-medium sm:text-2xl">
                     {procedureData.name[selectedLanguage]}
                   </span>

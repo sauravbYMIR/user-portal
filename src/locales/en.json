@@ -102,5 +102,6 @@
   "Please-select-procedure-to-proceed": "Please select procedure to proceed",
   "Please-select-hospital-to-proceed": "Please select hospital to proceed",
   "The-selected-procedure-is-not-associated": "The selected procedure is not associated with any hospital. Please choose another procedure",
-  "Selected": "Selected"
+  "Selected": "Selected",
+  "Select-date": "Select date"
 }

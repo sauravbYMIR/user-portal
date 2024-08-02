@@ -65,7 +65,7 @@ function HospitalDetailsPage({
   } = useAppStore();
   const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   const createBooking = useCreateBooking({ selectedHospitalName });
-  const [isMounted, setIsMounted] = React.useState<boolean>(false);
+  // const [isMounted, setIsMounted] = React.useState<boolean>(false);
   const [isBankidVerificationLoading, setIsBankidVerificationLoading] =
     React.useState<boolean>(false);
   const [startDate, setStartDate] = React.useState<null | Date>(null);
@@ -144,12 +144,12 @@ function HospitalDetailsPage({
     }
     handleCreateBooking();
   };
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  if (!isMounted) {
-    return null;
-  }
+  // React.useEffect(() => {
+  //   setIsMounted(true);
+  // }, []);
+  // if (!isMounted) {
+  //   return null;
+  // }
   return (
     <div className="relative h-screen w-screen">
       {isOpen && (
@@ -438,7 +438,7 @@ function HospitalDetailsPage({
                       </p>
                     )}
                 </div>
-                <div className="mt-6 flex w-full flex-col items-start gap-x-3 gap-y-4 sm:mt-0 sm:flex-row sm:gap-y-0">
+                <div className="mt-6 flex w-full flex-col items-start justify-end gap-x-3 gap-y-4 sm:mt-0 sm:flex-row sm:gap-y-0">
                   <DatePicker
                     selected={startDate}
                     onChange={(date) => {
@@ -477,48 +477,81 @@ function HospitalDetailsPage({
                     minDate={startDate}
                     className="w-full rounded-[10px] bg-base-light px-3 py-4 slg:w-[200px]"
                     inline
+                    // rangeColors={['#f33e5b', '#3ecf8e', '#fed14c']}
                   />
                 </div>
               </div>
             </div>
+            {matches ? (
+              <button
+                type="button"
+                className="flex items-center gap-x-4 rounded-xl bg-base-light px-5 py-4"
+                onClick={() => setIsOpen((prevState) => !prevState)}
+              >
+                <CalendarIcon />
+                <div className="flex flex-col items-start">
+                  {!(startDate && endDate) && (
+                    <span className="text-base font-normal text-dark-green">
+                      {t('Select-date')}
+                    </span>
+                  )}
+                  <div className="flex items-start gap-x-2">
+                    {startDate && (
+                      <span className="text-sm font-medium text-dark-green sm:text-base">
+                        {startDate.getDate()}.{getMonth(startDate)}
+                      </span>
+                    )}
+                    {endDate && (
+                      <span className="text-sm font-medium text-dark-green sm:text-base">
+                        {endDate.getDate()}.{getMonth(endDate)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </button>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="flex items-center gap-x-4 rounded-xl bg-base-light px-5 py-4"
+                  onClick={() => setIsOpen((prevState) => !prevState)}
+                >
+                  <CalendarIcon />
+                  <div className="flex flex-col items-start">
+                    <span className="text-base font-normal text-dark-green">
+                      {t('From')}
+                    </span>
+                    {startDate && (
+                      <span className="text-base font-medium text-dark-green">
+                        {startDate.getDate()}.{getMonth(startDate)}{' '}
+                        {startDate.getFullYear()}
+                      </span>
+                    )}
+                  </div>
+                </button>
+                <button
+                  type="button"
+                  className="flex items-center gap-x-4 rounded-xl bg-base-light px-5 py-4"
+                >
+                  <CalendarIcon />
+                  <div className="flex flex-col items-start">
+                    <span className="text-base font-normal text-dark-green">
+                      {t('To')}
+                    </span>
+                    {endDate && (
+                      <span className="text-base font-medium text-dark-green">
+                        {endDate.getDate()}.{getMonth(endDate)}{' '}
+                        {endDate.getFullYear()}
+                      </span>
+                    )}
+                  </div>
+                </button>
+              </>
+            )}
+
             <button
               type="button"
-              className="flex items-center gap-x-4 rounded-xl bg-base-light px-5 py-4"
-              onClick={() => setIsOpen((prevState) => !prevState)}
-            >
-              <CalendarIcon />
-              <div className="flex flex-col items-start">
-                <span className="text-base font-normal text-dark-green">
-                  {t('From')}
-                </span>
-                {startDate && (
-                  <span className="text-base font-medium text-dark-green">
-                    {startDate.getDate()}.{getMonth(startDate)}{' '}
-                    {startDate.getFullYear()}
-                  </span>
-                )}
-              </div>
-            </button>
-            <button
-              type="button"
-              className="flex items-center gap-x-4 rounded-xl bg-base-light px-5 py-4"
-            >
-              <CalendarIcon />
-              <div className="flex flex-col items-start">
-                <span className="text-base font-normal text-dark-green">
-                  {t('To')}
-                </span>
-                {endDate && (
-                  <span className="text-base font-medium text-dark-green">
-                    {endDate.getDate()}.{getMonth(endDate)}{' '}
-                    {endDate.getFullYear()}
-                  </span>
-                )}
-              </div>
-            </button>
-            <button
-              type="button"
-              className={`${error.length > 0 ? 'cursor-not-allowed bg-dark-primary-green text-dark-green' : 'bg-dark-green text-white'} flex w-[183px] items-center justify-center rounded-[40px] px-3 py-6 sm:w-[267px] sm:px-8 sm:py-5`}
+              className={`${error.length > 0 ? 'cursor-not-allowed bg-dark-primary-green text-dark-green' : 'bg-dark-green text-white'} flex w-[183px] items-center justify-center rounded-[40px] px-6 py-3 sm:w-[267px] sm:px-8 sm:py-5`}
               disabled={error.length > 0}
               onClick={handleRequestAppointment}
             >

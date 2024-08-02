@@ -99,5 +99,6 @@
   "Please-select-procedure-to-proceed": "Vänligen välj procedur för att fortsätta",
   "Please-select-hospital-to-proceed": "Vänligen välj sjukhus för att fortsätta",
   "The-selected-procedure-is-not-associated": "Den valda proceduren är inte kopplad till något sjukhus. Vänligen välj en annan procedur",
-  "Selected": "vald"
+  "Selected": "vald",
+  "Select-date": "Välj datum"
 }

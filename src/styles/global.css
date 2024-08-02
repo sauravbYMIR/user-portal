@@ -6,9 +6,6 @@
   font-family: "Onsite";
   src: url("./fonts/Onsite/OnsiteCondensed-Bold.otf") format("otf"),
     url("./fonts/Onsite/OnsiteCondensed-Bold.woff2") format("woff2");
-  /* font-weight: 300;
-  font-display: swap;
-  font-style: normal; */
 }
 
 @font-face {
@@ -16,9 +13,6 @@
   src: url("./fonts/Onsite/OnsiteStandard-Bold.otf") format("otf"),
     url("./fonts/Onsite/OnsiteStandard-Bold.woff") format("woff"),
     url("./fonts/Onsite/OnsiteStandard-Bold.woff2") format("woff2"),
-  /* font-weight: 300;
-  font-display: swap;
-  font-style: italic; */
 }
 
 @font-face {
@@ -26,18 +20,12 @@
   src: url("./fonts/Onsite/OnsiteStandard-Medium.otf") format("otf"),
     url("./fonts/Onsite/OnsiteStandard-Medium.woff") format("woff"),
     url("./fonts/Onsite/OnsiteStandard-Medium.woff2") format("woff2"),
-  /* font-weight: 400;
-  font-display: swap;
-  font-style: normal; */
 }
 @font-face {
   font-family: "Onsite";
   src: url("./fonts/Onsite/OnsiteStandard-Regular.otf") format("otf"),
     url("./fonts/Onsite/OnsiteStandard-Regular.woff") format("woff"),
     url("./fonts/Onsite/OnsiteStandard-Regular.woff2") format("woff2"),
-  /* font-weight: 400;
-  font-display: swap;
-  font-style: normal; */
 }
 
 body{
@@ -97,7 +85,7 @@ body{
 }
 
 .react-datepicker__current-month {
-  font-family: 'Inter';
+  font-family: 'Onsite';
   font-size: 0.75rem;
   color: #333;
   font-weight: 500 !important;
@@ -109,7 +97,7 @@ body{
 }
 
 .react-datepicker__day-name {
-  font-family: 'Inter';
+  font-family: 'Onsite';
   font-size: 0.75rem;
   color: rgba(249, 249, 249, 1);
   font-weight: 400 !important;
@@ -117,26 +105,32 @@ body{
 }
 
 .react-datepicker__day--selected {
-  border-radius: 100% !important;
+  /* border-radius: 100% !important; */
   background-color: rgba(9, 111, 144, 1);
   color: #fff;
 }
 
 .react-datepicker__day:hover, .react-datepicker__month-text:hover, .react-datepicker__quarter-text:hover, .react-datepicker__year-text:hover {
-  border-radius: 100% !important;
-  background-color: rgba(242, 250, 252, 1) !important;
+  /* border-radius: 100% !important; */
+  background-color: rgba(243, 243, 233, 1) !important;
   color: #333 !important;
 }
 
+.react-datepicker__day--selecting-range-start {
+  /* border-radius: 100% !important; */
+  background-color: rgba(9, 111, 144, 1) !important;
+  color: #fff !important;
+}
+
 .react-datepicker__day--selecting-range-start:hover {
-  border-radius: 100% !important;
-  background-color: rgba(242, 250, 252, 1) !important;
+  /* border-radius: 100% !important; */
+  background-color: rgba(243, 243, 233, 1) !important;
   color: #333 !important;
 }
 
 .react-datepicker__day--in-range {
-  border-radius: 100% !important;
-  background-color: rgba(242, 250, 252, 1) !important;
+  /* border-radius: 100% !important; */
+  background-color: rgba(243, 243, 233, 1) !important;
   color: #333 !important;
 }
 
