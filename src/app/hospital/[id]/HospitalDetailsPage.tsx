@@ -65,7 +65,6 @@ function HospitalDetailsPage({
   } = useAppStore();
   const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   const createBooking = useCreateBooking({ selectedHospitalName });
-  // const [isMounted, setIsMounted] = React.useState<boolean>(false);
   const [isBankidVerificationLoading, setIsBankidVerificationLoading] =
     React.useState<boolean>(false);
   const [startDate, setStartDate] = React.useState<null | Date>(null);
@@ -144,12 +143,6 @@ function HospitalDetailsPage({
     }
     handleCreateBooking();
   };
-  // React.useEffect(() => {
-  //   setIsMounted(true);
-  // }, []);
-  // if (!isMounted) {
-  //   return null;
-  // }
   return (
     <div className="relative h-screen w-screen">
       {isOpen && (

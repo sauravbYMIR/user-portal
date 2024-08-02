@@ -122,7 +122,7 @@ const Stepper = ({
           );
         })}
       </div>
-      <div className="flex items-center gap-x-6 py-4 pr-6">
+      <div className="flex h-full items-center gap-x-6 py-4 sm:pr-6">
         {!matches && (
           <button
             type="button"
@@ -144,7 +144,7 @@ const Stepper = ({
         )}
         <button
           type="button"
-          className={`${isDisable() ? 'cursor-not-allowed' : 'cursor-pointer'} flex w-[128px] items-center justify-center rounded-[40px] bg-dark-green py-4 text-white sm:w-[251px]`}
+          className={`${isDisable() ? 'cursor-not-allowed' : 'cursor-pointer'} flex items-center justify-center rounded-[40px] bg-dark-green px-6 py-3 text-white sm:w-[251px]`}
           disabled={isDisable()}
           onClick={() => {
             if (handleCountueBtnDisableStatus()) {
@@ -159,7 +159,7 @@ const Stepper = ({
             }
           }}
         >
-          <span className="text-xl font-normal text-white">
+          <span className="text-xs font-normal text-white sm:text-xl">
             {t('Next-step')}
           </span>
         </button>
