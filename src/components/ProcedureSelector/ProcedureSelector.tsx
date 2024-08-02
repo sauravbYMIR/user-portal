@@ -62,7 +62,7 @@ const ProcedureSelector = () => {
                 <FbtButton
                   key={procedureData.id}
                   variant="outline"
-                  className="flex !h-[62.95px] !w-[164px] cursor-pointer flex-row !items-center !justify-between gap-x-2 gap-y-4 !rounded-2xl !border-none bg-base-light text-dark-green hover:!bg-white hover:!text-dark-green sm:my-0 sm:!h-[179.5px] sm:!w-[294px] sm:flex-col sm:!justify-center md:my-4"
+                  className="flex !h-[62.95px] !w-[280px] cursor-pointer flex-row !items-center gap-x-2 gap-y-4 !rounded-2xl !border-none bg-base-light text-dark-green hover:!bg-white hover:!text-dark-green sm:my-0 sm:!h-[179.5px] sm:!w-[294px] sm:flex-col sm:!justify-center md:my-4"
                   onClick={() => scrollToDiv(index)}
                 >
                   {procedureAndIcon[
