@@ -58,7 +58,7 @@ const CountrySelector = () => {
               <FbtButton
                 key={country.name}
                 variant="outline"
-                className={`${country.countryCode === selectedCountry ? 'bg-dark-green !text-white hover:!bg-white hover:!text-dark-green' : 'bg-base-light text-dark-green hover:!bg-white hover:!text-dark-green'} flex !h-[139.51px] !w-[136px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none sm:my-0 sm:!h-[179.5px] sm:!w-[294px] md:my-4`}
+                className={`${country.countryCode === selectedCountry ? 'bg-dark-green !text-white hover:!bg-dark-green hover:!text-white' : 'bg-base-light text-dark-green hover:!bg-dark-green hover:!text-white'} flex !h-[139.51px] !w-[136px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none sm:my-0 sm:!h-[179.5px] sm:!w-[294px] md:my-4`}
                 onClick={() => {
                   setSelectedCountry(country.countryCode);
                   handleSetLocalStorage({
