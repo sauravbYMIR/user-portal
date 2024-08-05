@@ -135,20 +135,20 @@ const CreateAccount = () => {
         variant="link"
         className="!absolute right-4 top-2 z-10 !p-0"
         onClick={() => {
-          if (
-            process.env.NODE_ENV === 'development' ||
-            process.env.NODE_ENV === 'test'
-          ) {
-            router.push(
-              process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
-            );
-          }
-          if (process.env.NODE_ENV === 'production') {
-            router.push(
-              process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
-            );
-          }
-          // setIsLoginModalActive(false);
+          // if (
+          //   process.env.NODE_ENV === 'development' ||
+          //   process.env.NODE_ENV === 'test'
+          // ) {
+          //   router.push(
+          //     process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
+          //   );
+          // }
+          // if (process.env.NODE_ENV === 'production') {
+          //   router.push(
+          //     process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
+          //   );
+          // }
+          setIsLoginModalActive(false);
         }}
       >
         <CloseIcon className="size-8" stroke="#333" />
