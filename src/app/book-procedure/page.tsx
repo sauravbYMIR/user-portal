@@ -244,7 +244,7 @@ const BookProcedure = () => {
     <div className="h-screen">
       <div className="relative flex w-screen flex-col items-center justify-between bg-primary-green px-[20px] py-[27px] md:px-[60px] md:py-[32px] lg:px-[87px] lg:py-[43px] xl:justify-center">
         <nav className="flex w-screen items-start justify-between px-5 sm:px-12">
-          <button type="button" onClick={() => router.push('/book-procedure')}>
+          <button type="button" onClick={() => router.push('/')}>
             <Image
               src={brand}
               width={matches ? 133.37 : 190.47}

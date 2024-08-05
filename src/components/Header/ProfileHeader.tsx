@@ -67,7 +67,12 @@ const ProfileHeader = ({
               <button
                 type="button"
                 className="my-[20px] flex items-center justify-start gap-[20px]"
-                onClick={handleLogOut}
+                onClick={() => {
+                  handleLogOut();
+                  router.push(
+                    process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
+                  );
+                }}
               >
                 <span className="font-onsite text-[20px] text-neutral-2">
                   <span className="font-[16px] leading-6">Logout</span>
