@@ -196,6 +196,8 @@ const LOGIN = 'LOGIN';
 const SIGNUP = 'SIGNUP';
 const BOOKING = 'BOOKING';
 
+export const excludeProcedure = [`Women's Health`];
+
 export {
   BOOKING,
   convertToValidCurrency,

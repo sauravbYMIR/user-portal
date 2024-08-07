@@ -29,7 +29,7 @@ const GenderSelector = () => {
     <div className="flex w-full flex-col items-center justify-center gap-2">
       <div className="w-8/12">
         <h3 className="mt-32 text-center font-onsite text-[24px] font-medium text-dark-green sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
-          {t('Select-your-gender')}
+          {t('Select-your-medical-gender')}
         </h3>
       </div>
       <div className="mt-[40px] grid grid-cols-1 items-start gap-4 sm:mb-44 sm:mt-20 sm:grid-cols-2">

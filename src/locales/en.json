@@ -9,7 +9,7 @@
   "Tell-us-which-country-you-will-be-claiming-this-policy-from": "Tell us which country you will be claiming this policy from",
   "To-begin-we-are-piloting-with-a": "To begin we are piloting with a limited number of countries, more countries will be added in the near future.",
   "Continue": "Continue",
-  "Select-your-gender": "Select your gender",
+  "Select-your-medical-gender": "Select your medical gender",
   "Male": "Male",
   "Female": "Female",
   "Select-your-procedure": "Select your procedure",
@@ -103,5 +103,6 @@
   "Please-select-hospital-to-proceed": "Please select hospital to proceed",
   "The-selected-procedure-is-not-associated": "The selected procedure is not associated with any hospital. Please choose another procedure",
   "Selected": "Selected",
-  "Select-date": "Select date"
+  "Select-date": "Select date",
+  "The-selected-procedure-is-not-associated-with-any": "The selected procedure is not associated with any hospital. Please choose another procedure"
 }

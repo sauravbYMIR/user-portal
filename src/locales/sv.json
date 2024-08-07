@@ -9,7 +9,7 @@
   "Tell-us-which-country-you-will-be-claiming-this-policy-from": "Berätta för oss vilket land du kommer att ansöka om denna policy från",
   "To-begin-we-are-piloting-with-a": "För att börja pilotar vi med ett begränsat antal länder, fler länder kommer att läggas till inom en snar framtid.",
   "Continue": "Fortsätt",
-  "Select-your-gender": "Välj ditt kön",
+  "Select-your-medical-gender": "Välj ditt medicinska kön",
   "Male": "Man",
   "Female": "Kvinna",
   "Select-your-procedure": "Välj din procedur",
@@ -100,5 +100,6 @@
   "Please-select-hospital-to-proceed": "Vänligen välj sjukhus för att fortsätta",
   "The-selected-procedure-is-not-associated": "Den valda proceduren är inte kopplad till något sjukhus. Vänligen välj en annan procedur",
   "Selected": "vald",
-  "Select-date": "Välj datum"
+  "Select-date": "Välj datum",
+  "The-selected-procedure-is-not-associated-with-any": "Den valda proceduren är inte kopplad till något sjukhus. Vänligen välj en annan procedur"
 }

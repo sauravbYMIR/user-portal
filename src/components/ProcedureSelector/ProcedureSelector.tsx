@@ -8,6 +8,7 @@ import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import type { LocaleType } from '@/types/component';
 import {
+  excludeProcedure,
   handleGetLocalStorage,
   handleSetLocalStorage,
   procedureAndIcon,
@@ -18,7 +19,8 @@ import { FbtButton } from '../ui';
 
 const ProcedureSelector = () => {
   const { t } = useTranslation();
-  const { selectedProcedure, setSelectedProcedure } = useAppStore();
+  const { selectedProcedure, setSelectedProcedure, selectedGender } =
+    useAppStore();
   const departmentProcedureList = useGetAllDepartmentWithProcedure();
   const selectedLanguage = (handleGetLocalStorage({
     tokenKey: 'selected_language',
@@ -56,8 +58,15 @@ const ProcedureSelector = () => {
         ) &&
         departmentProcedureList.data.data.allCategoryWithProcedure.length >
           0 ? (
-          departmentProcedureList.data.data.allCategoryWithProcedure.map(
-            (procedureData, index) => {
+          departmentProcedureList.data.data.allCategoryWithProcedure
+            .filter(
+              (procedureData) =>
+                !(
+                  selectedGender === 'men' &&
+                  excludeProcedure.includes(procedureData.name.en)
+                ),
+            )
+            .map((procedureData, index) => {
               return (
                 <FbtButton
                   key={procedureData.id}
@@ -84,8 +93,7 @@ const ProcedureSelector = () => {
                   </span>
                 </FbtButton>
               );
-            },
-          )
+            })
         ) : (
           <div className="flex w-[90vw] items-start justify-center">
             <DashboardLoader />

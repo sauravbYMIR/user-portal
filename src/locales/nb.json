@@ -9,7 +9,7 @@
   "Tell-us-which-country-you-will-be-claiming-this-policy-from": "Fortell oss hvilket land du vil kreve denne politikken fra",
   "To-begin-we-are-piloting-with-a": "For å begynne med piloterer vi med et begrenset antall land, flere land vil bli lagt til i nær fremtid.",
   "Continue": "Fortsett",
-  "Select-your-gender": "Velg ditt kjønn",
+  "Select-your-medical-gender": "Velg ditt medisinske kjønn",
   "Male": "Mann",
   "Female": "Kvinne",
   "Select-your-procedure": "Velg din prosedyre",
@@ -100,5 +100,6 @@
   "Please-select-hospital-to-proceed": "Vennligst velg sykehus for å fortsette",
   "The-selected-procedure-is-not-associated": "Den valgte prosedyren er ikke tilknyttet noe sykehus. Vennligst velg en annen prosedyre",
   "Selected": "valgt",
-  "Select-date": "Velg dato"
+  "Select-date": "Velg dato",
+  "The-selected-procedure-is-not-associated-with-any": "Den valgte prosedyren er ikke tilknyttet noe sykehus. Vennligst velg en annen prosedyre"
 }
