@@ -1,5 +1,6 @@
 import posthog from 'posthog-js';
 
+import cardiology from '@/public/assets/icons/cardiology.svg';
 import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
 import earnosethroatIcon from '@/public/assets/icons/earnosethroatIcon.svg';
 import eyeIcon from '@/public/assets/icons/eyeIcon.svg';
@@ -9,6 +10,7 @@ import norwayBankId from '@/public/assets/icons/norBankid.svg';
 import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
 import orthopeadicIcon from '@/public/assets/icons/orthopeadicIcon.svg';
 import plasticsurgeryIcon from '@/public/assets/icons/plasticsurgeryIcon.svg';
+import spine from '@/public/assets/icons/spine.svg';
 import swedenFlag from '@/public/assets/icons/swedenFlag.svg';
 import urologyIcon from '@/public/assets/icons/urologyIcon.svg';
 import womenhealthIcon from '@/public/assets/icons/womenhealthIcon.svg';
@@ -65,6 +67,12 @@ export const procedureAndIcon = {
   },
   'Plastic surgery': {
     icon: plasticsurgeryIcon,
+  },
+  Cardiology: {
+    icon: cardiology,
+  },
+  Back: {
+    icon: spine,
   },
 };
 

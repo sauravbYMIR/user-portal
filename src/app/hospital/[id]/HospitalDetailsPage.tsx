@@ -278,7 +278,7 @@ function HospitalDetailsPage({
                 style={matches ? { display: 'none' } : { display: 'block' }}
               >
                 <p className="text-base font-normal text-black-52">
-                  Your cost after reinbursement
+                  {t('Your-cost-after-reimbursement')}
                 </p>
                 <div className="flex w-full items-center justify-between">
                   {hospitalProcedureId.success &&

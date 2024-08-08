@@ -137,6 +137,7 @@ const VerifyOtp = () => {
         if (selectedHospital && flowType === SIGNUP) {
           router.push(`/hospital/${selectedHospital}`);
         }
+        router.push(process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/');
         handleRemoveFromLocalStorage({ tokenKey: 'flow_type' });
       }
     } catch (e) {
