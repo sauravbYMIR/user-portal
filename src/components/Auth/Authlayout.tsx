@@ -7,7 +7,7 @@ import { handleGetLocalStorage } from '@/utils/global';
 
 const Authlayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const accessToken = handleGetLocalStorage({ tokenKey: 'acesss_token' });
+  const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   React.useEffect(() => {
     if (!accessToken) {
       router.push(`/`);
