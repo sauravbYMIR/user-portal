@@ -70,6 +70,7 @@ const VerifyOtp = () => {
   } = useAppStore();
   const [isShowTimer, setIsShowTimer] = React.useState<boolean>(false);
   const [otp, setOtp] = React.useState<string>('');
+  const iframeRef = React.useRef<HTMLIFrameElement | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isResendOtpLoader, setIsResendOtpLoader] =
     React.useState<boolean>(false);
@@ -109,22 +110,39 @@ const VerifyOtp = () => {
         otp,
         token,
       });
+      if (!response.success) {
+        toast.error(response.message);
+        return;
+      }
       if (response.success) {
         if (cookieConsentGiven() === 'yes') {
-          posthog.identify(response.data.userId, {
-            email: response.data.email,
+          posthog.identify(response.data?.userId, {
+            email: response.data?.email,
           });
         }
         setIsLoading(false);
         setIsOtpVerifyModalActive(false);
         handleSetLocalStorage({
           tokenKey: 'access_token',
-          tokenValue: response.data.accessToken,
+          tokenValue: response.data?.accessToken,
         });
         handleSetLocalStorage({
           tokenKey: 'refresh_token',
-          tokenValue: response.data.refreshToken,
+          tokenValue: response.data?.refreshToken,
         });
+        if (iframeRef.current) {
+          iframeRef.current.onload = () => {
+            if (iframeRef.current?.contentWindow) {
+              iframeRef?.current.contentWindow.postMessage(
+                {
+                  accessToken: response.data?.accessToken,
+                  refreshToken: response.data?.refreshToken,
+                },
+                `${process.env.NEXT_PUBLIC_WEBAPP_URL}`,
+              );
+            }
+          };
+        }
         const flowType = handleGetLocalStorage({ tokenKey: 'flow_type' });
         if (flowType && flowType !== LOGIN) {
           const r = await getBankIdStatus();
@@ -137,10 +155,14 @@ const VerifyOtp = () => {
         if (selectedHospital && flowType === SIGNUP) {
           router.push(`/hospital/${selectedHospital}`);
         }
-        router.push(process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/');
+        window.open(process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/', '_blank');
         handleRemoveFromLocalStorage({ tokenKey: 'flow_type' });
       }
-    } catch (e) {
+    } catch (e: unknown) {
+      const err = e as { success: boolean; message: string };
+      if (err?.message) {
+        toast.error(err.message);
+      }
       setIsLoading(false);
     } finally {
       setIsLoading(false);
@@ -151,6 +173,12 @@ const VerifyOtp = () => {
       parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
       childrenStyle="overflow-scroll relative z-[9999] flex flex-col items-center justify-center rounded-lg bg-white px-[24px] py-[42px] shadow-colorPickerShadow"
     >
+      <iframe
+        ref={iframeRef}
+        src={process.env.NEXT_PUBLIC_WEBAPP_URL}
+        style={{ display: 'none' }}
+        title="Webflow Communication Iframe"
+      />
       <FbtButton
         variant="link"
         className="!absolute !right-4 !top-2 !p-0"

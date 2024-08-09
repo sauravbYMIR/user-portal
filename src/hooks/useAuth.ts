@@ -80,19 +80,17 @@ export const verifyOtp = async ({
         email: response.data.email,
       },
     };
-  } catch (err) {
+  } catch (err: unknown | AxiosError) {
     if (axios.isAxiosError(err)) {
-      const serverError = err as AxiosError<ServerError>;
-
-      if (
-        serverError &&
-        serverError.response &&
-        serverError.response.data.error.message
-      ) {
-        throw new Error(serverError.response.data.error.message);
-      }
+      return {
+        success: false,
+        message: err.response?.data.error.message,
+      };
     }
-    throw new Error('otp-verification-failed');
+    return {
+      success: false,
+      message: 'Error while verfying otp',
+    };
   }
 };
 export const resendOtp = async (token: string) => {
