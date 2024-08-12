@@ -97,7 +97,7 @@ const Stepper = ({
               }}
             >
               <div
-                className={`${stepNum > 1 && stepNum !== info.stepNo && info.stepNo < stepNum ? 'bg-white' : ''} flex ${matches ? 'size-[20.89px]' : 'size-[29px]'} items-center justify-center rounded-full border-2 border-white p-1`}
+                className={`${stepNum > 1 && stepNum !== info.stepNo && info.stepNo < stepNum ? 'bg-white' : ''} flex ${matches ? 'size-[20.89px]' : 'size-[29px]'} items-center justify-center rounded-full border-2 border-white px-2 py-1`}
               >
                 <span className="text-[11.52px] font-normal text-white sm:text-xl">
                   {stepNum > 1 &&
