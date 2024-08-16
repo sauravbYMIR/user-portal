@@ -141,6 +141,29 @@ const VerifyOtp = () => {
         if (selectedHospital && flowType === SIGNUP) {
           router.push(`/hospital/${selectedHospital}`);
         }
+        const onMyFrameLoad = () => {
+          const iframeEl = document.getElementById(
+            'myIframe',
+          ) as HTMLIFrameElement;
+          if (iframeEl && iframeEl.contentWindow) {
+            iframeEl.contentWindow.postMessage(
+              {
+                accessToken: response.data?.accessToken,
+                refreshToken: response.data?.refreshToken,
+              },
+              `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
+            );
+          }
+        };
+
+        const iframe = document.getElementById('myIframe');
+        if (
+          response.data?.accessToken &&
+          response.data?.refreshToken &&
+          iframe
+        ) {
+          iframe.onload = onMyFrameLoad;
+        }
         window.open(`${process.env.NEXT_PUBLIC_WEBFLOW_URL}`, '_blank');
         handleRemoveFromLocalStorage({ tokenKey: 'flow_type' });
       }
@@ -155,84 +178,92 @@ const VerifyOtp = () => {
     }
   };
   return (
-    <ModalWrapper
-      parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
-      childrenStyle="overflow-scroll relative z-[9999] flex flex-col items-center justify-center rounded-lg bg-white px-[24px] py-[42px] shadow-colorPickerShadow"
-    >
-      <FbtButton
-        variant="link"
-        className="!absolute !right-4 !top-2 !p-0"
-        onClick={() => setIsOtpVerifyModalActive(false)}
+    <>
+      <iframe
+        id="myIframe"
+        src={`${process.env.NEXT_PUBLIC_WEBFLOW_URL}`}
+        style={{ display: 'none' }}
+        title="Webflow Communication Iframe"
+      />
+      <ModalWrapper
+        parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
+        childrenStyle="overflow-scroll relative z-[9999] flex flex-col items-center justify-center rounded-lg bg-white px-[24px] py-[42px] shadow-colorPickerShadow"
       >
-        <CloseIcon className="size-10" stroke="#333" />
-      </FbtButton>
-      <h1 className="font-onsite text-3xl font-medium text-primary-1 sxl:text-5xl">
-        {t('Verify-with-OTP')}
-      </h1>
-      <p className="text-center font-onsite text-lg font-light text-neutral-2 sxl:text-xl">
-        {t('A-6-digit-code-has-been-sent-to')} {selectedPhoneNumber}
-      </p>
-      <form className="mt-6 flex flex-col items-start sxl:mt-12">
-        <p className="mb-2 font-onsite text-xl font-light">OTP</p>
-        <OTPInputWrapper otp={otp} setOtp={setOtp} />
-        <div className="my-6 flex w-full items-center justify-center sxl:mt-12">
-          {isShowTimer ? (
-            <Timer
-              msg="Resend OTP in"
-              time={60}
-              setIsShowTimer={setIsShowTimer}
-            />
-          ) : (
-            <>
-              <span className="font-onsite text-sm font-normal text-primary-2 sxl:text-xl">
-                {t('Didnt-receive-OTP')}
-              </span>
-              <button
-                type="button"
-                className="ml-1 underline decoration-primary-2 underline-offset-4"
-                onClick={handleResendOtp}
-                disabled={isResendOtpLoader}
-              >
-                {isResendOtpLoader ? (
-                  <ClipLoader
-                    loading={isResendOtpLoader}
-                    color="#fff"
-                    size={10}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                  />
-                ) : (
-                  <span className="font-onsite text-base font-medium text-primary-2 sxl:text-xl">
-                    {t('Resend')}
-                  </span>
-                )}
-              </button>
-            </>
-          )}
-        </div>
         <FbtButton
-          type="submit"
-          variant="solid"
-          disabled={isLoading}
-          className="!w-full !rounded-[6.4px] px-4 py-5 sxl:!px-6 sxl:!py-7"
-          onClick={handleVerifyOtp}
+          variant="link"
+          className="!absolute !right-4 !top-2 !p-0"
+          onClick={() => setIsOtpVerifyModalActive(false)}
         >
-          {isLoading ? (
-            <ClipLoader
-              loading={isLoading}
-              color="#fff"
-              size={30}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          ) : (
-            <p className="font-onsite text-lg font-normal text-neutral-7 sxl:text-2xl">
-              {t('Verify-code')}
-            </p>
-          )}
+          <CloseIcon className="size-10" stroke="#333" />
         </FbtButton>
-      </form>
-    </ModalWrapper>
+        <h1 className="font-onsite text-3xl font-medium text-primary-1 sxl:text-5xl">
+          {t('Verify-with-OTP')}
+        </h1>
+        <p className="text-center font-onsite text-lg font-light text-neutral-2 sxl:text-xl">
+          {t('A-6-digit-code-has-been-sent-to')} {selectedPhoneNumber}
+        </p>
+        <form className="mt-6 flex flex-col items-start sxl:mt-12">
+          <p className="mb-2 font-onsite text-xl font-light">OTP</p>
+          <OTPInputWrapper otp={otp} setOtp={setOtp} />
+          <div className="my-6 flex w-full items-center justify-center sxl:mt-12">
+            {isShowTimer ? (
+              <Timer
+                msg="Resend OTP in"
+                time={60}
+                setIsShowTimer={setIsShowTimer}
+              />
+            ) : (
+              <>
+                <span className="font-onsite text-sm font-normal text-primary-2 sxl:text-xl">
+                  {t('Didnt-receive-OTP')}
+                </span>
+                <button
+                  type="button"
+                  className="ml-1 underline decoration-primary-2 underline-offset-4"
+                  onClick={handleResendOtp}
+                  disabled={isResendOtpLoader}
+                >
+                  {isResendOtpLoader ? (
+                    <ClipLoader
+                      loading={isResendOtpLoader}
+                      color="#fff"
+                      size={10}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
+                  ) : (
+                    <span className="font-onsite text-base font-medium text-primary-2 sxl:text-xl">
+                      {t('Resend')}
+                    </span>
+                  )}
+                </button>
+              </>
+            )}
+          </div>
+          <FbtButton
+            type="submit"
+            variant="solid"
+            disabled={isLoading}
+            className="!w-full !rounded-[6.4px] px-4 py-5 sxl:!px-6 sxl:!py-7"
+            onClick={handleVerifyOtp}
+          >
+            {isLoading ? (
+              <ClipLoader
+                loading={isLoading}
+                color="#fff"
+                size={30}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            ) : (
+              <p className="font-onsite text-lg font-normal text-neutral-7 sxl:text-2xl">
+                {t('Verify-code')}
+              </p>
+            )}
+          </FbtButton>
+        </form>
+      </ModalWrapper>
+    </>
   );
 };
 

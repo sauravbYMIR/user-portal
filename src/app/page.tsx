@@ -34,7 +34,7 @@ import hosiptalImg2Tag from '@/public/assets/images/hospitalImg2Tag.svg';
 import hosiptalImg3 from '@/public/assets/images/hospitalImg3.png';
 import hosiptalImg3Tag from '@/public/assets/images/hospitalImg3Tag.svg';
 import landingPageBannerImg from '@/public/assets/images/landingPageBannerImg.png';
-import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
+import { handleSetLocalStorage } from '@/utils/global';
 
 const landingCardsInfo = [
   {
@@ -120,51 +120,8 @@ function LandingPage() {
 
   const stepCount = 5;
   const router = useRouter();
-  const iframeRef = React.useRef<HTMLIFrameElement | null>(null);
-  const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
-  const refreshToken = handleGetLocalStorage({ tokenKey: 'refresh_token' });
-  React.useEffect(() => {
-    // if (iframeRef.current && accessToken && refreshToken) {
-    //   iframeRef.current.onload = () => {
-    //     if (iframeRef.current?.contentWindow) {
-    //       iframeRef?.current.contentWindow.postMessage(
-    //         {
-    //           accessToken,
-    //           refreshToken,
-    //         },
-    //         `https://www.drfasttrack.no/`,
-    //       );
-    //     }
-    //   };
-    // }
-    const onMyFrameLoad = () => {
-      const iframeEl = document.getElementById('myIframe') as HTMLIFrameElement;
-      if (iframeEl && iframeEl.contentWindow) {
-        iframeEl.contentWindow.postMessage(
-          {
-            accessToken,
-            refreshToken,
-          },
-          `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
-        );
-      }
-    };
-
-    const iframe = document.getElementById('myIframe');
-    if (accessToken && refreshToken && iframe) {
-      iframe.onload = onMyFrameLoad;
-    }
-  }, [accessToken, refreshToken]);
-
   return (
     <div>
-      <iframe
-        ref={iframeRef}
-        id="myIframe"
-        src={`${process.env.NEXT_PUBLIC_WEBFLOW_URL}`}
-        style={{ display: 'none' }}
-        title="Webflow Communication Iframe"
-      />
       <Header
         howItWorksRef={howItWorksRef}
         ourHospitalRef={ourHospitalRef}
