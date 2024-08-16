@@ -35,6 +35,12 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       />
       <PHProvider>
         <body>
+          <iframe
+            id="myIframe"
+            src={`${process.env.NEXT_PUBLIC_WEBFLOW_URL}`}
+            style={{ display: 'none' }}
+            title="Webflow Communication Iframe"
+          />
           <PostHogPageView />
           <CookieModal />
           <Toaster position="top-center" richColors closeButton />
