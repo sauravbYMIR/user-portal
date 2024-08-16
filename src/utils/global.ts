@@ -167,21 +167,6 @@ const handleLogOut = () => {
     'flow_type',
     'selected_hospital_name',
   ].map((key) => handleRemoveFromLocalStorage({ tokenKey: key }));
-  const onMyFrameLoad = () => {
-    const iframeEl = document.getElementById('myIframe') as HTMLIFrameElement;
-    const message = { action: 'clearData' };
-    if (iframeEl && iframeEl.contentWindow) {
-      iframeEl.contentWindow.postMessage(
-        JSON.stringify(message),
-        `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
-      );
-    }
-  };
-
-  const iframe = document.getElementById('myIframe');
-  if (iframe) {
-    iframe.onload = onMyFrameLoad;
-  }
   posthog.reset();
 };
 

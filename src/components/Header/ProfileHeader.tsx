@@ -68,6 +68,22 @@ const ProfileHeader = ({
                 type="button"
                 className="my-[20px] flex items-center justify-start gap-[20px]"
                 onClick={() => {
+                  const onMyFrameLoad = () => {
+                    const iframeEl = document.getElementById(
+                      'myIframe',
+                    ) as HTMLIFrameElement;
+                    const message = { action: 'clearData' };
+                    if (iframeEl && iframeEl.contentWindow) {
+                      iframeEl.contentWindow.postMessage(
+                        JSON.stringify(message),
+                        `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
+                      );
+                    }
+                  };
+                  const iframe = document.getElementById('myIframe');
+                  if (iframe) {
+                    iframe.onload = onMyFrameLoad;
+                  }
                   handleLogOut();
                   router.push(
                     process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
