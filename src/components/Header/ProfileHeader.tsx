@@ -79,11 +79,9 @@ const ProfileHeader = ({
                     );
                   }
                   handleLogOut();
-                  setTimeout(() => {
-                    router.push(
-                      process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
-                    );
-                  }, 10000);
+                  router.push(
+                    process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
+                  );
                 }}
               >
                 <span className="font-onsite text-[20px] text-neutral-2">
