@@ -141,28 +141,24 @@ const VerifyOtp = () => {
         if (selectedHospital && flowType === SIGNUP) {
           router.push(`/hospital/${selectedHospital}`);
         }
-        const onMyFrameLoad = () => {
-          const iframeEl = document.getElementById(
-            'myIframe',
-          ) as HTMLIFrameElement;
-          if (iframeEl && iframeEl.contentWindow) {
-            iframeEl.contentWindow.postMessage(
-              {
-                accessToken: response.data?.accessToken,
-                refreshToken: response.data?.refreshToken,
-              },
-              `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
-            );
-          }
-        };
 
-        const iframe = document.getElementById('myIframe');
+        const iframeEl = document.getElementById(
+          'myIframe',
+        ) as HTMLIFrameElement;
         if (
           response.data?.accessToken &&
           response.data?.refreshToken &&
-          iframe
+          iframeEl &&
+          iframeEl.contentWindow
         ) {
-          iframe.onload = onMyFrameLoad;
+          const data = JSON.stringify({
+            accessToken: response.data?.accessToken,
+            refreshToken: response.data?.refreshToken,
+          });
+          iframeEl.contentWindow.postMessage(
+            data,
+            `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
+          );
         }
         window.open(`${process.env.NEXT_PUBLIC_WEBFLOW_URL}`, '_blank');
         handleRemoveFromLocalStorage({ tokenKey: 'flow_type' });
