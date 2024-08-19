@@ -83,7 +83,7 @@ const ProfileHeader = ({
                     router.push(
                       process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
                     );
-                  }, 0);
+                  }, 10000);
                 }}
               >
                 <span className="font-onsite text-[20px] text-neutral-2">
