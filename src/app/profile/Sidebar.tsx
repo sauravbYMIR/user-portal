@@ -6,11 +6,11 @@ import useTranslation from '@/hooks/useTranslation';
 
 const itemsList = [
   {
-    name: 'My procedures',
+    name: 'My-procedures',
     route: '/my-procedures',
   },
   {
-    name: 'My profile',
+    name: 'My-profile',
     route: '/profile',
   },
 ];

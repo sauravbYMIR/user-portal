@@ -22,7 +22,7 @@ const Procedure = () => {
   }) ?? 'en') as LocaleType;
   const { t } = useTranslation();
   return (
-    <ProfileLayout heading="My procedures">
+    <ProfileLayout heading="My-procedures">
       <Authlayout>
         <main className="flex w-full flex-col gap-4">
           {bookingsByUserId.isLoading ? (

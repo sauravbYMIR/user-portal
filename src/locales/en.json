@@ -104,5 +104,11 @@
   "The-selected-procedure-is-not-associated": "The selected procedure is not associated with any hospital. Please choose another procedure",
   "Selected": "Selected",
   "Select-date": "Select date",
-  "The-selected-procedure-is-not-associated-with-any": "The selected procedure is not associated with any hospital. Please choose another procedure"
+  "The-selected-procedure-is-not-associated-with-any": "The selected procedure is not associated with any hospital. Please choose another procedure",
+  "Country": "Country",
+  "Gender": "Gender",
+  "Procedure": "Procedure",
+  "Hospital": "Hospital",
+  "Personal": "Personal",
+  "Mobile number": "Mobile number"
 }

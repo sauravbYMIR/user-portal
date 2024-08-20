@@ -101,5 +101,11 @@
   "The-selected-procedure-is-not-associated": "Den valgte procedure er ikke tilknyttet noget hospital. Vælg venligst en anden procedure",
   "Selected": "valgt",
   "Select-date": "Vælg dato",
-  "The-selected-procedure-is-not-associated-with-any": "Den valgte procedure er ikke tilknyttet noget hospital. Vælg venligst en anden procedure"
+  "The-selected-procedure-is-not-associated-with-any": "Den valgte procedure er ikke tilknyttet noget hospital. Vælg venligst en anden procedure",
+  "Country": "Land",
+  "Gender": "Køn",
+  "Procedure": "Procedure",
+  "Hospital": "Hospital",
+  "Personal": "Personlig",
+  "Mobile number": "Mobilnummer"
 }

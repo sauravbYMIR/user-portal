@@ -117,7 +117,7 @@ const Stepper = ({
               </div>
               {!matches && (
                 <span className="text-xl font-normal text-white">
-                  {info.name}
+                  {t(`${info.name}`)}
                 </span>
               )}
             </button>

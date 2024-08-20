@@ -101,5 +101,11 @@
   "The-selected-procedure-is-not-associated": "Den valgte prosedyren er ikke tilknyttet noe sykehus. Vennligst velg en annen prosedyre",
   "Selected": "valgt",
   "Select-date": "Velg dato",
-  "The-selected-procedure-is-not-associated-with-any": "Den valgte prosedyren er ikke tilknyttet noe sykehus. Vennligst velg en annen prosedyre"
+  "The-selected-procedure-is-not-associated-with-any": "Den valgte prosedyren er ikke tilknyttet noe sykehus. Vennligst velg en annen prosedyre",
+  "Country": "Land",
+  "Gender": "Kjønn",
+  "Procedure": "Prosedyre",
+  "Hospital": "Sykehus",
+  "Personal": "Personlig",
+  "Mobile number": "Mobilnummer"
 }
