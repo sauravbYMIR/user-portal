@@ -1,8 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { Suspense } from 'react';
 import { toast } from 'sonner';
 
 import { CountrySelector } from '@/components/CountrySelector/CountrySelector';
@@ -19,7 +19,7 @@ import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import brand from '@/public/assets/icons/brand.svg';
 import type { LocaleType } from '@/types/component';
-import { handleGetLocalStorage } from '@/utils/global';
+import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
 
 const steppers = [
   {
@@ -171,6 +171,17 @@ const Stepper = ({
 };
 
 const BookProcedure = () => {
+  const searchParams = useSearchParams();
+  const lang = searchParams.get('lang');
+  React.useEffect(() => {
+    if (lang) {
+      handleSetLocalStorage({
+        tokenKey: 'selected_language',
+        tokenValue: lang,
+      });
+    }
+  }, [lang]);
+
   const selectedLanguage = (handleGetLocalStorage({
     tokenKey: 'selected_language',
   }) ?? 'en') as LocaleType;
@@ -298,4 +309,12 @@ const BookProcedure = () => {
   );
 };
 
-export default BookProcedure;
+const BookProcedureSuspense = () => {
+  return (
+    <Suspense>
+      <BookProcedure />
+    </Suspense>
+  );
+};
+
+export default BookProcedureSuspense;
