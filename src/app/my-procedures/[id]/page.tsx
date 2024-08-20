@@ -66,6 +66,9 @@ const BookingStatusButton = ({
 }) => {
   const { t } = useTranslation();
   const router = useRouter();
+  const selectedLanguage = (handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  }) ?? 'en') as LocaleType;
   switch (status) {
     case 'accepted':
       return (
@@ -82,7 +85,9 @@ const BookingStatusButton = ({
         <button
           type="button"
           className="mt-8 w-full rounded-[6.4px] bg-primary-2 py-4 font-onsite text-base font-normal text-white sm:mt-0 sm:w-[348px] md:mt-2 md:text-2xl"
-          onClick={() => router.push('/book-procedure')}
+          onClick={() =>
+            router.push(`/book-procedure/?lang=${selectedLanguage}`)
+          }
         >
           {t('Apply-for-another-procedure')}
         </button>

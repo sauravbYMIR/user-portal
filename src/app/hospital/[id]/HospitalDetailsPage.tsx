@@ -150,7 +150,12 @@ function HospitalDetailsPage({
       )}
       <div className="flex size-full flex-col items-center justify-between overflow-y-scroll bg-primary-green px-0 py-9 pb-48 sm:px-12">
         <nav className="flex w-screen items-start justify-between px-5 sm:px-12">
-          <button type="button" onClick={() => router.push('/book-procedure')}>
+          <button
+            type="button"
+            onClick={() =>
+              router.push(`/book-procedure/?lang=${selectedLanguage}`)
+            }
+          >
             <Image
               src={brand}
               width={matches ? 133.37 : 190.47}

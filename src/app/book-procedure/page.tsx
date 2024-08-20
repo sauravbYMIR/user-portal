@@ -18,6 +18,8 @@ import { useScreenWidth } from '@/hooks/useScreenWidth';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import brand from '@/public/assets/icons/brand.svg';
+import type { LocaleType } from '@/types/component';
+import { handleGetLocalStorage } from '@/utils/global';
 
 const steppers = [
   {
@@ -169,6 +171,9 @@ const Stepper = ({
 };
 
 const BookProcedure = () => {
+  const selectedLanguage = (handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  }) ?? 'en') as LocaleType;
   const { matches } = useScreenWidth(640);
   const { t } = useTranslation();
   const {
@@ -244,7 +249,12 @@ const BookProcedure = () => {
     <div className="h-screen">
       <div className="relative flex w-screen flex-col items-center justify-between bg-primary-green px-[20px] py-[27px] md:px-[60px] md:py-[32px] lg:px-[87px] lg:py-[43px] xl:justify-center">
         <nav className="flex w-screen items-start justify-between px-5 sm:px-12">
-          <button type="button" onClick={() => router.push('/')}>
+          <button
+            type="button"
+            onClick={() =>
+              router.push(`/book-procedure/?lang=${selectedLanguage}`)
+            }
+          >
             <Image
               src={brand}
               width={matches ? 133.37 : 190.47}

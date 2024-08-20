@@ -34,7 +34,7 @@ import hosiptalImg2Tag from '@/public/assets/images/hospitalImg2Tag.svg';
 import hosiptalImg3 from '@/public/assets/images/hospitalImg3.png';
 import hosiptalImg3Tag from '@/public/assets/images/hospitalImg3Tag.svg';
 import landingPageBannerImg from '@/public/assets/images/landingPageBannerImg.png';
-import { handleSetLocalStorage } from '@/utils/global';
+import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
 
 const landingCardsInfo = [
   {
@@ -120,6 +120,9 @@ function LandingPage() {
 
   const stepCount = 5;
   const router = useRouter();
+  const selectedLanguage = handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  });
   return (
     <div>
       <Header
@@ -146,7 +149,9 @@ function LandingPage() {
               variant="solid"
               onClick={() => {
                 setStepNumber(1);
-                router.push('/book-procedure');
+                router.push(
+                  `/book-procedure/?lang=${selectedLanguage ?? 'en'}`,
+                );
               }}
             >
               <p className={pageStyle.ctaBtnText}>{t('Get-me-started')}</p>

@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 import headerStyles from '@/components/Header/header.module.scss';
 import brandTitle from '@/public/assets/icons/brandTitle.svg';
-import { handleLogOut } from '@/utils/global';
+import { handleGetLocalStorage, handleLogOut } from '@/utils/global';
 
 import { ArrowDownIcon, ProfileIcon } from '../Icons/Icons';
 
@@ -20,12 +20,23 @@ const ProfileHeader = ({
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const router = useRouter();
+  const selectedLanguage = handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  });
   return (
     <nav
       className={`${className} flex items-center justify-between px-5 py-6 sxl:px-20`}
     >
       {showLogo && (
-        <button type="button" onClick={() => router.push('/')}>
+        <button
+          type="button"
+          onClick={() =>
+            router.push(
+              process.env.NEXT_PUBLIC_WEBFLOW_URL ??
+                `/book-procedure/?lang=${selectedLanguage ?? 'en'}`,
+            )
+          }
+        >
           <Image src={brandTitle} alt="brand-title" width={120} height={48} />
         </button>
       )}
@@ -80,7 +91,8 @@ const ProfileHeader = ({
                   }
                   handleLogOut();
                   router.push(
-                    process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
+                    process.env.NEXT_PUBLIC_WEBFLOW_URL ??
+                      `/book-procedure/?lang=${selectedLanguage}`,
                   );
                 }}
               >

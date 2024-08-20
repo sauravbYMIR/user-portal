@@ -18,8 +18,10 @@ import { z } from 'zod';
 import { createUser, userlogin } from '@/hooks/useAuth';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
+import type { LocaleType } from '@/types/component';
 import {
   countryData,
+  handleGetLocalStorage,
   handleSetLocalStorage,
   LOGIN,
   SIGNUP,
@@ -126,6 +128,9 @@ const CreateAccount = () => {
   };
   const { t } = useTranslation();
   const router = useRouter();
+  const selectedLanguage = (handleGetLocalStorage({
+    tokenKey: 'selected_language',
+  }) ?? 'en') as LocaleType;
   return (
     <ModalWrapper
       parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
@@ -135,20 +140,21 @@ const CreateAccount = () => {
         variant="link"
         className="!absolute right-4 top-2 z-10 !p-0"
         onClick={() => {
-          // if (
-          //   process.env.NODE_ENV === 'development' ||
-          //   process.env.NODE_ENV === 'test'
-          // ) {
-          //   router.push(
-          //     process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
-          //   );
-          // }
-          // if (process.env.NODE_ENV === 'production') {
-          //   router.push(
-          //     process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/book-procedure',
-          //   );
-          // }
-          setIsLoginModalActive(false);
+          if (
+            process.env.NODE_ENV === 'development' ||
+            process.env.NODE_ENV === 'test'
+          ) {
+            router.push(
+              process.env.NEXT_PUBLIC_WEBFLOW_URL ??
+                `/book-procedure/?lang=${selectedLanguage}`,
+            );
+          }
+          if (process.env.NODE_ENV === 'production') {
+            router.push(
+              process.env.NEXT_PUBLIC_WEBFLOW_URL ??
+                `/book-procedure/?lang=${selectedLanguage}`,
+            );
+          }
         }}
       >
         <CloseIcon className="size-8" stroke="#333" />
