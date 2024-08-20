@@ -10,7 +10,7 @@ const Authlayout = ({ children }: { children: React.ReactNode }) => {
   const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   React.useEffect(() => {
     if (!accessToken) {
-      router.push(`/`);
+      router.push(process.env.NEXT_PUBLIC_WEBFLOW_URL ?? '/');
     }
   }, [accessToken, router]);
 

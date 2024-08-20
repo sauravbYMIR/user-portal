@@ -325,6 +325,8 @@ function HospitalDetailsPage({
                             className="rounded-xl"
                             width={matches ? 80 : 102.08}
                             height={matches ? 80 : 102}
+                            unoptimized
+                            priority
                           />
                           <div className="flex flex-col items-start">
                             <p className="text-xl font-medium text-dark-green sm:text-2xl">

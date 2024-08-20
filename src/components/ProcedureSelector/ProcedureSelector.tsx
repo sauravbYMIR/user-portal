@@ -86,6 +86,8 @@ const ProcedureSelector = () => {
                       width={matches ? 38.95 : 58.5}
                       height={matches ? 38.95 : 58.5}
                       alt={procedureData.name.en}
+                      unoptimized
+                      priority
                     />
                   )}
                   <span className="font-onsite text-base font-medium sm:text-2xl">

@@ -55,6 +55,8 @@ const HospitalCard = ({
             src={hospitalImages[0].imageUrl}
             alt={hospitalImages[0].fileName}
             fill
+            unoptimized
+            priority
             className="rounded-xl"
             objectFit="cover"
           />
@@ -95,6 +97,8 @@ const HospitalCard = ({
           {hospitalLogo && typeof hospitalLogo === 'string' ? (
             <Image
               src={hospitalLogo}
+              unoptimized
+              priority
               className="size-12 rounded-full border-2 border-neutral-5"
               alt="hospital-logo"
               height={48}
