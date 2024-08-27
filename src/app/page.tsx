@@ -31,13 +31,20 @@ function LandingPage() {
         tokenKey: 'selected_language',
         tokenValue: lang,
       });
+      return;
     }
+    handleSetLocalStorage({
+      tokenKey: 'selected_language',
+      tokenValue: 'en',
+    });
   }, [lang]);
   useEffect(() => {
-    if (selectedLanguage) {
-      setIsLoginModalActive(true);
+    if (accessToken) {
+      router.push(`/book-procedure`);
+      return;
     }
-  }, [selectedLanguage, setIsLoginModalActive]);
+    setIsLoginModalActive(true);
+  }, [accessToken, router, selectedLanguage, setIsLoginModalActive]);
   useEffect(() => {
     if (accessToken) {
       router.push(`/profile`);
