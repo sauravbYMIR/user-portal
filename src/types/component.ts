@@ -18,3 +18,14 @@ export type LocaleType =
   | 'lv'
   | 'lt'
   | 'et';
+export type LangJSONType =
+  | 'en'
+  | 'no'
+  | 'dk'
+  | 'se'
+  | 'nl'
+  | 'fi'
+  | 'lv'
+  | 'lt'
+  | 'ee'
+  | 'ie';

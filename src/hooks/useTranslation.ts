@@ -1,8 +1,11 @@
 import * as translations from '@/locales/index';
-import type { LocaleType } from '@/types/component';
+import type { LangJSONType } from '@/types/component';
 import { handleGetLocalStorage } from '@/utils/global';
 
-function getNestedTranslation(selectedLanguage: LocaleType, keys: Array<any>) {
+function getNestedTranslation(
+  selectedLanguage: LangJSONType,
+  keys: Array<any>,
+) {
   return keys?.reduce((obj, key) => {
     return obj?.[key];
   }, translations[selectedLanguage]);
@@ -11,7 +14,7 @@ function getNestedTranslation(selectedLanguage: LocaleType, keys: Array<any>) {
 export default function useTranslation() {
   const selectedLanguage = (handleGetLocalStorage({
     tokenKey: 'selected_language',
-  }) ?? 'en') as unknown as LocaleType;
+  }) ?? 'en') as unknown as LangJSONType;
 
   const translate = (key: string) => {
     const keys = key?.split('.');

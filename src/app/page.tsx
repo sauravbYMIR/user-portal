@@ -47,13 +47,6 @@ function LandingPage() {
   }, [accessToken, router, selectedLanguage, setIsLoginModalActive]);
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      console.log(
-        'NEXTJS',
-        event.origin,
-        event.data,
-        process.env.NEXT_PUBLIC_WEBFLOW_URL,
-        process.env.NEXT_PUBLIC_WEBFLOW_URL === event.origin,
-      );
       if (`${event.origin}/` === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
         const { data } = event;
         handleSetLocalStorage({
