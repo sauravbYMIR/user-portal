@@ -183,8 +183,14 @@ const BookProcedure = () => {
   }, [lang]);
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      console.log('NEXTJS-BOOK-PROCEDURE', event.origin, event.data);
-      if (event.origin === process.env.NEXT_PUBLIC_WEBAPP_URL) {
+      console.log(
+        'NEXTJS',
+        event.origin,
+        event.data,
+        process.env.NEXT_PUBLIC_WEBFLOW_URL,
+        process.env.NEXT_PUBLIC_WEBFLOW_URL === event.origin,
+      );
+      if (event.origin === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
         const { data } = event;
         handleSetLocalStorage({
           tokenKey: 'selected_language',
