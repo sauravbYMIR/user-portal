@@ -54,7 +54,7 @@ function LandingPage() {
         process.env.NEXT_PUBLIC_WEBFLOW_URL,
         process.env.NEXT_PUBLIC_WEBFLOW_URL === event.origin,
       );
-      if (event.origin === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
+      if (`${event.origin}/` === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
         const { data } = event;
         handleSetLocalStorage({
           tokenKey: 'selected_language',
