@@ -12,7 +12,7 @@ import {
   handleSetLocalStorage,
 } from '@/utils/global';
 
-import { CheckIcon, HospitalIcon } from '../Icons/Icons';
+import { CheckIcon, ExclamationCircleIcon, HospitalIcon } from '../Icons/Icons';
 import { FbtButton } from '../ui';
 
 const HospitalCard = ({
@@ -43,10 +43,23 @@ const HospitalCard = ({
   const { t } = useTranslation();
   const { setSelectedHospital, setSelectedHospitalName } = useAppStore();
   return (
-    <div
+    <button
+      type="button"
       className={`bg-base-light ${selectedHospital === id ? 'border-primary-2' : 'border-neutral-5'} flex h-[444px] flex-1 flex-col items-start rounded-xl border px-3 py-4`}
       style={{
         boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
+      }}
+      onClick={() => {
+        setSelectedHospital(id);
+        setSelectedHospitalName(hospitalName);
+        handleSetLocalStorage({
+          tokenKey: 'selected_hospital',
+          tokenValue: id,
+        });
+        handleSetLocalStorage({
+          tokenKey: 'selected_hospital_name',
+          tokenValue: hospitalName,
+        });
       }}
     >
       <div className="relative h-[209px] w-full rounded-xl">
@@ -64,18 +77,6 @@ const HospitalCard = ({
         <FbtButton
           variant="outline"
           className="absolute right-2 top-2 !h-[40px] gap-x-[6px] !rounded-[42.81px] !border-none bg-secondary-green text-white hover:!bg-secondary-green hover:!text-white"
-          onClick={() => {
-            setSelectedHospital(id);
-            setSelectedHospitalName(hospitalName);
-            handleSetLocalStorage({
-              tokenKey: 'selected_hospital',
-              tokenValue: id,
-            });
-            handleSetLocalStorage({
-              tokenKey: 'selected_hospital_name',
-              tokenValue: hospitalName,
-            });
-          }}
         >
           {selectedHospital === id ? (
             <>
@@ -143,12 +144,12 @@ const HospitalCard = ({
           </span>
         </div>
       </div>
-      <p className="mb-6 font-onsite text-base font-normal text-dark-green">
+      <p className="mb-6 text-start font-onsite text-base font-normal text-dark-green">
         {hospitalDesc.length > 50
           ? `${hospitalDesc.slice(0, 50)}...`
           : hospitalDesc}
       </p>
-    </div>
+    </button>
   );
 };
 
@@ -230,7 +231,11 @@ const HospitalSelector = () => {
           allHospitals.data.data.length > 0
         ) && (
           <div className="flex w-full flex-col items-center justify-center">
-            <div className="flex w-8/12 items-center justify-center">
+            <div className="flex w-8/12 flex-col items-center justify-center">
+              <ExclamationCircleIcon
+                className="size-12"
+                stroke="rgba(0, 70, 70, 1)"
+              />
               <p className="text-center font-onsite text-2xl font-normal text-neutral-2">
                 {t('The-selected-procedure-is-not-associated')}
               </p>

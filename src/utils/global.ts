@@ -3,9 +3,14 @@ import posthog from 'posthog-js';
 import cardiology from '@/public/assets/icons/cardiology.svg';
 import denmarkFlag from '@/public/assets/icons/denmarkFlag.svg';
 import earnosethroatIcon from '@/public/assets/icons/earnosethroatIcon.svg';
+import estoniaFlag from '@/public/assets/icons/estoniaFlag.svg';
 import eyeIcon from '@/public/assets/icons/eyeIcon.svg';
+import finlandFlag from '@/public/assets/icons/finlandFlag.svg';
 import generalsurgeryIcon from '@/public/assets/icons/generalsurgeryIcon.svg';
 import irelandFlag from '@/public/assets/icons/ireland.svg';
+import latviaFlag from '@/public/assets/icons/latviaFlag.svg';
+import lithuaniaFlag from '@/public/assets/icons/lithuaniaFlag.svg';
+import netherlandFlag from '@/public/assets/icons/netherlandFlag.svg';
 import norwayBankId from '@/public/assets/icons/norBankid.svg';
 import norwayFlag from '@/public/assets/icons/norwayFlag.svg';
 import orthopeadicIcon from '@/public/assets/icons/orthopeadicIcon.svg';
@@ -19,8 +24,6 @@ import ireBankId from '@/public/assets/images/bankIdNor.svg';
 import denmarkBankId from '@/public/assets/images/denBankId.svg';
 import type { LanguagesType } from '@/types/component';
 
-export type CountryCodeType = 'ie' | 'no' | 'dk' | 'se';
-
 type CountryData = {
   name: string;
   language: LanguagesType;
@@ -31,13 +34,6 @@ type CountryData = {
   bankIdIcon: string;
   workflowId: string;
 };
-
-interface IntialLanguagesDataType {
-  English: string;
-  Norwegian: string;
-  Danish: string;
-  Swedish: string;
-}
 
 export const bankIdModalMsg = {
   ie: 'Use Veriff',
@@ -117,14 +113,57 @@ const countryData: CountryData[] = [
     bankIdIcon: swedenBankId,
     workflowId: 'bits:workflow::e248a2a3-4453-4c01-913a-70f656461fbc',
   },
+  {
+    name: 'Netherlands',
+    language: 'Dutch',
+    locale: 'nl',
+    currency: 'EUR',
+    countryCode: 'nl',
+    flagIcon: netherlandFlag,
+    workflowId: '',
+    bankIdIcon: '',
+  },
+  {
+    name: 'Finland',
+    language: 'Finnish',
+    locale: 'fi',
+    currency: 'EUR',
+    countryCode: 'fi',
+    flagIcon: finlandFlag,
+    workflowId: '',
+    bankIdIcon: '',
+  },
+  {
+    name: 'Latvia',
+    language: 'Latvian',
+    locale: 'lv',
+    currency: 'EUR',
+    countryCode: 'lv',
+    flagIcon: latviaFlag,
+    workflowId: '',
+    bankIdIcon: '',
+  },
+  {
+    name: 'Lithuania',
+    language: 'Lithuanian',
+    locale: 'lt',
+    currency: 'EUR',
+    countryCode: 'lt',
+    flagIcon: lithuaniaFlag,
+    workflowId: '',
+    bankIdIcon: '',
+  },
+  {
+    name: 'Estonia',
+    language: 'Estonian',
+    locale: 'et',
+    currency: 'EUR',
+    countryCode: 'ee',
+    flagIcon: estoniaFlag,
+    workflowId: '',
+    bankIdIcon: '',
+  },
 ];
-
-const intialLanguagesData: IntialLanguagesDataType = {
-  English: '',
-  Norwegian: '',
-  Danish: '',
-  Swedish: '',
-};
 
 const handleSetLocalStorage = ({
   tokenKey,
@@ -198,8 +237,11 @@ const convertToValidCurrency = ({
   locale: string;
   price: number;
   currency: string;
-}) =>
-  price ? price.toLocaleString(locale, { style: 'currency', currency }) : '';
+}) => {
+  return price
+    ? price.toLocaleString(locale, { style: 'currency', currency })
+    : '';
+};
 const LOGIN = 'LOGIN';
 const SIGNUP = 'SIGNUP';
 const BOOKING = 'BOOKING';
@@ -215,7 +257,6 @@ export {
   handleLogOut,
   handleRemoveFromLocalStorage,
   handleSetLocalStorage,
-  intialLanguagesData,
   LOGIN,
   SIGNUP,
 };

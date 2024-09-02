@@ -181,7 +181,19 @@ const BookProcedure = () => {
       });
     }
   }, [lang]);
-
+  React.useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      console.log(event.origin, event.data);
+      if (event.origin === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
+        const { data } = event;
+        localStorage.setItem('sharedDataFromWebflow', data);
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
   const selectedLanguage = (handleGetLocalStorage({
     tokenKey: 'selected_language',
   }) ?? 'en') as LocaleType;

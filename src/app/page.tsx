@@ -45,11 +45,24 @@ function LandingPage() {
     }
     setIsLoginModalActive(true);
   }, [accessToken, router, selectedLanguage, setIsLoginModalActive]);
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     router.push(`/profile`);
+  //   }
+  // }, [accessToken, router]);
   useEffect(() => {
-    if (accessToken) {
-      router.push(`/profile`);
-    }
-  }, [accessToken, router]);
+    const handleMessage = (event: MessageEvent) => {
+      console.log(event.origin, event.data);
+      if (event.origin === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
+        const { data } = event;
+        localStorage.setItem('sharedDataFromWebflow', data);
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
   return (
     <div>
       {isLoginModalActive && <CreateAccount />}

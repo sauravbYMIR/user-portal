@@ -7,12 +7,22 @@ export type NameJSONType = {
   nb: string;
   da: string;
   sv: string;
+  nl: string;
+  fi: string;
+  lv: string;
+  lt: string;
+  et: string;
 };
 export type ReimbursementJSONType = {
   ie: number;
   no: number;
   dk: number;
   se: number;
+  nl: number;
+  fi: number;
+  lv: number;
+  lt: number;
+  ee: number;
 };
 export type ProcedureType = {
   id: string;

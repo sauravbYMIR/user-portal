@@ -205,7 +205,7 @@ function HospitalDetailsPage({
                 </span>
               </div>
             </div>
-            <div className="flex w-full flex-wrap items-center justify-between gap-4 sm:justify-end">
+            <div className="flex flex-wrap items-center justify-between gap-4 sm:justify-end">
               {hospitalProcedureId.success && (
                 <div className="flex max-w-[161px] flex-1 flex-col rounded-xl bg-light-purple p-3 sm:w-[161px] sm:p-5">
                   <p className="text-sm font-normal text-accent-purple sm:text-base">
