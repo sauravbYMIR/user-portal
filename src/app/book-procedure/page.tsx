@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { toast } from 'sonner';
 
 import { CountrySelector } from '@/components/CountrySelector/CountrySelector';
@@ -181,12 +181,15 @@ const BookProcedure = () => {
       });
     }
   }, [lang]);
-  React.useEffect(() => {
+  useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      console.log(event.origin, event.data);
-      if (event.origin === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
+      console.log('NEXTJS-BOOK-PROCEDURE', event.origin, event.data);
+      if (event.origin === process.env.NEXT_PUBLIC_WEBAPP_URL) {
         const { data } = event;
-        localStorage.setItem('sharedDataFromWebflow', data);
+        handleSetLocalStorage({
+          tokenKey: 'selected_language',
+          tokenValue: data,
+        });
       }
     };
     window.addEventListener('message', handleMessage);
