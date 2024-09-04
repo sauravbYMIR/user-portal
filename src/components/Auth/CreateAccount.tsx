@@ -5,6 +5,7 @@
 import 'react-phone-number-input/style.css';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import type { E164Number } from 'libphonenumber-js';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
@@ -59,19 +60,23 @@ const LoginUserAccountSchema = z.object({
     .max(14, { message: 'Must be a valid mobile number' }),
 });
 export type LoginUserAccountFormFields = z.infer<typeof LoginUserAccountSchema>;
-const CreateAccount = () => {
+const CreateAccount = ({
+  type,
+}: {
+  type: 'LANDING' | 'HOSPITAL_DETAILS' | 'HEADER';
+}) => {
   const [isLogin, setIsLogin] = React.useState<boolean>(false);
   const {
     setIsLoginModalActive,
     setIsOtpVerifyModalActive,
     setSelectedPhoneNumber,
   } = useAppStore();
-  const languageList: Array<PreferredLanguageType> = countryData.map(
-    (data) => ({
+  const languageList: Array<PreferredLanguageType> = countryData
+    .filter((data) => !!data.workflowId)
+    .map((data) => ({
       label: data.language,
       value: data.locale,
-    }),
-  );
+    }));
   const [selectedOption, setSelectedOption] = React.useState<{
     label: string;
     value: string;
@@ -96,6 +101,10 @@ const CreateAccount = () => {
           tokenKey: 'otp_verify_token',
           tokenValue: response.data.token,
         });
+        handleSetLocalStorage({
+          tokenKey: 'phone_number',
+          tokenValue: data.phoneNumber,
+        });
         handleSetLocalStorage({ tokenKey: 'flow_type', tokenValue: SIGNUP });
         setIsOtpVerifyModalActive(true);
         setIsLoginModalActive(false);
@@ -116,6 +125,10 @@ const CreateAccount = () => {
         handleSetLocalStorage({
           tokenKey: 'otp_verify_token',
           tokenValue: response.data.token,
+        });
+        handleSetLocalStorage({
+          tokenKey: 'phone_number',
+          tokenValue: data.phoneNumber,
         });
         handleSetLocalStorage({ tokenKey: 'flow_type', tokenValue: LOGIN });
         setIsOtpVerifyModalActive(true);
@@ -140,6 +153,10 @@ const CreateAccount = () => {
         variant="link"
         className="!absolute right-4 top-2 z-10 !p-0"
         onClick={() => {
+          if (type === 'HOSPITAL_DETAILS') {
+            setIsLoginModalActive(false);
+            return;
+          }
           if (
             process.env.NODE_ENV === 'development' ||
             process.env.NODE_ENV === 'test'
@@ -212,7 +229,7 @@ const CreateAccount = () => {
               render={({ field: { onChange, value } }) => (
                 <PhoneInput
                   placeholder="+47 000 00 00"
-                  value={value}
+                  value={value as E164Number}
                   onChange={onChange}
                   international
                   defaultCountry="NO"
@@ -317,7 +334,7 @@ const CreateAccount = () => {
               render={({ field: { onChange, value } }) => (
                 <PhoneInput
                   placeholder="+47 000 00 00"
-                  value={value}
+                  value={value as E164Number}
                   onChange={onChange}
                   international
                   defaultCountry="NO"

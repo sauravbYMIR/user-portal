@@ -128,23 +128,23 @@ const HospitalCard = ({
       </div>
       <div className="mb-1 flex w-full items-start justify-between">
         <div className="flex w-2/5 flex-col items-start">
-          <span className="mb-1 font-onsite text-sm font-normal text-dark-green">
+          <span className="mb-1 text-start font-onsite text-sm font-normal text-dark-green">
             {t('Cost-of-procedure')}
           </span>
-          <span className="font-onsite text-sm font-bold text-dark-green">
+          <span className="text-start font-onsite text-sm font-bold text-dark-green">
             {costOfProcedure}
           </span>
         </div>
         <div className="flex w-2/5 flex-col items-start">
-          <span className="mb-1 font-onsite text-sm font-normal text-dark-green">
+          <span className="mb-1 text-start font-onsite text-sm font-normal text-dark-green">
             {t('Reimbursement-offered')}
           </span>
-          <span className="font-onsite text-sm font-bold text-dark-green">
+          <span className="text-start font-onsite text-sm font-bold text-dark-green">
             {reimBursementCost}
           </span>
         </div>
       </div>
-      <p className="mb-6 text-start font-onsite text-base font-normal text-dark-green">
+      <p className="mb-6 mt-2 text-start font-onsite text-base font-normal text-dark-green">
         {hospitalDesc.length > 50
           ? `${hospitalDesc.slice(0, 50)}...`
           : hospitalDesc}

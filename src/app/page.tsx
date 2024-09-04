@@ -62,7 +62,7 @@ function LandingPage() {
   }, []);
   return (
     <div>
-      {isLoginModalActive && <CreateAccount />}
+      {isLoginModalActive && <CreateAccount type="LANDING" />}
       {isOtpVerifyModalActive && <VerifyOtp />}
       {isBankIdModalActive && <BankIdModal />}
     </div>

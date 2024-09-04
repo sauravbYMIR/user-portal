@@ -62,6 +62,7 @@ function HospitalDetailsPage({
     isBankIdModalActive,
     setIsBankIdModalActive,
     selectedHospitalName,
+    setStepNumber,
   } = useAppStore();
   const accessToken = handleGetLocalStorage({ tokenKey: 'access_token' });
   const createBooking = useCreateBooking({ selectedHospitalName });
@@ -167,7 +168,10 @@ function HospitalDetailsPage({
           <button
             type="button"
             className="flex items-center gap-x-3"
-            onClick={() => router.push('/')}
+            onClick={() => {
+              setStepNumber(1);
+              router.push('/');
+            }}
           >
             <span className="font-onsite text-sm font-normal text-dark-green sm:block sm:text-xl">
               {t('Close')}
@@ -573,7 +577,7 @@ function HospitalDetailsPage({
             </button>
           </div>
         </div>
-        {isLoginModalActive && <CreateAccount />}
+        {isLoginModalActive && <CreateAccount type="HOSPITAL_DETAILS" />}
         {isOtpVerifyModalActive && <VerifyOtp />}
         {isBankIdModalActive && <BankIdModal />}
       </div>

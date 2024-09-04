@@ -114,6 +114,7 @@ export const useCreateBooking = ({
         'end_date',
         'flow_type',
         'selected_hospital_name',
+        'phone_number',
       ].map((key) => handleRemoveFromLocalStorage({ tokenKey: key }));
       if (selectedHospitalName || selectedHospitalNameFromLocalStorage) {
         router.push(

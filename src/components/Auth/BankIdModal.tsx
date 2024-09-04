@@ -1,3 +1,4 @@
+import parsePhoneNumberFromString from 'libphonenumber-js';
 import Image from 'next/image';
 import React from 'react';
 import { SyncLoader } from 'react-spinners';
@@ -9,6 +10,7 @@ import { useAppStore } from '@/libs/store';
 import {
   bankIdModalMsg,
   countryData,
+  handleGetLocalStorage,
   handleRemoveFromLocalStorage,
 } from '@/utils/global';
 
@@ -16,15 +18,23 @@ import { CloseIcon } from '../Icons/Icons';
 import { ModalWrapper } from '../ModalWrapper/ModalWrapper';
 import { FbtButton } from '../ui';
 
-const BankIdModal = () => {
-  const { t } = useTranslation();
-  const { setIsBankIdModalActive } = useAppStore();
-  const [isBankIdInitLoading, setIsBankIdInitLoading] =
-    React.useState<boolean>(false);
-  const handleCallBankId = async ({ countryCode }: { countryCode: string }) => {
+const BankIdSelectContainer = ({
+  countryCode,
+  isBankIdInitLoading,
+  bankIdIcon,
+  setIsBankIdInitLoading,
+  name,
+}: {
+  countryCode: string;
+  isBankIdInitLoading: boolean;
+  bankIdIcon: string;
+  setIsBankIdInitLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  name: string;
+}) => {
+  const handleCallBankId = async ({ cc }: { cc: string }) => {
     setIsBankIdInitLoading(true);
     try {
-      const r = await initBankId({ countryCode: countryCode.toUpperCase() });
+      const r = await initBankId({ countryCode: cc.toUpperCase() });
       if (r.success) {
         window.open(r.bankIdUrl, '_blank', 'noopener,noreferrer');
       }
@@ -37,7 +47,53 @@ const BankIdModal = () => {
       setIsBankIdInitLoading(false);
     }
   };
+  return (
+    <button
+      type="button"
+      className={`flex ${isBankIdInitLoading ? 'cursor-not-allowed' : 'cursor-pointer'} items-center gap-x-6`}
+      key={countryCode}
+      onClick={() =>
+        handleCallBankId({
+          cc: countryCode,
+        })
+      }
+      disabled={isBankIdInitLoading}
+    >
+      <Image
+        src={bankIdIcon}
+        alt={countryCode}
+        width={60}
+        height={60}
+        className="rounded-lg border border-neutral-7"
+      />
+      <div className="flex flex-col items-start gap-y-2">
+        <p className="font-onsite text-xl font-medium text-neutral-1">{name}</p>
+        <p className="font-onsite text-base font-normal text-neutral-2">
+          {bankIdModalMsg[countryCode as keyof typeof bankIdModalMsg]}
+        </p>
+      </div>
+    </button>
+  );
+};
 
+const BankIdModal = () => {
+  const { t } = useTranslation();
+  const { setIsBankIdModalActive } = useAppStore();
+  const phoneNumber = handleGetLocalStorage({ tokenKey: 'phone_number' });
+  const [isBankIdInitLoading, setIsBankIdInitLoading] =
+    React.useState<boolean>(false);
+  const countryCodeFromPhonenumber = phoneNumber
+    ? parsePhoneNumberFromString(phoneNumber)?.country
+    : '';
+  const selectedCountry = countryCodeFromPhonenumber
+    ? countryData
+        .filter(
+          (countryInfo) =>
+            countryInfo.countryCode.toLowerCase() ===
+            countryCodeFromPhonenumber?.toLowerCase(),
+        )
+        .filter((countryInfo) => !!countryInfo.workflowId)
+    : countryData;
   return (
     <ModalWrapper
       parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"
@@ -71,39 +127,29 @@ const BankIdModal = () => {
       </h1>
       <div className="mt-12 w-[90%] rounded-lg border border-neutral-6 bg-neutral-7 px-4 py-5">
         <div className="flex flex-col items-start gap-y-5">
-          {countryData.map((countryInfo) => (
-            <button
-              type="button"
-              className={`flex ${isBankIdInitLoading ? 'cursor-not-allowed' : 'cursor-pointer'} items-center gap-x-6`}
-              key={countryInfo.countryCode}
-              onClick={() =>
-                handleCallBankId({
-                  countryCode: countryInfo.countryCode,
-                })
-              }
-              disabled={isBankIdInitLoading}
-            >
-              <Image
-                src={countryInfo.bankIdIcon}
-                alt={countryInfo.countryCode}
-                width={60}
-                height={60}
-                className="rounded-lg border border-neutral-7"
-              />
-              <div className="flex flex-col items-start gap-y-2">
-                <p className="font-onsite text-xl font-medium text-neutral-1">
-                  {countryInfo.name}
-                </p>
-                <p className="font-onsite text-base font-normal text-neutral-2">
-                  {
-                    bankIdModalMsg[
-                      countryInfo.countryCode as keyof typeof bankIdModalMsg
-                    ]
-                  }
-                </p>
-              </div>
-            </button>
-          ))}
+          {selectedCountry.length > 0
+            ? selectedCountry.map((countryInfo) => (
+                <BankIdSelectContainer
+                  key={countryInfo.countryCode}
+                  countryCode={countryInfo.countryCode}
+                  isBankIdInitLoading={isBankIdInitLoading}
+                  bankIdIcon={countryInfo.bankIdIcon}
+                  setIsBankIdInitLoading={setIsBankIdInitLoading}
+                  name={countryInfo.name}
+                />
+              ))
+            : countryData
+                .filter((countryInfo) => !!countryInfo.workflowId)
+                .map((countryInfo) => (
+                  <BankIdSelectContainer
+                    key={countryInfo.countryCode}
+                    countryCode={countryInfo.countryCode}
+                    isBankIdInitLoading={isBankIdInitLoading}
+                    bankIdIcon={countryInfo.bankIdIcon}
+                    setIsBankIdInitLoading={setIsBankIdInitLoading}
+                    name={countryInfo.name}
+                  />
+                ))}
         </div>
       </div>
     </ModalWrapper>

@@ -284,7 +284,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
           </FbtHeaderMenu>
         )}
       </FbtHeader>
-      {isLoginModalActive && <CreateAccount />}
+      {isLoginModalActive && <CreateAccount type="HEADER" />}
       {isOtpVerifyModalActive && <VerifyOtp />}
       {isBankIdModalActive && <BankIdModal />}
     </>
