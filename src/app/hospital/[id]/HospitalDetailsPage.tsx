@@ -21,7 +21,6 @@ import {
   CalendarIcon,
   CloseIcon,
   ExternalLinkIcon,
-  QuestionIcon,
 } from '@/components/Icons/Icons';
 import { getBankIdStatus } from '@/hooks/useAuth';
 import { useCreateBooking } from '@/hooks/useBooking';
@@ -265,7 +264,7 @@ function HospitalDetailsPage({
                         })}
                       </p>
                     )}
-                  <QuestionIcon />
+                  {/* <QuestionIcon /> */}
                 </div>
               </div>
             </div>
@@ -308,7 +307,7 @@ function HospitalDetailsPage({
                         })}
                       </p>
                     )}
-                  <QuestionIcon />
+                  {/* <QuestionIcon /> */}
                 </div>
               </div>
               <div className="mt-10 flex w-full flex-col items-start sm:w-[90%]">
