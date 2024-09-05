@@ -31,12 +31,7 @@ function LandingPage() {
         tokenKey: 'selected_language',
         tokenValue: lang,
       });
-      return;
     }
-    handleSetLocalStorage({
-      tokenKey: 'selected_language',
-      tokenValue: 'en',
-    });
   }, [lang]);
   useEffect(() => {
     if (accessToken) {
