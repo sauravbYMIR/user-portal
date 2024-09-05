@@ -44,10 +44,23 @@ function LandingPage() {
     const handleMessage = (event: MessageEvent) => {
       if (`${event.origin}/` === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
         const { data } = event;
-        handleSetLocalStorage({
+        const r = data ? JSON.parse(data) : { lang: '', type: '' };
+        const selectedLang = handleGetLocalStorage({
           tokenKey: 'selected_language',
-          tokenValue: data,
         });
+        if (r.type === 'DEFAULT' && !selectedLang) {
+          handleSetLocalStorage({
+            tokenKey: 'selected_language',
+            tokenValue: r.lang,
+          });
+          return;
+        }
+        if (r.lang && r.type === 'SELECTOR') {
+          handleSetLocalStorage({
+            tokenKey: 'selected_language',
+            tokenValue: r.lang,
+          });
+        }
       }
     };
     window.addEventListener('message', handleMessage);

@@ -261,22 +261,3 @@ export {
   LOGIN,
   SIGNUP,
 };
-
-// const browserLanguage = navigator.language;
-//       const languageCodes = {
-//         "nb-NO": { locale: "nb" },
-//         "nn-NO": { locale: "nb" },
-//         "en-US": { locale: "en" },
-//         "en-GB": { locale: "en" },
-//         "da-DK": { locale: "da" },
-//         "sv-SE": { locale: "sv" },
-//         "nl-NL": { locale: "nl" },
-//         "fi-FI": { locale: "fi" },
-//         "lv-LV": { locale: "lv" },
-//         "lt-LT": { locale: "lt" },
-//         "et-EE": { locale: "et" },
-//       };
-
-//        if(languageCodes[browserLanguage] && languageCodes[browserLanguage]?.locale){
-//       	sendDataToNextJSApp(languageCodes[browserLanguage]?.locale)
-//       }
