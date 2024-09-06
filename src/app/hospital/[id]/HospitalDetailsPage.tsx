@@ -150,12 +150,7 @@ function HospitalDetailsPage({
       )}
       <div className="flex size-full flex-col items-center justify-between overflow-y-scroll bg-primary-green px-0 py-9 pb-48 sm:px-12">
         <nav className="flex w-screen items-start justify-between px-5 sm:px-12">
-          <button
-            type="button"
-            onClick={() =>
-              router.push(`/book-procedure/?lang=${selectedLanguage}`)
-            }
-          >
+          <button type="button" onClick={() => router.push(`/book-procedure`)}>
             <Image
               src={brand}
               width={matches ? 133.37 : 190.47}
@@ -193,7 +188,9 @@ function HospitalDetailsPage({
             <div className="mb-9 flex flex-col items-start gap-y-1 sm:mb-0 sm:gap-y-4">
               {hospitalProcedureId.success && (
                 <h2 className="text-2xl font-medium text-dark-green sm:text-[32px]">
-                  {hospitalProcedureId.data.procedure.name[selectedLanguage]}
+                  {hospitalProcedureId.data.procedure.name[selectedLanguage]
+                    ? hospitalProcedureId.data.procedure.name[selectedLanguage]
+                    : hospitalProcedureId.data.procedure.name.en}
                 </h2>
               )}
               <div className="flex items-center gap-x-1 sm:gap-x-2">
@@ -276,7 +273,9 @@ function HospitalDetailsPage({
               </h3>
               {hospitalProcedureId.success && (
                 <p className="text-lg font-normal text-dark-green sm:text-xl">
-                  {hospitalProcedureId.data.description[selectedLanguage]}
+                  {hospitalProcedureId.data.description[selectedLanguage]
+                    ? hospitalProcedureId.data.description[selectedLanguage]
+                    : hospitalProcedureId.data.description.en}
                 </p>
               )}
             </div>
@@ -520,19 +519,27 @@ function HospitalDetailsPage({
                   onClick={() => setIsOpen((prevState) => !prevState)}
                 >
                   <CalendarIcon />
-                  <div className="flex flex-col items-start">
+                  <div className="flex w-full flex-col items-start">
                     <span className="text-base font-normal text-dark-green">
-                      {t('From')}
+                      {t('From')} - {t('To')}
                     </span>
-                    {startDate && (
-                      <span className="text-base font-medium text-dark-green">
-                        {startDate.getDate()}.{getMonth(startDate)}{' '}
-                        {startDate.getFullYear()}
-                      </span>
-                    )}
+                    <div className="flex w-full items-center gap-x-2">
+                      {startDate && (
+                        <span className="text-base font-medium text-dark-green">
+                          {startDate.getDate()}.{getMonth(startDate)}{' '}
+                          {startDate.getFullYear()} -
+                        </span>
+                      )}
+                      {endDate && (
+                        <span className="text-base font-medium text-dark-green">
+                          {endDate.getDate()}.{getMonth(endDate)}{' '}
+                          {endDate.getFullYear()}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </button>
-                <button
+                {/* <button
                   type="button"
                   className="flex items-center gap-x-4 rounded-xl bg-base-light px-5 py-4"
                 >
@@ -541,14 +548,8 @@ function HospitalDetailsPage({
                     <span className="text-base font-normal text-dark-green">
                       {t('To')}
                     </span>
-                    {endDate && (
-                      <span className="text-base font-medium text-dark-green">
-                        {endDate.getDate()}.{getMonth(endDate)}{' '}
-                        {endDate.getFullYear()}
-                      </span>
-                    )}
                   </div>
-                </button>
+                </button> */}
               </>
             )}
 

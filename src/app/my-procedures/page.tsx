@@ -37,7 +37,11 @@ const Procedure = () => {
                     <ProcedureCard
                       key={booking.id}
                       bookingId={booking.id}
-                      procedureName={booking.procedureName[selectedLanguage]}
+                      procedureName={
+                        booking.procedureName[selectedLanguage]
+                          ? booking.procedureName[selectedLanguage]
+                          : booking.procedureName.en
+                      }
                       hospitalName={booking.hospitalName}
                       city={booking.city}
                       country={booking.country}

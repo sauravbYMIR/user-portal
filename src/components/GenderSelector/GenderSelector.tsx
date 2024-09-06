@@ -23,7 +23,7 @@ const genderData = [
 
 const GenderSelector = () => {
   const { t } = useTranslation();
-  const { selectedGender, setSelectedGender } = useAppStore();
+  const { selectedGender, setSelectedGender, setStepNumber } = useAppStore();
   const { matches } = useScreenWidth(640);
   return (
     <div className="flex w-full flex-col items-center justify-center gap-2">
@@ -45,6 +45,7 @@ const GenderSelector = () => {
                   tokenKey: 'selected_gender',
                   tokenValue: gender.value,
                 });
+                setStepNumber(3);
               }}
             >
               {gender.value === 'men' ? (

@@ -19,8 +19,12 @@ import { FbtButton } from '../ui';
 
 const ProcedureSelector = () => {
   const { t } = useTranslation();
-  const { selectedProcedure, setSelectedProcedure, selectedGender } =
-    useAppStore();
+  const {
+    selectedProcedure,
+    setSelectedProcedure,
+    selectedGender,
+    setStepNumber,
+  } = useAppStore();
   const departmentProcedureList = useGetAllDepartmentWithProcedure();
   const selectedLanguage = (handleGetLocalStorage({
     tokenKey: 'selected_language',
@@ -123,7 +127,9 @@ const ProcedureSelector = () => {
                   ref={addToRefs}
                 >
                   <h3 className="text-4xl font-medium text-dark-green">
-                    {data.name[selectedLanguage]}
+                    {data.name[selectedLanguage]
+                      ? data.name[selectedLanguage]
+                      : data.name.en}
                   </h3>
                   <div className="my-6 h-px w-full bg-info-green" />
                   {data.procedures &&
@@ -147,6 +153,7 @@ const ProcedureSelector = () => {
                                   tokenKey: 'selected_procedure',
                                   tokenValue: e.target.value,
                                 });
+                                setStepNumber(4);
                               }
                             }}
                           />
@@ -155,7 +162,9 @@ const ProcedureSelector = () => {
                             htmlFor={procedure.id}
                             className="font-onsite text-base font-normal text-dark-green sm:cursor-pointer sm:text-2xl"
                           >
-                            {procedure.name[selectedLanguage]}
+                            {procedure.name[selectedLanguage]
+                              ? procedure.name[selectedLanguage]
+                              : procedure.name.en}
                           </label>
                         </div>
                       );
@@ -169,8 +178,13 @@ const ProcedureSelector = () => {
                           key={subCategoryData.id}
                         >
                           <h3 className="text-2xl font-medium text-dark-green">
-                            {data.name[selectedLanguage]} |{' '}
-                            {subCategoryData.name[selectedLanguage]}
+                            {data.name[selectedLanguage]
+                              ? data.name[selectedLanguage]
+                              : data.name.en}{' '}
+                            |{' '}
+                            {subCategoryData.name[selectedLanguage]
+                              ? subCategoryData.name[selectedLanguage]
+                              : subCategoryData.name.en}
                           </h3>
                           {subCategoryData.procedures &&
                             subCategoryData.procedures.length > 0 &&
@@ -193,6 +207,7 @@ const ProcedureSelector = () => {
                                           tokenKey: 'selected_procedure',
                                           tokenValue: e.target.value,
                                         });
+                                        setStepNumber(4);
                                       }
                                     }}
                                   />
@@ -201,7 +216,9 @@ const ProcedureSelector = () => {
                                     htmlFor={pData.id}
                                     className="font-onsite text-base font-normal text-dark-green sm:cursor-pointer sm:text-2xl"
                                   >
-                                    {pData.name[selectedLanguage]}
+                                    {pData.name[selectedLanguage]
+                                      ? pData.name[selectedLanguage]
+                                      : pData.name.en}
                                   </label>
                                 </div>
                               );

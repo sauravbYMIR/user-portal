@@ -188,9 +188,6 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
   if (!isMounted) {
     return null;
   }
-  const selectedLanguageFromUserDropdown = handleGetLocalStorage({
-    tokenKey: 'selected_language',
-  });
   const countryInfo = countryData.find((c) => c.locale === selectedLanguage);
   return (
     <div className="sxl:py-15 mt-3 h-[650px] overflow-y-scroll px-5 sxl:px-[75px]">
@@ -202,7 +199,7 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
               <div>
                 {bookingDetails.data.data?.elfSightScript && (
                   <div
-                    className={`elfsight-app-${bookingDetails.data.data?.elfSightScript[selectedLanguage]}`}
+                    className={`elfsight-app-${bookingDetails.data.data?.elfSightScript[selectedLanguage] ? bookingDetails.data.data?.elfSightScript[selectedLanguage] : bookingDetails.data.data?.elfSightScript.en}`}
                     data-elfsight-app-lazy
                   />
                 )}
@@ -319,8 +316,10 @@ function HospitalDetailsPage({ params }: { params: { id: string } }) {
                 <p className="font-onsite text-2xl font-normal text-neutral-1">
                   {convertToValidCurrency({
                     price: bookingDetails.data.data.costOfProcedure.price,
-                    locale: selectedLanguageFromUserDropdown ?? 'en',
-                    currency: bookingDetails.data.data.costOfProcedure.currency,
+                    locale: selectedLanguage ?? 'en',
+                    currency: countryInfo?.currency
+                      ? countryInfo.currency
+                      : bookingDetails.data.data.costOfProcedure.currency,
                   })}
                 </p>
               </div>

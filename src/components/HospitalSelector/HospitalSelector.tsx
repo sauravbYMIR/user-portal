@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import type { HospitalImageType } from '@/hooks/useHospital';
@@ -40,6 +41,7 @@ const HospitalCard = ({
   hospitalLogo: false | string;
   hospitalImages: Array<HospitalImageType>;
 }) => {
+  const router = useRouter();
   const { t } = useTranslation();
   const { setSelectedHospital, setSelectedHospitalName } = useAppStore();
   return (
@@ -60,6 +62,7 @@ const HospitalCard = ({
           tokenKey: 'selected_hospital_name',
           tokenValue: hospitalName,
         });
+        router.push(`/hospital/${id}`);
       }}
     >
       <div className="relative h-[209px] w-full rounded-xl">
@@ -204,7 +207,9 @@ const HospitalSelector = () => {
                   costOfProcedure={convertToValidCurrency({
                     price: hospital.costOfProcedure.price,
                     locale: selectedLanguageFromUserDropdown ?? 'en',
-                    currency: hospital.costOfProcedure.currency,
+                    currency: selectedCountryInfo?.currency
+                      ? selectedCountryInfo.currency
+                      : hospital.costOfProcedure.currency,
                   })}
                   reimBursementCost={`${
                     selectedCountryInfo?.countryCode
@@ -214,8 +219,8 @@ const HospitalSelector = () => {
                               (selectedCountry as keyof typeof hospital.reimBursementCost) ??
                                 'ie'
                             ],
-                          currency: selectedCountryInfo.currency,
-                          locale: selectedCountryInfo.locale,
+                          currency: selectedCountryInfo.currency ?? 'EUR',
+                          locale: selectedCountryInfo.locale ?? 'en',
                         })
                       : ''
                   }`}

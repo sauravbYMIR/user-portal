@@ -16,7 +16,7 @@ const CountrySelector = () => {
   const selectedLangFromLocalStorage = handleGetLocalStorage({
     tokenKey: 'selected_language',
   });
-  const { setSelectedCountry, selectedCountry } = useAppStore();
+  const { setSelectedCountry, selectedCountry, setStepNumber } = useAppStore();
   const { t } = useTranslation();
   React.useEffect(() => {
     if (selectedLangFromLocalStorage) {
@@ -66,6 +66,7 @@ const CountrySelector = () => {
                     tokenKey: 'selected_country',
                     tokenValue: country.countryCode,
                   });
+                  setStepNumber(2);
                 }}
               >
                 <Image

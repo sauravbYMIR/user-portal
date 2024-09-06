@@ -144,6 +144,24 @@ const CreateAccount = ({
   const selectedLanguage = (handleGetLocalStorage({
     tokenKey: 'selected_language',
   }) ?? 'en') as LocaleType;
+  React.useEffect(() => {
+    if (selectedLanguage) {
+      const reqdCountryData = countryData.find(
+        (cInfo) => cInfo.locale === selectedLanguage,
+      );
+      if (reqdCountryData?.countryCode) {
+        createUserRHF.setValue(
+          'preferredLanguage.label',
+          reqdCountryData.language,
+        );
+        createUserRHF.setValue(
+          'preferredLanguage.value',
+          reqdCountryData.locale,
+        );
+      }
+    }
+  }, [createUserRHF, selectedLanguage]);
+
   return (
     <ModalWrapper
       parentStyle="z-[9990] fixed top-0 left-0 after:backdrop-blur bg-zinc-900/70 flex items-center justify-center"

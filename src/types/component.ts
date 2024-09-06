@@ -20,12 +20,12 @@ export type LocaleType =
   | 'et';
 export type LangJSONType =
   | 'en'
-  | 'no'
-  | 'dk'
-  | 'se'
+  | 'nb'
+  | 'da'
+  | 'sv'
   | 'nl'
   | 'fi'
   | 'lv'
   | 'lt'
-  | 'ee'
+  | 'et'
   | 'ie';
