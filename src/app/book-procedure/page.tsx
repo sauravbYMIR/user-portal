@@ -284,7 +284,7 @@ const BookProcedure = () => {
               src={brand}
               width={matches ? 133.37 : 190.47}
               height={matches ? 32.21 : 46}
-              alt="brand-w-name"
+              alt="brand-with-name"
             />
             <p className="hidden">brand name</p>
           </button>
