@@ -7,7 +7,11 @@ import BankIdModal from '@/components/Auth/BankIdModal';
 import { CreateAccount } from '@/components/Auth/CreateAccount';
 import { VerifyOtp } from '@/components/Auth/VerifyOtp';
 import { useAppStore } from '@/libs/store';
-import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
+import {
+  countryData,
+  handleGetLocalStorage,
+  handleSetLocalStorage,
+} from '@/utils/global';
 
 function LandingPage() {
   const router = useRouter();
@@ -56,9 +60,12 @@ function LandingPage() {
           return;
         }
         if (r.lang && r.type === 'SELECTOR') {
+          const reqdCountry =
+            countryData.find((cInfo) => cInfo.countryCode === r.lang)?.locale ??
+            'en';
           handleSetLocalStorage({
             tokenKey: 'selected_language',
-            tokenValue: r.lang,
+            tokenValue: reqdCountry,
           });
         }
       }
