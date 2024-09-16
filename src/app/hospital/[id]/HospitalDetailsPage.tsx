@@ -53,7 +53,7 @@ function HospitalDetailsPage({
     tokenKey: 'selected_country',
   });
   const reqdCountryFromCountryCode = countryData.find(
-    (d) => d.locale === selectedLanguage,
+    (d) => d.countryCode === selectedCountryFromLocalStorage,
   );
   const { t } = useTranslation();
   const router = useRouter();
