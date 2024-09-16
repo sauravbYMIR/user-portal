@@ -52,18 +52,21 @@ const HospitalCard = ({
       style={{
         boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
       }}
-      onClick={() => {
-        setSelectedHospital(id);
-        setSelectedHospitalName(hospitalName);
-        handleSetLocalStorage({
-          tokenKey: 'selected_hospital',
-          tokenValue: id,
-        });
-        handleSetLocalStorage({
-          tokenKey: 'selected_hospital_name',
-          tokenValue: hospitalName,
-        });
-        router.push(`/hospital/${id}`);
+      onClick={(e) => {
+        const target = e.target as HTMLElement;
+        if (target && target.id === 'selected-btn') {
+          setSelectedHospital(id);
+          setSelectedHospitalName(hospitalName);
+          handleSetLocalStorage({
+            tokenKey: 'selected_hospital',
+            tokenValue: id,
+          });
+          handleSetLocalStorage({
+            tokenKey: 'selected_hospital_name',
+            tokenValue: hospitalName,
+          });
+          router.push(`/hospital/${id}`);
+        }
       }}
     >
       <div className="relative h-[209px] w-full rounded-xl">
@@ -79,18 +82,22 @@ const HospitalCard = ({
           />
         )}
         <FbtButton
+          id="selected-btn"
           variant="outline"
           className="absolute right-2 top-2 !h-[40px] gap-x-[6px] !rounded-[42.81px] !border-none bg-secondary-green text-white hover:!bg-secondary-green hover:!text-white"
         >
           {selectedHospital === id ? (
-            <>
+            <div id="selected-btn" className="flex items-center gap-x-1">
               <CheckIcon stroke="#fff" className="size-5" />
               <span className="text-base font-medium text-white">
                 {t('Selected')}
               </span>
-            </>
+            </div>
           ) : (
-            <span className="text-base font-medium text-white">
+            <span
+              id="selected-btn"
+              className="text-base font-medium text-white"
+            >
               {t('Select')}
             </span>
           )}
@@ -148,23 +155,29 @@ const HospitalCard = ({
           </span>
         </div>
       </div>
-      <p className="mb-6 mt-2 text-start font-onsite text-base font-normal text-dark-green">
-        {hospitalDesc.length > 50 ? (
-          <>
-            {isReadMore && selectedHospital === id
-              ? `${hospitalDesc.slice(0, 50)} ...`
-              : hospitalDesc}
-            <button
-              type="button"
-              onClick={() => setIsReadMore((prevState) => !prevState)}
-            >
-              {!isReadMore ? <span>Read more</span> : <span>Read less</span>}
-            </button>
-          </>
-        ) : (
-          hospitalDesc
-        )}
-      </p>
+      <div className="h-[100px] overflow-y-scroll">
+        <p className="mb-6 mt-2 text-start font-onsite text-base font-normal text-dark-green">
+          {hospitalDesc.length > 50 ? (
+            <div className="flex flex-col items-start gap-y-1">
+              {isReadMore && selectedHospital === id
+                ? hospitalDesc
+                : `${hospitalDesc.slice(0, 50)} ...`}
+              <button
+                type="button"
+                onClick={() => setIsReadMore((prevState) => !prevState)}
+              >
+                {!isReadMore ? (
+                  <span className="font-bold italic">Read more</span>
+                ) : (
+                  <span className="font-bold italic">Read less</span>
+                )}
+              </button>
+            </div>
+          ) : (
+            hospitalDesc
+          )}
+        </p>
+      </div>
     </button>
   );
 };
