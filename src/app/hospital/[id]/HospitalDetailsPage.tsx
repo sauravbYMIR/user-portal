@@ -52,6 +52,9 @@ function HospitalDetailsPage({
   const selectedCountryFromLocalStorage = handleGetLocalStorage({
     tokenKey: 'selected_country',
   });
+  const reqdCountryFromCountryCode = countryData.find(
+    (d) => d.locale === selectedLanguage,
+  );
   const { t } = useTranslation();
   const router = useRouter();
   const {
@@ -253,11 +256,9 @@ function HospitalDetailsPage({
                               (selectedCountry ||
                                 selectedCountryFromLocalStorage) as keyof typeof hospitalProcedureId.data.procedure.reimbursement
                             ],
-                          locale: selectedLanguage ?? 'en',
+                          locale: reqdCountryFromCountryCode?.locale ?? 'en',
                           currency:
-                            countryData.find(
-                              (d) => d.locale === selectedLanguage,
-                            )?.currency ?? 'EUR',
+                            reqdCountryFromCountryCode?.currency ?? 'EUR',
                         })}
                       </p>
                     )}
@@ -298,11 +299,9 @@ function HospitalDetailsPage({
                               (selectedCountry ||
                                 selectedCountryFromLocalStorage) as keyof typeof hospitalProcedureId.data.procedure.reimbursement
                             ],
-                          locale: selectedLanguage ?? 'en',
+                          locale: reqdCountryFromCountryCode?.locale ?? 'en',
                           currency:
-                            countryData.find(
-                              (d) => d.locale === selectedLanguage,
-                            )?.currency ?? 'EUR',
+                            reqdCountryFromCountryCode?.currency ?? 'EUR',
                         })}
                       </p>
                     )}
