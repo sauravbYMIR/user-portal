@@ -103,5 +103,6 @@
   "Procedure": "Toimenpide",
   "Hospital": "Sairaala",
   "Personal": "Henkilökohtainen",
-  "Mobile number": "Matkapuhelinnumero"
+  "Mobile number": "Matkapuhelinnumero",
+  "If-you-cant-find-your-procedure-click-here-to-contact-us": "Jos et löydä toimenpidettäsi, klikkaa tästä ottaaksesi yhteyttä meihin"
 }

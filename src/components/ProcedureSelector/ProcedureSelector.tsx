@@ -51,6 +51,14 @@ const ProcedureSelector = () => {
         <p className="mt-6 hidden text-center font-onsite text-base font-normal leading-7 text-dark-green sm:block sm:text-xl">
           {t('To-begin-we-are-piloting-with-a-limited-number-of-non')}
         </p>
+        <a
+          className="mt-3 hidden text-center font-onsite text-base font-normal italic leading-7 text-dark-green sm:block sm:text-xl"
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.drfasttrack.no/kontakt"
+        >
+          {t('If-you-cant-find-your-procedure-click-here-to-contact-us')}
+        </a>
       </div>
 
       <div className="mb-9 mt-[40px] flex flex-col items-start gap-x-6 gap-y-3 sm:mb-32 sm:mt-[60px] sm:grid sm:grid-cols-3 sm:gap-4">
@@ -106,9 +114,17 @@ const ProcedureSelector = () => {
           </div>
         )}
       </div>
-      <p className="mb-24 mt-6 block text-center font-onsite text-base font-normal leading-7 text-dark-green sm:hidden sm:text-xl">
+      <p className="my-6 block text-center font-onsite text-base font-normal leading-7 text-dark-green sm:hidden sm:text-xl">
         {t('To-begin-we-are-piloting-with-a-limited-number-of-non')}
       </p>
+      <a
+        className="mb-24 mt-6 block text-center font-onsite text-base font-normal italic leading-7 text-dark-green sm:hidden sm:text-xl"
+        href="https://www.drfasttrack.no/kontakt"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {t('If-you-cant-find-your-procedure-click-here-to-contact-us')}
+      </a>
       <div className="flex flex-col items-center justify-start gap-y-24">
         {departmentProcedureList.isSuccess &&
           departmentProcedureList.data &&

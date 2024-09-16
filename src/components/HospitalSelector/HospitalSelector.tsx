@@ -206,7 +206,7 @@ const HospitalSelector = () => {
                   }
                   costOfProcedure={convertToValidCurrency({
                     price: hospital.costOfProcedure.price,
-                    locale: selectedLanguageFromUserDropdown ?? 'en',
+                    locale: selectedCountryInfo?.locale ?? 'en',
                     currency: selectedCountryInfo?.currency
                       ? selectedCountryInfo.currency
                       : hospital.costOfProcedure.currency,
