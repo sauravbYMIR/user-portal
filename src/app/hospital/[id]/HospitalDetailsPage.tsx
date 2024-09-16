@@ -455,7 +455,16 @@ function HospitalDetailsPage({
                         });
                       }
                     }}
-                    minDate={new Date()}
+                    minDate={
+                      new Date(
+                        new Date().getTime() +
+                          Number(hospitalProcedureId.data.waitingTime) *
+                            24 *
+                            60 *
+                            60 *
+                            1000,
+                      )
+                    }
                     selectsStart
                     startDate={startDate}
                     endDate={endDate}
@@ -479,7 +488,6 @@ function HospitalDetailsPage({
                     minDate={startDate}
                     className="w-full rounded-[10px] bg-base-light px-3 py-4 slg:w-[200px]"
                     inline
-                    // rangeColors={['#f33e5b', '#3ecf8e', '#fed14c']}
                   />
                 </div>
               </div>
