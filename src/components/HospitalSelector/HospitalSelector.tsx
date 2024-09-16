@@ -44,7 +44,10 @@ const HospitalCard = ({
   const router = useRouter();
   const { t } = useTranslation();
   const { setSelectedHospital, setSelectedHospitalName } = useAppStore();
-  const [isReadMore, setIsReadMore] = React.useState(false);
+  const [readMore, setReadMore] = React.useState({
+    isShow: false,
+    id: '',
+  });
   return (
     <button
       type="button"
@@ -159,14 +162,20 @@ const HospitalCard = ({
         <p className="mb-6 mt-2 text-start font-onsite text-base font-normal text-dark-green">
           {hospitalDesc.length > 50 ? (
             <div className="flex flex-col items-start gap-y-1">
-              {isReadMore && selectedHospital === id
+              {readMore.isShow && readMore.id === id
                 ? hospitalDesc
                 : `${hospitalDesc.slice(0, 50)} ...`}
               <button
                 type="button"
-                onClick={() => setIsReadMore((prevState) => !prevState)}
+                onClick={() =>
+                  setReadMore((prevState) => ({
+                    ...prevState,
+                    isShow: !prevState.isShow,
+                    id,
+                  }))
+                }
               >
-                {!isReadMore ? (
+                {!(readMore.isShow && readMore.id === id) ? (
                   <span className="font-bold italic">Read more</span>
                 ) : (
                   <span className="font-bold italic">Read less</span>
