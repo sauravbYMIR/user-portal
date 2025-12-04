@@ -1,8 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { Suspense, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { Suspense } from 'react';
 import { toast } from 'sonner';
 
 import { CountrySelector } from '@/components/CountrySelector/CountrySelector';
@@ -17,9 +16,7 @@ import { ProcedureSelector } from '@/components/ProcedureSelector/ProcedureSelec
 import { useScreenWidth } from '@/hooks/useScreenWidth';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
-import brand from '@/public/assets/icons/brand.svg';
-import type { LocaleType } from '@/types/component';
-import { handleGetLocalStorage, handleSetLocalStorage } from '@/utils/global';
+import { brandName } from '@/utils/global';
 
 const steppers = [
   {
@@ -171,34 +168,21 @@ const Stepper = ({
 };
 
 const BookProcedure = () => {
-  const searchParams = useSearchParams();
-  const lang = searchParams.get('lang');
-  React.useEffect(() => {
-    if (lang) {
-      handleSetLocalStorage({
-        tokenKey: 'selected_language',
-        tokenValue: lang,
-      });
-    }
-  }, [lang]);
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (`${event.origin}/` === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
-        const { data } = event;
-        handleSetLocalStorage({
-          tokenKey: 'selected_language',
-          tokenValue: data,
-        });
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-  }, []);
-  const selectedLanguage = (handleGetLocalStorage({
-    tokenKey: 'selected_language',
-  }) ?? 'en') as LocaleType;
+  // useEffect(() => {
+  //   const handleMessage = (event: MessageEvent) => {
+  //     if (`${event.origin}/` === process.env.NEXT_PUBLIC_WEBFLOW_URL) {
+  //       const { data } = event;
+  //       handleSetLocalStorage({
+  //         tokenKey: 'selected_language',
+  //         tokenValue: data,
+  //       });
+  //     }
+  //   };
+  //   window.addEventListener('message', handleMessage);
+  //   return () => {
+  //     window.removeEventListener('message', handleMessage);
+  //   };
+  // }, []);
   const { matches } = useScreenWidth(640);
   const { t } = useTranslation();
   const {
@@ -276,16 +260,13 @@ const BookProcedure = () => {
         <nav className="flex w-screen items-start justify-between px-5 sm:px-12">
           <button
             type="button"
-            onClick={() =>
-              router.push(`/book-procedure/?lang=${selectedLanguage}`)
-            }
+            onClick={() => router.push(`/book-procedure`)}
+            className="text-3xl"
+            style={{
+              color: 'rgba(0, 70, 70, 1)',
+            }}
           >
-            <Image
-              src={brand}
-              width={matches ? 133.37 : 190.47}
-              height={matches ? 32.21 : 46}
-              alt="brand-w-name"
-            />
+            {brandName}
             <p className="hidden">brand name</p>
           </button>
           <button

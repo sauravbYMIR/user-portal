@@ -14,7 +14,7 @@ const PostHogPageView = dynamic(() => import('./PostHogPageView'), {
 });
 
 export const metadata: Metadata = {
-  title: 'Drfasttrack',
+  title: 'Medipath',
   icons: [
     {
       rel: 'icon',

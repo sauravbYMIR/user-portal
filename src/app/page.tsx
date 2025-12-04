@@ -17,9 +17,6 @@ function LandingPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const lang = searchParams.get('lang');
-  const selectedLanguage = handleGetLocalStorage({
-    tokenKey: 'selected_language',
-  });
   const accessToken = handleGetLocalStorage({
     tokenKey: 'access_token',
   });
@@ -43,7 +40,7 @@ function LandingPage() {
       return;
     }
     setIsLoginModalActive(true);
-  }, [accessToken, router, selectedLanguage, setIsLoginModalActive]);
+  }, [accessToken, router, setIsLoginModalActive]);
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (`${event.origin}/` === process.env.NEXT_PUBLIC_WEBFLOW_URL) {

@@ -29,10 +29,10 @@ import type { HospitalProcedureByIdType } from '@/hooks/useHospital';
 import { useScreenWidth } from '@/hooks/useScreenWidth';
 import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
-import brand from '@/public/assets/icons/brand.svg';
 import type { LocaleType } from '@/types/component';
 import {
   BOOKING,
+  brandName,
   convertToValidCurrency,
   countryData,
   getMonth,
@@ -153,13 +153,15 @@ function HospitalDetailsPage({
       )}
       <div className="flex size-full flex-col items-center justify-between overflow-y-scroll bg-primary-green px-0 py-9 pb-48 sm:px-12">
         <nav className="flex w-screen items-start justify-between px-5 sm:px-12">
-          <button type="button" onClick={() => router.push(`/book-procedure`)}>
-            <Image
-              src={brand}
-              width={matches ? 133.37 : 190.47}
-              height={matches ? 32.21 : 46}
-              alt="brand-with-name"
-            />
+          <button
+            type="button"
+            onClick={() => router.push(`/book-procedure`)}
+            className="text-3xl"
+            style={{
+              color: 'rgba(0, 70, 70, 1)',
+            }}
+          >
+            {brandName}
             <p className="hidden">brand name</p>
           </button>
           <button

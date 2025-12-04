@@ -102,6 +102,10 @@ module.exports = {
         'black-52': 'rgba(52, 52, 50, 1)',
         'dark-grey-1': 'rgba(213, 213, 205, 1)',
         'bold-red': 'rgba(215, 64, 65, 1)',
+        // primary: #0C4E64
+        // secondary color: #096F90
+        // tertiary color: #F2FAFC
+        // the bottom nav bg color: #D0E3EA
       },
       fontFamily: {
         onsite: ['Onsite', 'sans-serif'],

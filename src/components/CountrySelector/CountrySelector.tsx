@@ -19,7 +19,20 @@ const CountrySelector = () => {
   const { setSelectedCountry, selectedCountry, setStepNumber } = useAppStore();
   const { t } = useTranslation();
   React.useEffect(() => {
-    if (selectedLangFromLocalStorage) {
+    // First, check if there's a saved country in localStorage (from previous selection)
+    const savedCountry = handleGetLocalStorage({
+      tokenKey: 'selected_country',
+    });
+
+    if (savedCountry && !selectedCountry) {
+      // Restore the previously selected country from localStorage
+      setSelectedCountry(savedCountry);
+    } else if (
+      selectedLangFromLocalStorage &&
+      !selectedCountry &&
+      !savedCountry
+    ) {
+      // Only set country from language locale if no country is saved or selected
       const selectedCountryFound = countryData.find(
         (d) => d.locale === selectedLangFromLocalStorage,
       );
@@ -32,7 +45,7 @@ const CountrySelector = () => {
       }
     }
     return () => {};
-  }, [selectedLangFromLocalStorage, setSelectedCountry]);
+  }, [selectedLangFromLocalStorage, setSelectedCountry, selectedCountry]);
 
   const { matches } = useScreenWidth(640);
 

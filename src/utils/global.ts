@@ -248,6 +248,7 @@ const SIGNUP = 'SIGNUP';
 const BOOKING = 'BOOKING';
 
 export const excludeProcedure = [`Women's Health`];
+export const brandName = 'Medipath';
 
 export {
   BOOKING,
