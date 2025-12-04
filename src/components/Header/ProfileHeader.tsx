@@ -79,21 +79,18 @@ const ProfileHeader = ({
                 type="button"
                 className="my-[20px] flex items-center justify-start gap-[20px]"
                 onClick={() => {
-                  const iframeEl = document.getElementById(
-                    'myIframe',
-                  ) as HTMLIFrameElement;
-                  if (iframeEl && iframeEl.contentWindow) {
-                    const message = { action: 'clearData' };
-                    iframeEl.contentWindow.postMessage(
-                      JSON.stringify(message),
-                      `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
-                    );
-                  }
+                  // const iframeEl = document.getElementById(
+                  //   'myIframe',
+                  // ) as HTMLIFrameElement;
+                  // if (iframeEl && iframeEl.contentWindow) {
+                  //   const message = { action: 'clearData' };
+                  //   iframeEl.contentWindow.postMessage(
+                  //     JSON.stringify(message),
+                  //     `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
+                  //   );
+                  // }
                   handleLogOut();
-                  router.push(
-                    process.env.NEXT_PUBLIC_WEBFLOW_URL ??
-                      `/book-procedure/?lang=${selectedLanguage}`,
-                  );
+                  router.push(`/`);
                 }}
               >
                 <span className="font-onsite text-[20px] text-neutral-2">

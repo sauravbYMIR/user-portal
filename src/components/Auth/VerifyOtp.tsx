@@ -142,25 +142,25 @@ const VerifyOtp = () => {
           router.push(`/hospital/${selectedHospital}`);
         }
 
-        const iframeEl = document.getElementById(
-          'myIframe',
-        ) as HTMLIFrameElement;
-        if (
-          response.data?.accessToken &&
-          response.data?.refreshToken &&
-          iframeEl &&
-          iframeEl.contentWindow
-        ) {
-          const data = JSON.stringify({
-            accessToken: response.data?.accessToken,
-            refreshToken: response.data?.refreshToken,
-          });
-          iframeEl.contentWindow.postMessage(
-            data,
-            `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
-          );
-        }
-        window.open(`${process.env.NEXT_PUBLIC_WEBFLOW_URL}`, '_blank');
+        // const iframeEl = document.getElementById(
+        //   'myIframe',
+        // ) as HTMLIFrameElement;
+        // if (
+        //   response.data?.accessToken &&
+        //   response.data?.refreshToken &&
+        //   iframeEl &&
+        //   iframeEl.contentWindow
+        // ) {
+        //   const data = JSON.stringify({
+        //     accessToken: response.data?.accessToken,
+        //     refreshToken: response.data?.refreshToken,
+        //   });
+        //   iframeEl.contentWindow.postMessage(
+        //     data,
+        //     `${process.env.NEXT_PUBLIC_WEBFLOW_URL}`,
+        //   );
+        // }
+        // window.open(`${process.env.NEXT_PUBLIC_WEBFLOW_URL}`, '_blank');
         handleRemoveFromLocalStorage({ tokenKey: 'flow_type' });
       }
     } catch (e: unknown) {
