@@ -102,6 +102,14 @@ module.exports = {
         'black-52': 'rgba(52, 52, 50, 1)',
         'dark-grey-1': 'rgba(213, 213, 205, 1)',
         'bold-red': 'rgba(215, 64, 65, 1)',
+        'dark-blue': '#096F90',
+        'primary-light-blue': '#F2FAFC',
+        'secondary-blue': '#D0E3EA',
+        'extra-dark-blue': '#0C4E64',
+        'light-grey': '#F3F3E9',
+        'secondary-dark-blue': '#227D9B',
+        'silver-gray': '#AFC1C6',
+        'dark-gray-text': '#434956',
         // primary: #0C4E64
         // secondary color: #096F90
         // tertiary color: #F2FAFC

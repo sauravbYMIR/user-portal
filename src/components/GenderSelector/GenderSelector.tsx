@@ -28,7 +28,7 @@ const GenderSelector = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-2">
       <div className="w-8/12">
-        <h3 className="mt-32 text-center font-onsite text-[24px] font-medium text-dark-green sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
+        <h3 className="mt-32 text-center font-onsite text-[24px] font-medium text-extra-dark-blue sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
           {t('Select-your-medical-gender')}
         </h3>
       </div>
@@ -38,7 +38,7 @@ const GenderSelector = () => {
             <FbtButton
               key={gender.value}
               variant="outline"
-              className={`${selectedGender === gender.value ? 'bg-dark-green !text-white hover:!bg-dark-green hover:!text-white' : 'bg-base-light text-dark-green hover:!bg-dark-green hover:!text-white'} flex !h-[139.51px] !w-[136px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none sm:my-0 sm:!h-[179.5px] sm:!w-[294px] md:my-4`}
+              className={` ${selectedGender === gender.value ? 'bg-dark-blue !text-white hover:!bg-dark-blue hover:!text-white' : 'bg-primary-light-blue !text-extra-dark-blue hover:!bg-dark-blue hover:!text-white'} flex !h-[139.51px] !w-[136px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none sm:my-0 sm:!h-[179.5px] sm:!w-[294px] md:my-4`}
               onClick={() => {
                 setSelectedGender(gender.value);
                 handleSetLocalStorage({

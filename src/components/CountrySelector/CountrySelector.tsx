@@ -2,7 +2,6 @@ import Image from 'next/image';
 import React from 'react';
 
 import { useScreenWidth } from '@/hooks/useScreenWidth';
-import useTranslation from '@/hooks/useTranslation';
 import { useAppStore } from '@/libs/store';
 import {
   countryData,
@@ -17,7 +16,6 @@ const CountrySelector = () => {
     tokenKey: 'selected_language',
   });
   const { setSelectedCountry, selectedCountry, setStepNumber } = useAppStore();
-  const { t } = useTranslation();
   React.useEffect(() => {
     // First, check if there's a saved country in localStorage (from previous selection)
     const savedCountry = handleGetLocalStorage({
@@ -50,16 +48,17 @@ const CountrySelector = () => {
   const { matches } = useScreenWidth(640);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-2 overflow-scroll pb-10">
+    <div className="flex w-full flex-col items-center justify-center gap-2 overflow-y-auto pb-10">
       <div className="w-11/12 lg:w-7/12">
-        <h3 className="mt-32 text-center font-onsite text-[24px] font-medium text-dark-green sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
-          {t('Tell-us-which-country-you-will-be-claiming-this-policy-from')}
+        <h3 className="mt-32 text-center font-onsite text-[24px] font-medium text-dark-blue sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
+          {/* {t('Tell-us-which-country-you-will-be-claiming-this-policy-from')} */}
+          Select your country
         </h3>
-        <p className="mt-6 hidden text-center font-onsite text-base font-normal leading-7 text-dark-green sm:block sm:text-xl">
+        {/* <p className="mt-6 hidden text-center font-onsite text-base font-normal leading-7 text-dark-green sm:block sm:text-xl">
           {t('To-begin-we-are-piloting-with-a')}
-        </p>
+        </p> */}
       </div>
-      <div className="mb-11 mt-[40px] grid grid-cols-1 items-start gap-6 sm:mb-44 sm:mt-[60px] sm:grid-cols-2 sm:gap-4">
+      <div className="mb-11 mt-[40px] grid grid-cols-1 items-start gap-6 sm:mb-44 sm:mt-[60px] sm:grid-cols-2 sm:gap-4 xl:my-14">
         {countryData
           .filter((country) => !!country.workflowId)
           .sort((a, b) => {
@@ -72,7 +71,7 @@ const CountrySelector = () => {
               <FbtButton
                 key={country.name}
                 variant="outline"
-                className={`${country.countryCode === selectedCountry ? 'bg-dark-green !text-white hover:!bg-dark-green hover:!text-white' : 'bg-base-light text-dark-green hover:!bg-dark-green hover:!text-white'} flex !h-[139.51px] !w-[136px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none sm:my-0 sm:!h-[179.5px] sm:!w-[294px] md:my-4`}
+                className={`${country.countryCode === selectedCountry ? 'bg-dark-blue !text-white hover:!bg-dark-blue hover:!text-white' : 'bg-primary-light-blue text-extra-dark-blue hover:!bg-dark-blue hover:!text-white'} flex !h-[139.51px] !w-[136px] cursor-pointer flex-col !items-center !justify-center gap-y-4 !rounded-2xl !border-none sm:my-0 sm:!h-[179.5px] sm:!w-[294px]`}
                 onClick={() => {
                   setSelectedCountry(country.countryCode);
                   handleSetLocalStorage({
@@ -96,9 +95,9 @@ const CountrySelector = () => {
             );
           })}
       </div>
-      <p className="mt-6 block text-center font-onsite text-base font-normal leading-7 text-dark-green sm:hidden sm:text-xl">
+      {/* <p className="mt-6 block text-center font-onsite text-base font-normal leading-7 text-dark-green sm:hidden sm:text-xl">
         {t('To-begin-we-are-piloting-with-a')}
-      </p>
+      </p> */}
     </div>
   );
 };

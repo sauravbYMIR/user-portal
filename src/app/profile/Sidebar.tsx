@@ -9,10 +9,10 @@ const itemsList = [
     name: 'My-procedures',
     route: '/my-procedures',
   },
-  {
-    name: 'My-profile',
-    route: '/profile',
-  },
+  // {
+  //   name: 'My-profile',
+  //   route: '/profile',
+  // },
 ];
 
 const Sidebar = (): JSX.Element => {

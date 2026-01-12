@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import type { HospitalImageType } from '@/hooks/useHospital';
 import { useGetHospitalByProcedureId } from '@/hooks/useHospital';
@@ -14,6 +14,7 @@ import {
 } from '@/utils/global';
 
 import { CheckIcon, ExclamationCircleIcon, HospitalIcon } from '../Icons/Icons';
+import HospitalSelectorSkeleton from '../Skeleton/HospitalSelectorSkeleton';
 import { FbtButton } from '../ui';
 
 const HospitalCard = ({
@@ -51,7 +52,7 @@ const HospitalCard = ({
   return (
     <button
       type="button"
-      className={`bg-base-light ${selectedHospital === id ? 'border-primary-2' : 'border-neutral-5'} flex h-[444px] flex-1 flex-col items-start rounded-xl border px-3 py-4`}
+      className={`bg-primary-light-blue ${selectedHospital === id ? 'border-primary-2' : 'border-neutral-5'} flex h-[444px] w-[27vw] flex-1 flex-col items-start rounded-xl border px-3 py-4`}
       style={{
         boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
       }}
@@ -87,7 +88,7 @@ const HospitalCard = ({
         <FbtButton
           id="selected-btn"
           variant="outline"
-          className="absolute right-2 top-2 !h-[40px] gap-x-[6px] !rounded-[42.81px] !border-none bg-secondary-green text-white hover:!bg-secondary-green hover:!text-white"
+          className="absolute right-2 top-2 !h-[40px] gap-x-[6px] !rounded-[42.81px] !border-none bg-extra-dark-blue text-white hover:!bg-secondary-dark-blue hover:!text-white"
         >
           {selectedHospital === id ? (
             <div id="selected-btn" className="flex items-center gap-x-1">
@@ -123,10 +124,10 @@ const HospitalCard = ({
             <HospitalIcon className="size-12 rounded-full border-2 border-neutral-5" />
           )}
           <div className="ml-3 flex flex-col items-start">
-            <h3 className="font-onsite text-sm font-bold text-dark-green sm:text-base">
+            <h3 className="text-start font-onsite text-sm font-bold text-extra-dark-blue sm:text-base">
               {hospitalName}
             </h3>
-            <p className="font-onsite text-sm font-normal text-dark-green sm:text-base">
+            <p className="font-onsite text-sm font-normal text-extra-dark-blue sm:text-base">
               {city}, {country}
             </p>
           </div>
@@ -142,29 +143,29 @@ const HospitalCard = ({
       </div>
       <div className="mb-1 flex w-full items-start justify-between">
         <div className="flex w-2/5 flex-col items-start">
-          <span className="mb-1 text-start font-onsite text-sm font-normal text-dark-green">
+          <span className="mb-1 text-start font-onsite text-sm font-normal text-extra-dark-blue">
             {t('Cost-of-procedure')}
           </span>
-          <span className="text-start font-onsite text-sm font-bold text-dark-green">
+          <span className="text-start font-onsite text-sm font-bold text-extra-dark-blue">
             {costOfProcedure}
           </span>
         </div>
         <div className="flex w-2/5 flex-col items-start">
-          <span className="mb-1 text-start font-onsite text-sm font-normal text-dark-green">
+          <span className="mb-1 text-start font-onsite text-sm font-normal text-extra-dark-blue">
             {t('Reimbursement-offered')}
           </span>
-          <span className="text-start font-onsite text-sm font-bold text-dark-green">
+          <span className="text-start font-onsite text-sm font-bold text-extra-dark-blue">
             {reimBursementCost}
           </span>
         </div>
       </div>
       <div className="h-[100px] overflow-y-scroll">
-        <p className="mb-6 mt-2 text-start font-onsite text-base font-normal text-dark-green">
+        <p className="mb-6 mt-2 text-start font-onsite text-base font-normal text-extra-dark-blue">
           {hospitalDesc.length > 50 ? (
             <div className="flex flex-col items-start gap-y-1">
               {readMore.isShow && readMore.id === id
-                ? hospitalDesc
-                : `${hospitalDesc.slice(0, 50)} ...`}
+                ? hospitalDesc.replace(/<\/?[^>]+(>|$)/g, '')
+                : `${hospitalDesc.replace(/<\/?[^>]+(>|$)/g, '').slice(0, 50)} ...`}
               <button
                 type="button"
                 onClick={() =>
@@ -183,7 +184,7 @@ const HospitalCard = ({
               </button>
             </div>
           ) : (
-            hospitalDesc
+            hospitalDesc.replace(/<\/?[^>]+(>|$)/g, '')
           )}
         </p>
       </div>
@@ -211,78 +212,93 @@ const HospitalSelector = () => {
   const selectedCountryInfo = countryData.find(
     (countryInfo) => countryInfo.countryCode === selectedReimbursementCountry,
   );
+
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  useEffect(() => {
+    if (allHospitals.data === undefined) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [allHospitals]);
+
   return (
     <div className="flex flex-col items-center justify-center gap-2">
       <div className="w-8/12">
-        <h3 className="mt-20 text-center font-onsite text-[24px] font-medium text-primary-1 sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
+        <h3 className="mt-20 text-center font-onsite text-[24px] font-medium text-extra-dark-blue sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
           {t('Select-a-hospital-for-your-procedure')}
         </h3>
       </div>
-      <div className="w-full pb-20">
-        <div className="mt-[40px] flex flex-col content-center justify-items-center gap-[24px] sm:mt-[60px] sm:grid sm:grid-cols-3">
-          {allHospitals.data &&
-            Array.isArray(allHospitals.data.data) &&
-            allHospitals.data.data.length > 0 &&
-            allHospitals.data.data.map((hospital) => {
-              return (
-                <HospitalCard
-                  selectedHospital={selectedHospital}
-                  id={hospital.id}
-                  key={hospital.id}
-                  waitTime={hospital.waitTime}
-                  hospitalName={hospital.hospitalName}
-                  city={hospital.city}
-                  country={hospital.country}
-                  hospitalDesc={
-                    hospital.hospitalDesc[
-                      (selectedLanguageFromUserDropdown as keyof typeof nameType) ??
-                        'en'
-                    ]
-                  }
-                  costOfProcedure={convertToValidCurrency({
-                    price: hospital.costOfProcedure.price,
-                    locale: selectedCountryInfo?.locale ?? 'en',
-                    currency: selectedCountryInfo?.currency
-                      ? selectedCountryInfo.currency
-                      : hospital.costOfProcedure.currency,
-                  })}
-                  reimBursementCost={`${
-                    selectedCountryInfo?.countryCode
-                      ? convertToValidCurrency({
-                          price:
-                            hospital.reimBursementCost[
-                              (selectedCountry as keyof typeof hospital.reimBursementCost) ??
-                                'ie'
-                            ],
-                          currency: selectedCountryInfo.currency ?? 'EUR',
-                          locale: selectedCountryInfo.locale ?? 'en',
-                        })
-                      : ''
-                  }`}
-                  hospitalLogo={hospital.hospitalLogo}
-                  hospitalImages={hospital.hospitalImages}
-                />
-              );
-            })}
-        </div>
-        {!(
-          allHospitals.data &&
-          Array.isArray(allHospitals.data.data) &&
-          allHospitals.data.data.length > 0
-        ) && (
-          <div className="flex w-full flex-col items-center justify-center">
-            <div className="flex w-8/12 flex-col items-center justify-center">
-              <ExclamationCircleIcon
-                className="size-12"
-                stroke="rgba(0, 70, 70, 1)"
-              />
-              <p className="text-center font-onsite text-2xl font-normal text-neutral-2">
-                {t('The-selected-procedure-is-not-associated')}
-              </p>
-            </div>
+      {isLoading ? (
+        <HospitalSelectorSkeleton />
+      ) : (
+        <div className="w-full pb-40">
+          <div className="mt-[40px] flex flex-col content-center justify-items-center gap-[24px] sm:mt-[60px] sm:grid sm:grid-cols-3">
+            {allHospitals.data &&
+              Array.isArray(allHospitals.data.data) &&
+              allHospitals.data.data.length > 0 &&
+              allHospitals.data.data.map((hospital) => {
+                return (
+                  <HospitalCard
+                    selectedHospital={selectedHospital}
+                    id={hospital.id}
+                    key={hospital.id}
+                    waitTime={hospital.waitTime}
+                    hospitalName={hospital.hospitalName}
+                    city={hospital.city}
+                    country={hospital.country}
+                    hospitalDesc={
+                      hospital.hospitalDesc[
+                        (selectedLanguageFromUserDropdown as keyof typeof nameType) ??
+                          'en'
+                      ]
+                    }
+                    costOfProcedure={convertToValidCurrency({
+                      price: hospital.costOfProcedure.price,
+                      locale: selectedCountryInfo?.locale ?? 'en',
+                      currency: selectedCountryInfo?.currency
+                        ? selectedCountryInfo.currency
+                        : hospital.costOfProcedure.currency,
+                    })}
+                    reimBursementCost={`${
+                      selectedCountryInfo?.countryCode
+                        ? convertToValidCurrency({
+                            price:
+                              hospital.reimBursementCost[
+                                (selectedCountry as keyof typeof hospital.reimBursementCost) ??
+                                  'ie'
+                              ],
+                            currency: selectedCountryInfo.currency ?? 'EUR',
+                            locale: selectedCountryInfo.locale ?? 'en',
+                          })
+                        : ''
+                    }`}
+                    hospitalLogo={hospital.hospitalLogo}
+                    hospitalImages={hospital.hospitalImages}
+                  />
+                );
+              })}
           </div>
-        )}
-      </div>
+          {!(
+            allHospitals.data &&
+            Array.isArray(allHospitals.data.data) &&
+            allHospitals.data.data.length > 0
+          ) && (
+            <div className="flex w-full flex-col items-center justify-center">
+              <div className="flex w-8/12 flex-col items-center justify-center">
+                <ExclamationCircleIcon
+                  className="size-12"
+                  stroke="rgba(0, 70, 70, 1)"
+                />
+                <p className="text-center font-onsite text-2xl font-normal text-neutral-2">
+                  {t('The-selected-procedure-is-not-associated')}
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

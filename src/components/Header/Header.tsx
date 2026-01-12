@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
@@ -8,7 +7,6 @@ import headerStyle from '@/components/Header/header.module.scss';
 import useTranslation from '@/hooks/useTranslation';
 import { useScreenWidth } from '@/hooks/useWindowWidth';
 import { useAppStore } from '@/libs/store';
-import brandLogo from '@/public/assets/images/brandLogo.svg';
 import type { LocaleType } from '@/types/component';
 import {
   countryData,
@@ -19,6 +17,7 @@ import {
 import BankIdModal from '../Auth/BankIdModal';
 import { CreateAccount } from '../Auth/CreateAccount';
 import { VerifyOtp } from '../Auth/VerifyOtp';
+import MedipathLogo from '../MedipathLogo/MedipathLogo';
 import {
   FbtHeader,
   FbtHeaderBrand,
@@ -109,12 +108,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
         className="flex items-center justify-between !bg-primary-5 sm:!px-16"
       >
         <FbtHeaderBrand>
-          <Image
-            src={brandLogo}
-            alt="branch icon"
-            width={!matches ? 160 : 80}
-            height={!matches ? 64 : 32}
-          />
+          <MedipathLogo />
         </FbtHeaderBrand>
         <FbtHeaderContent className={headerStyle.headerLinkContainer}>
           {menuItems.map((menu) => {
@@ -230,12 +224,7 @@ function Header({ howItWorksRef, ourHospitalRef, faqsRef }: HeaderPropType) {
           <FbtHeaderMenu className={headerStyle.headerMobileMenuContainer}>
             <FbtHeaderMenuItem className="flex w-full items-center justify-between px-1 py-3">
               <FbtHeaderBrand>
-                <Image
-                  src={brandLogo}
-                  alt="branch icon"
-                  width={80}
-                  height={32}
-                />
+                <MedipathLogo />
               </FbtHeaderBrand>
 
               <FbtHeaderMenuToggle
