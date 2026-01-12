@@ -28,7 +28,7 @@ const Procedure = () => {
           {bookingsByUserId.isLoading ? (
             <TaskListSkeleton />
           ) : (
-            <div className="flex w-full flex-col items-start gap-y-5">
+            <div className="flex max-h-[70vh] w-full flex-col items-center gap-y-5 overflow-y-scroll pb-10">
               {bookingsByUserId.data &&
               Array.isArray(bookingsByUserId.data.data) &&
               bookingsByUserId.data.data.length > 0 ? (

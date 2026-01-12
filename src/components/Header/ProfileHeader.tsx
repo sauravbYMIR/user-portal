@@ -1,15 +1,14 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 import headerStyles from '@/components/Header/header.module.scss';
-import brandTitle from '@/public/assets/icons/brandTitle.svg';
 import { handleGetLocalStorage, handleLogOut } from '@/utils/global';
 
 import { ArrowDownIcon, ProfileIcon } from '../Icons/Icons';
+import MedipathLogo from '../MedipathLogo/MedipathLogo';
 
 const ProfileHeader = ({
   showLogo,
@@ -37,7 +36,10 @@ const ProfileHeader = ({
             )
           }
         >
-          <Image src={brandTitle} alt="brand-title" width={120} height={48} />
+          <span>
+            {' '}
+            <MedipathLogo />
+          </span>
         </button>
       )}
       <div className="flex items-center">

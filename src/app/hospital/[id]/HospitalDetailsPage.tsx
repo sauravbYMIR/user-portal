@@ -17,11 +17,8 @@ import { toast } from 'sonner';
 import BankIdModal from '@/components/Auth/BankIdModal';
 import { CreateAccount } from '@/components/Auth/CreateAccount';
 import { VerifyOtp } from '@/components/Auth/VerifyOtp';
-import {
-  CalendarIcon,
-  CloseIcon,
-  ExternalLinkIcon,
-} from '@/components/Icons/Icons';
+import { CalendarIcon, CloseIcon } from '@/components/Icons/Icons';
+import MedipathLogo from '@/components/MedipathLogo/MedipathLogo';
 import { getBankIdStatus } from '@/hooks/useAuth';
 import { useCreateBooking } from '@/hooks/useBooking';
 import { useClickOutside } from '@/hooks/useClickOutside';
@@ -32,7 +29,6 @@ import { useAppStore } from '@/libs/store';
 import type { LocaleType } from '@/types/component';
 import {
   BOOKING,
-  brandName,
   convertToValidCurrency,
   countryData,
   getMonth,
@@ -146,24 +142,34 @@ function HospitalDetailsPage({
     }
     handleCreateBooking();
   };
+
+  const onChange = (dates: [Date | null, Date | null]) => {
+    const [start, end] = dates;
+    if (start) {
+      setStartDate(start);
+      setEndDate(new Date(new Date(start).getTime() + 12096e5));
+      handleSetLocalStorage({
+        tokenKey: 'start_date',
+        tokenValue: JSON.stringify(start),
+      });
+    }
+    if (end) {
+      setEndDate(end);
+      handleSetLocalStorage({
+        tokenKey: 'end_date',
+        tokenValue: JSON.stringify(end),
+      });
+    }
+  };
+
   return (
     <div className="relative h-screen w-screen">
       {isOpen && (
         <div className="absolute left-0 top-0 h-screen w-full bg-black/50" />
       )}
-      <div className="flex size-full flex-col items-center justify-between overflow-y-scroll bg-primary-green px-0 py-9 pb-48 sm:px-12">
+      <div className="flex size-full flex-col items-center justify-between overflow-y-scroll bg-white px-0 py-9 pb-48 sm:px-12">
         <nav className="flex w-screen items-start justify-between px-5 sm:px-12">
-          <button
-            type="button"
-            onClick={() => router.push(`/book-procedure`)}
-            className="text-3xl"
-            style={{
-              color: 'rgba(0, 70, 70, 1)',
-            }}
-          >
-            {brandName}
-            <p className="hidden">brand name</p>
-          </button>
+          <MedipathLogo />
           <button
             type="button"
             className="flex items-center gap-x-3"
@@ -172,10 +178,10 @@ function HospitalDetailsPage({
               router.push('/');
             }}
           >
-            <span className="font-onsite text-sm font-normal text-dark-green sm:block sm:text-xl">
+            <span className="font-onsite text-sm font-normal text-extra-dark-blue sm:block sm:text-xl">
               {t('Close')}
             </span>
-            <div className="flex items-center justify-center rounded-full border-[1.5px] border-dark-green p-1">
+            <div className="flex items-center justify-center rounded-full border-[1.5px] border-extra-dark-blue p-1">
               <CloseIcon
                 className={matches ? 'size-4' : 'size-8'}
                 stroke="rgba(0, 70, 70, 1)"
@@ -184,15 +190,15 @@ function HospitalDetailsPage({
           </button>
         </nav>
         <div className="w-8/12">
-          <h3 className="mt-28 text-center font-onsite text-[24px] font-medium text-primary-1 sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
+          <h3 className="mt-28 text-center font-onsite text-[24px] font-medium text-extra-dark-blue sm:mt-0 sm:text-[32px] sm:leading-12 md:text-5xl md:leading-15">
             {t('Your-procedure')}
           </h3>
         </div>
-        <div className="mt-10 flex w-full flex-col rounded-lg bg-base-light px-[22px] pb-12 pt-6 sm:p-[52px]">
+        <div className="mt-10 flex w-full flex-col rounded-lg bg-primary-light-blue px-[22px] pb-12 pt-6 sm:p-[52px]">
           <div className="flex w-full flex-col items-start justify-between sm:flex-row">
             <div className="mb-9 flex flex-col items-start gap-y-1 sm:mb-0 sm:gap-y-4">
               {hospitalProcedureId.success && (
-                <h2 className="text-2xl font-medium text-dark-green sm:text-[32px]">
+                <h2 className="text-2xl font-medium text-extra-dark-blue sm:text-[32px]">
                   {hospitalProcedureId.data.procedure.name[selectedLanguage]
                     ? hospitalProcedureId.data.procedure.name[selectedLanguage]
                     : hospitalProcedureId.data.procedure.name.en}
@@ -200,12 +206,12 @@ function HospitalDetailsPage({
               )}
               <div className="flex items-center gap-x-1 sm:gap-x-2">
                 {hospitalProcedureId.success && (
-                  <span className="text-lg font-normal text-dark-green sm:text-xl">
+                  <span className="text-lg font-normal text-extra-dark-blue sm:text-xl">
                     {hospitalProcedureId.data.hospital.name}
                   </span>
                 )}
                 /
-                <span className="text-xl font-normal text-dark-green/40">
+                <span className="text-xl font-normal text-extra-dark-blue/40">
                   Details
                 </span>
               </div>
@@ -243,15 +249,15 @@ function HospitalDetailsPage({
               )}
             </div>
             <div className="mt-2 block w-full sm:hidden">
-              <div className="flex w-full flex-col items-start gap-y-3 rounded-xl bg-dark-grey-1 p-5">
-                <p className="text-sm font-normal text-black-52 sm:text-base">
+              <div className="flex w-full flex-col items-start gap-y-3 rounded-xl bg-secondary-dark-blue p-5">
+                <p className="text-sm font-normal text-white sm:text-base">
                   {t('Your-cost-after-reimbursement')}
                 </p>
                 <div className="flex w-full items-center justify-between">
                   {hospitalProcedureId.success &&
                     hospitalProcedureId.data.procedure &&
                     hospitalProcedureId.data.procedure.reimbursement && (
-                      <p className="text-xl font-medium text-black-52 sm:text-2xl">
+                      <p className="text-xl font-medium text-white sm:text-2xl">
                         {convertToValidCurrency({
                           price:
                             hospitalProcedureId.data.procedure.reimbursement[
@@ -269,32 +275,39 @@ function HospitalDetailsPage({
               </div>
             </div>
           </div>
-          <div className="mt-5 flex w-full flex-col items-start justify-between border-b border-dark-grey-1 pb-9 sm:mt-24 sm:flex-row sm:items-center">
+          <div className="mt-4 flex w-full flex-col items-start justify-between border-b border-dark-grey-1 pb-9 sm:mt-24 sm:flex-row">
             <div className="flex flex-1 flex-col items-start">
-              <h3 className="text-xl font-medium text-dark-green sm:text-2xl">
+              <h3 className="text-xl font-medium text-extra-dark-blue sm:text-2xl">
                 {t('About-the-procedure')}
               </h3>
               {hospitalProcedureId.success && (
-                <p className="text-lg font-normal text-dark-green sm:text-xl">
-                  {hospitalProcedureId.data.description[selectedLanguage]
-                    ? hospitalProcedureId.data.description[selectedLanguage]
-                    : hospitalProcedureId.data.description.en}
+                <p className="text-lg font-normal text-extra-dark-blue sm:text-xl">
+                  {hospitalProcedureId.data.description[
+                    selectedLanguage
+                  ].replace(/<\/?[^>]+(>|$)/g, '')
+                    ? hospitalProcedureId.data.description[
+                        selectedLanguage
+                      ].replace(/<\/?[^>]+(>|$)/g, '')
+                    : hospitalProcedureId.data.description.en.replace(
+                        /<\/?[^>]+(>|$)/g,
+                        '',
+                      )}
                 </p>
               )}
             </div>
             <div className="flex w-full flex-col items-end sm:flex-1">
               <div
-                className="flex w-[83%] flex-col items-start gap-y-3 rounded-xl bg-dark-grey-1 p-5"
+                className="flex w-[83%] flex-col items-start gap-y-3 rounded-xl bg-secondary-dark-blue p-5"
                 style={matches ? { display: 'none' } : { display: 'block' }}
               >
-                <p className="text-base font-normal text-black-52">
+                <p className="text-base font-normal text-white">
                   {t('Your-cost-after-reimbursement')}
                 </p>
                 <div className="flex w-full items-center justify-between">
                   {hospitalProcedureId.success &&
                     hospitalProcedureId.data.procedure &&
                     hospitalProcedureId.data.procedure.reimbursement && (
-                      <p className="text-2xl font-medium text-black-52">
+                      <p className="text-2xl font-medium text-white">
                         {convertToValidCurrency({
                           price:
                             hospitalProcedureId.data.procedure.reimbursement[
@@ -310,8 +323,8 @@ function HospitalDetailsPage({
                   {/* <QuestionIcon /> */}
                 </div>
               </div>
-              <div className="mt-10 flex w-full flex-col items-start sm:w-[90%]">
-                <h3 className="text-sm font-bold text-dark-green sm:text-base">
+              <div className="mt-10 flex w-full flex-col items-start sm:w-[83%]">
+                <h3 className="text-sm font-bold text-extra-dark-blue sm:text-base">
                   {t('Procedure-team')}
                 </h3>
                 {hospitalProcedureId.success && (
@@ -332,10 +345,10 @@ function HospitalDetailsPage({
                             priority
                           />
                           <div className="flex flex-col items-start">
-                            <p className="text-xl font-medium text-dark-green sm:text-2xl">
+                            <p className="text-xl font-medium text-extra-dark-blue sm:text-2xl">
                               {d.name}
                             </p>
-                            <p className="text-base font-normal text-dark-green">
+                            <p className="text-base font-normal text-extra-dark-blue">
                               {d.position[selectedLanguage ?? 'en']}
                             </p>
                           </div>
@@ -347,20 +360,18 @@ function HospitalDetailsPage({
             </div>
           </div>
           <div className="flex flex-col items-start py-16">
-            <h2 className="text-2xl font-medium text-dark-green">
+            <h2 className="text-2xl font-medium text-extra-dark-blue">
               {t('About-the-hospital')}
             </h2>
             {hospitalProcedureId.success &&
               hospitalProcedureId.data.hospitalDescription && (
-                <p className="text-xl font-normal text-dark-green">
-                  {
-                    hospitalProcedureId.data.hospitalDescription[
-                      selectedLanguage ?? 'en'
-                    ]
-                  }
+                <p className="text-xl font-normal text-extra-dark-blue">
+                  {hospitalProcedureId.data.hospitalDescription[
+                    selectedLanguage ?? 'en'
+                  ].replace(/<\/?[^>]+(>|$)/g, '')}
                 </p>
               )}
-            {hospitalProcedureId.success &&
+            {/* {hospitalProcedureId.success &&
               hospitalProcedureId.data.hospital.externalLink && (
                 <a
                   href={`http://${hospitalProcedureId.data.hospital.externalLink}`}
@@ -368,7 +379,7 @@ function HospitalDetailsPage({
                   rel="noopener noreferrer"
                   className="mt-5 flex items-center gap-x-2"
                 >
-                  <span className="text-base font-normal text-dark-green">
+                  <span className="text-base font-normal text-extra-dark-blue">
                     {t('Go-to-the-hospitals-website')}
                   </span>
                   <ExternalLinkIcon
@@ -376,7 +387,7 @@ function HospitalDetailsPage({
                     stroke="rgba(0, 70, 70, 1)"
                   />
                 </a>
-              )}
+              )} */}
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
             {hospitalProcedureId.success &&
@@ -396,11 +407,11 @@ function HospitalDetailsPage({
               ))}
           </div>
         </div>
-        <div className="fixed bottom-0 flex w-screen items-center justify-between bg-secondary-green px-4 py-[18px] sm:p-8">
+        <div className="fixed bottom-0 flex w-screen items-center justify-between bg-secondary-blue px-4 py-[18px] sm:p-8">
           <div className="hidden sm:block">
             <div className="flex flex-col">
               {hospitalProcedureId.success && (
-                <h3 className="text-xl font-medium text-white">
+                <h3 className="text-xl font-medium text-black">
                   {
                     hospitalProcedureId.data.procedure.name[
                       selectedLanguage ?? 'en'
@@ -408,14 +419,14 @@ function HospitalDetailsPage({
                   }
                 </h3>
               )}
-              <p className="text-base font-normal text-white/60">
+              <p className="text-base font-normal text-black">
                 {t('Please-select-desired-date-for-procedure')}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-x-4">
             <div
-              className={`fixed inset-x-0 bottom-28 z-50 bg-base-light sm:bottom-32 ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-[430px] opacity-0'}`}
+              className={`fixed inset-x-0 bottom-28 z-50 bg-primary-light-blue sm:bottom-32 ${isOpen ? 'translate-y-0 opacity-100' : 'translate-y-[430px] opacity-0'}`}
             >
               <div
                 className="flex h-[312px] flex-col items-start justify-between overflow-y-scroll px-6 py-8 sm:flex-row"
@@ -423,10 +434,10 @@ function HospitalDetailsPage({
               >
                 <div className="flex h-full flex-col items-start justify-between">
                   <div className="flex flex-col gap-y-2">
-                    <h2 className="text-lg font-medium text-dark-green sm:text-xl">
+                    <h2 className="text-lg font-medium text-extra-dark-blue sm:text-xl">
                       {t('When-do-you-want-to-get-your-treatment-done')}
                     </h2>
-                    <p className="text-sm font-normal text-dark-green sm:text-base">
+                    <p className="text-sm font-normal text-extra-dark-blue sm:text-base">
                       {t('Select-a-range-of-minimum-14-days')}
                     </p>
                   </div>
@@ -444,8 +455,32 @@ function HospitalDetailsPage({
                 <div className="mt-6 flex w-full flex-col items-start justify-end gap-x-3 gap-y-4 sm:mt-0 sm:flex-row sm:gap-y-0">
                   <DatePicker
                     selected={startDate}
+                    onChange={onChange}
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={
+                      new Date(
+                        new Date().getTime() +
+                          Number(hospitalProcedureId.data.waitingTime) *
+                            24 *
+                            60 *
+                            60 *
+                            1000,
+                      )
+                    }
+                    selectsRange
+                    inline
+                  />
+                  {/* <DatePicker
+                    selected={startDate}
                     onChange={(date) => {
                       if (date) {
+                        console.log(
+                          "First calendar's date changed:",
+                          date,
+                          startDate,
+                          endDate,
+                        );
                         setStartDate(date);
                         setEndDate(
                           new Date(new Date(date).getTime() + 12096e5),
@@ -486,34 +521,43 @@ function HospitalDetailsPage({
                     selectsEnd
                     startDate={startDate}
                     endDate={endDate}
-                    minDate={startDate}
+                    minDate={
+                      new Date(
+                        new Date().getTime() +
+                          Number(hospitalProcedureId.data.waitingTime) *
+                            24 *
+                            60 *
+                            60 *
+                            1000,
+                      )
+                    }
                     className="w-full rounded-[10px] bg-base-light px-3 py-4 slg:w-[200px]"
                     inline
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
             {matches ? (
               <button
                 type="button"
-                className="flex items-center gap-x-4 rounded-xl bg-base-light px-5 py-4"
+                className="flex items-center gap-x-4 rounded-xl bg-primary-light-blue px-5 py-4"
                 onClick={() => setIsOpen((prevState) => !prevState)}
               >
                 <CalendarIcon />
                 <div className="flex flex-col items-start">
                   {!(startDate && endDate) && (
-                    <span className="text-base font-normal text-dark-green">
+                    <span className="text-base font-normal text-extra-dark-blue">
                       {t('Select-date')}
                     </span>
                   )}
                   <div className="flex items-start gap-x-2">
                     {startDate && (
-                      <span className="text-sm font-medium text-dark-green sm:text-base">
+                      <span className="text-sm font-medium text-extra-dark-blue sm:text-base">
                         {startDate.getDate()}.{getMonth(startDate)}
                       </span>
                     )}
                     {endDate && (
-                      <span className="text-sm font-medium text-dark-green sm:text-base">
+                      <span className="text-sm font-medium text-extra-dark-blue sm:text-base">
                         {endDate.getDate()}.{getMonth(endDate)}
                       </span>
                     )}
@@ -524,23 +568,23 @@ function HospitalDetailsPage({
               <>
                 <button
                   type="button"
-                  className="flex items-center gap-x-4 rounded-xl bg-base-light px-5 py-4"
+                  className="flex items-center gap-x-4 rounded-xl bg-primary-light-blue px-5 py-4"
                   onClick={() => setIsOpen((prevState) => !prevState)}
                 >
                   <CalendarIcon />
                   <div className="flex w-full flex-col items-start">
-                    <span className="text-base font-normal text-dark-green">
+                    <span className="text-base font-normal text-extra-dark-blue">
                       {t('From')} - {t('To')}
                     </span>
                     <div className="flex w-full items-center gap-x-2">
                       {startDate && (
-                        <span className="text-base font-medium text-dark-green">
+                        <span className="text-base font-medium text-extra-dark-blue">
                           {startDate.getDate()}.{getMonth(startDate)}{' '}
                           {startDate.getFullYear()} -
                         </span>
                       )}
                       {endDate && (
-                        <span className="text-base font-medium text-dark-green">
+                        <span className="text-base font-medium text-extra-dark-blue">
                           {endDate.getDate()}.{getMonth(endDate)}{' '}
                           {endDate.getFullYear()}
                         </span>
@@ -554,7 +598,7 @@ function HospitalDetailsPage({
                 >
                   <CalendarIcon />
                   <div className="flex flex-col items-start">
-                    <span className="text-base font-normal text-dark-green">
+                    <span className="text-base font-normal text-extra-dark-blue">
                       {t('To')}
                     </span>
                   </div>
@@ -564,7 +608,7 @@ function HospitalDetailsPage({
 
             <button
               type="button"
-              className={`${error.length > 0 ? 'cursor-not-allowed bg-dark-primary-green text-dark-green' : 'bg-dark-green text-white'} flex w-[183px] items-center justify-center rounded-[40px] px-6 py-3 sm:w-[267px] sm:px-8 sm:py-5`}
+              className={`${error.length > 0 ? 'cursor-not-allowed bg-silver-gray text-extra-dark-blue' : 'bg-extra-dark-blue text-white'} flex w-[183px] items-center justify-center rounded-[40px] px-6 py-3 sm:w-[267px] sm:px-8 sm:py-5`}
               disabled={error.length > 0}
               onClick={handleRequestAppointment}
             >

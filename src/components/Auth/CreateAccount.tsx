@@ -195,7 +195,7 @@ const CreateAccount = ({
         <CloseIcon className="size-8" stroke="#333" />
       </FbtButton>
       <div className="flex w-[547px] items-center justify-center bg-white px-5">
-        <h1 className="font-onsite text-2xl font-medium text-dark-green sxl:text-[40px]">
+        <h1 className="font-onsite text-2xl font-medium text-extra-dark-blue sxl:text-[40px]">
           {!isLogin ? (
             <span>{t('Create-an-account')}</span>
           ) : (
@@ -203,7 +203,7 @@ const CreateAccount = ({
           )}
         </h1>
       </div>
-      <p className="text-center font-onsite text-base font-light text-dark-green sxl:text-lg">
+      <p className="text-center font-onsite text-base font-light text-extra-dark-blue sxl:text-lg">
         {t('Empowering-EU-&-EEC')}
       </p>
       {!isLogin ? (
@@ -297,7 +297,7 @@ const CreateAccount = ({
             )}
           </div>
           <div className="mb-4 flex items-center">
-            <span className="font-onsite text-lg font-normal text-dark-green sxl:text-xl">
+            <span className="font-onsite text-lg font-normal text-extra-dark-blue sxl:text-xl">
               {t('Already-have-an-account')}
             </span>
             <button
@@ -305,7 +305,7 @@ const CreateAccount = ({
               className="ml-1 underline decoration-primary-2 underline-offset-4"
               onClick={() => setIsLogin(true)}
             >
-              <span className="font-onsite text-lg font-medium text-dark-green sxl:text-xl">
+              <span className="font-onsite text-lg font-medium text-extra-dark-blue sxl:text-xl">
                 {t('Login')}
               </span>
             </button>
@@ -314,7 +314,7 @@ const CreateAccount = ({
             type="submit"
             variant="solid"
             disabled={createUserRHF.formState.isSubmitting}
-            className="!h-[64px] !w-full !rounded-[6.4px] !bg-dark-green"
+            className="!h-[64px] !w-full !rounded-[6.4px] !bg-dark-blue"
           >
             {createUserRHF.formState.isSubmitting ? (
               <ClipLoader
@@ -368,7 +368,7 @@ const CreateAccount = ({
             )}
           </div>
           <div className="mb-4 flex items-center justify-center">
-            <span className="font-onsite text-base font-normal text-dark-green">
+            <span className="font-onsite text-base font-normal text-extra-dark-blue">
               {t('Dont-have-an-account')}
             </span>
             <button
@@ -376,7 +376,7 @@ const CreateAccount = ({
               className="ml-1 underline decoration-primary-2 underline-offset-4"
               onClick={() => router.push('/book-procedure')}
             >
-              <span className="font-onsite text-base font-medium text-dark-green">
+              <span className="font-onsite text-base font-medium text-extra-dark-blue">
                 {t('Book-a-procedure-first')}
               </span>
             </button>
@@ -385,7 +385,7 @@ const CreateAccount = ({
             type="submit"
             variant="solid"
             disabled={loginUserRHF.formState.isSubmitting}
-            className="!h-[64px] !w-full !rounded-[6.4px] !bg-dark-green"
+            className="!h-[64px] !w-full !rounded-[6.4px] !bg-dark-blue"
           >
             {loginUserRHF.formState.isSubmitting ? (
               <ClipLoader

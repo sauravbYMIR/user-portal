@@ -1,28 +1,44 @@
 'use client';
 
-import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { Suspense } from 'react';
 
-import { useScreenWidth } from '@/hooks/useScreenWidth';
+import MedipathLogo from '@/components/MedipathLogo/MedipathLogo';
 import useTranslation from '@/hooks/useTranslation';
-import brandLogo from '@/public/assets/images/brandLogo.svg';
+import { useAppStore } from '@/libs/store';
 
 const BookingSuccess = () => {
   const searchParams = useSearchParams();
   const hospitalName = searchParams.get('name');
-  const { matches } = useScreenWidth(500);
   const router = useRouter();
   const { t } = useTranslation();
+  const {
+    setSelectedGender,
+    setSelectedCountry,
+    setSelectedProcedure,
+    setSelectedHospital,
+    setStepNumber,
+  } = useAppStore();
+
+  React.useEffect(() => {
+    // Clear selected country on booking success page load
+    setSelectedGender('');
+    setSelectedCountry('');
+    setSelectedProcedure('');
+    setSelectedHospital('');
+    setStepNumber(1);
+    return () => {};
+  }, [
+    setSelectedCountry,
+    setSelectedGender,
+    setSelectedHospital,
+    setSelectedProcedure,
+    setStepNumber,
+  ]);
   return (
     <div className="flex w-screen flex-col items-start bg-primary-5">
       <nav className="w-full items-start px-10 py-6 slg:px-20">
-        <Image
-          src={brandLogo}
-          alt="branch icon"
-          width={!matches ? 160 : 80}
-          height={!matches ? 64 : 32}
-        />
+        <MedipathLogo />
       </nav>
       <div className="flex h-screen w-full items-start justify-center">
         <div className="mt-10 flex w-2/3 flex-col items-center text-center slg:mt-40">

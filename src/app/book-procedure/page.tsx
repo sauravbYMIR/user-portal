@@ -22,18 +22,26 @@ const steppers = [
   {
     name: 'Country',
     stepNo: 1,
+    color:
+      'linear-gradient(0deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.22)), linear-gradient(0deg, #E1F7FE, #E1F7FE)',
   },
   {
     name: 'Gender',
     stepNo: 2,
+    color:
+      'linear-gradient(0deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.16)),linear-gradient(0deg, #E1F7FE, #E1F7FE)',
   },
   {
     name: 'Procedure',
     stepNo: 3,
+    color:
+      'linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),linear-gradient(0deg, #E1F7FE, #E1F7FE)',
   },
   {
     name: 'Hospital',
     stepNo: 4,
+    color:
+      'linear-gradient(0deg,#E1F7FE,#E1F7FE),linear-gradient(0deg,rgba(0,0,0,0.16),rgba(0,0,0,0.16))',
   },
 ];
 
@@ -68,11 +76,11 @@ const Stepper = ({
   const router = useRouter();
   const { selectedHospital } = useAppStore();
   return (
-    <footer className="fixed bottom-0 flex h-24 w-screen items-start justify-between bg-secondary-green">
+    <footer className="fixed bottom-0 flex h-24 w-screen items-start justify-between bg-secondary-blue">
       <div className="flex h-full items-start">
         {steppers.map((info) => {
-          const bgColor = `rgba(65, 135, 121, ${info.stepNo / 100})`;
-          const border = `1px solid rgba(0, 70, 70, ${info.stepNo / 10})`;
+          const bgColor = info.color;
+          const border = `0px solid rgba(0, 70, 70, ${info.stepNo / 10})`;
           return (
             <button
               type="button"
@@ -81,10 +89,10 @@ const Stepper = ({
               style={
                 stepNum === info.stepNo
                   ? {
-                      backgroundColor: 'rgba(0, 70, 70, 1)',
+                      backgroundColor: 'rgba(9, 111, 144, 1)',
                     }
                   : {
-                      backgroundColor: bgColor,
+                      background: bgColor,
                       borderRight: border,
                     }
               }
@@ -96,9 +104,11 @@ const Stepper = ({
               }}
             >
               <div
-                className={`${stepNum > 1 && stepNum !== info.stepNo && info.stepNo < stepNum ? 'bg-white' : ''} flex ${matches ? 'size-[20.89px]' : 'size-[29px]'} items-center justify-center rounded-full border-2 border-white px-2 py-1`}
+                className={`${stepNum > 1 && stepNum !== info.stepNo && info.stepNo < stepNum ? 'bg-white' : ''} flex ${matches ? 'size-[20.89px]' : 'size-[29px]'} items-center justify-center rounded-full border-2 ${stepNum === info.stepNo ? 'border-white' : 'border-black opacity-50'} ${stepNum > info.stepNo ? 'border-none' : ''} px-2 py-1`}
               >
-                <span className="text-[11.52px] font-normal text-white sm:text-xl">
+                <span
+                  className={`text-[11.52px] font-normal xl:text-base ${stepNum === info.stepNo ? 'text-white' : '!font-bold text-black'} sm:text-xl`}
+                >
                   {stepNum > 1 &&
                   stepNum !== info.stepNo &&
                   info.stepNo < stepNum ? (
@@ -113,7 +123,9 @@ const Stepper = ({
                 </span>
               </div>
               {!matches && (
-                <span className="text-xl font-normal text-white">
+                <span
+                  className={`text-xl font-normal ${stepNum === info.stepNo ? 'text-white' : 'text-black opacity-50'} `}
+                >
                   {t(`${info.name}`)}
                 </span>
               )}
@@ -134,16 +146,13 @@ const Stepper = ({
               router.back();
             }}
           >
-            <BackShortArrowIcon
-              stroke="rgba(255, 255, 255, 1)"
-              strokeWidth="2.5"
-            />
-            <span className="text-xl font-normal text-white">{t('back')}</span>
+            <BackShortArrowIcon stroke="rgba(0,0,0, 1)" strokeWidth="2.5" />
+            <span className="text-xl font-normal text-black">{t('back')}</span>
           </button>
         )}
         <button
           type="button"
-          className={`${isDisable() ? 'cursor-not-allowed' : 'cursor-pointer'} flex items-center justify-center rounded-[40px] bg-dark-green px-6 py-3 text-white sm:w-[251px]`}
+          className={`${isDisable() ? 'cursor-not-allowed' : 'cursor-pointer'} flex items-center justify-center rounded-[40px] bg-extra-dark-blue px-6 py-3 text-white sm:w-[251px]`}
           disabled={isDisable()}
           onClick={() => {
             if (handleCountueBtnDisableStatus()) {
@@ -256,7 +265,7 @@ const BookProcedure = () => {
   };
   return (
     <div className="h-screen">
-      <div className="relative flex w-screen flex-col items-center justify-between bg-primary-green px-[20px] py-[27px] md:px-[60px] md:py-[32px] lg:px-[87px] lg:py-[43px] xl:justify-center">
+      <div className="relative flex w-screen flex-col items-center justify-between px-[20px] py-[27px] md:px-[60px] md:py-[32px] lg:px-[87px] lg:py-[43px] xl:justify-center">
         <nav className="flex w-screen items-start justify-between px-5 sm:px-12">
           <button
             type="button"
@@ -274,10 +283,10 @@ const BookProcedure = () => {
             className="flex items-center gap-x-3"
             onClick={() => router.push('/profile')}
           >
-            <span className="font-onsite text-sm font-normal text-dark-green sm:block sm:text-xl">
+            <span className="font-onsite text-sm font-normal text-dark-blue sm:block sm:text-xl">
               {t('Close')}
             </span>
-            <div className="flex items-center justify-center rounded-full border-[1.5px] border-dark-green p-1">
+            <div className="flex items-center justify-center rounded-full border-[1.5px] border-dark-blue p-1">
               <CloseIcon
                 className={matches ? 'size-4' : 'size-8'}
                 stroke="rgba(0, 70, 70, 1)"
@@ -286,9 +295,9 @@ const BookProcedure = () => {
           </button>
         </nav>
         <div
-          className="m-5 w-full overflow-y-scroll"
+          className="m-5 w-full overflow-y-auto"
           style={{
-            height: 'calc(100vh - 200px)',
+            height: 'calc(100vh - 105px)',
           }}
         >
           <BookingFlow stepNumber={stepNumber} />
