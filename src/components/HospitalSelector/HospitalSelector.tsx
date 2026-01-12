@@ -52,7 +52,7 @@ const HospitalCard = ({
   return (
     <button
       type="button"
-      className={`bg-primary-light-blue ${selectedHospital === id ? 'border-primary-2' : 'border-neutral-5'} flex h-[444px] flex-1 flex-col items-start rounded-xl border px-3 py-4`}
+      className={`bg-primary-light-blue ${selectedHospital === id ? 'border-primary-2' : 'border-neutral-5'} flex h-[444px] w-[27vw] flex-1 flex-col items-start rounded-xl border px-3 py-4`}
       style={{
         boxShadow: '2px 2px 4px 1px rgba(9, 111, 144, 0.1)',
       }}
@@ -124,7 +124,7 @@ const HospitalCard = ({
             <HospitalIcon className="size-12 rounded-full border-2 border-neutral-5" />
           )}
           <div className="ml-3 flex flex-col items-start">
-            <h3 className="font-onsite text-sm font-bold text-extra-dark-blue sm:text-base">
+            <h3 className="text-start font-onsite text-sm font-bold text-extra-dark-blue sm:text-base">
               {hospitalName}
             </h3>
             <p className="font-onsite text-sm font-normal text-extra-dark-blue sm:text-base">
@@ -233,7 +233,7 @@ const HospitalSelector = () => {
       {isLoading ? (
         <HospitalSelectorSkeleton />
       ) : (
-        <div className="w-full pb-20">
+        <div className="w-full pb-40">
           <div className="mt-[40px] flex flex-col content-center justify-items-center gap-[24px] sm:mt-[60px] sm:grid sm:grid-cols-3">
             {allHospitals.data &&
               Array.isArray(allHospitals.data.data) &&
