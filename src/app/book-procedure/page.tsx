@@ -281,7 +281,7 @@ const BookProcedure = () => {
           <button
             type="button"
             className="flex items-center gap-x-3"
-            onClick={() => router.push('/profile')}
+            onClick={() => router.push('/my-procedures')}
           >
             <span className="font-onsite text-sm font-normal text-dark-blue sm:block sm:text-xl">
               {t('Close')}
